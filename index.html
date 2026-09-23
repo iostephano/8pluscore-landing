@@ -219,8 +219,6 @@
       position: relative; overflow: hidden;
       aspect-ratio: 16 / 10.3;
       border-radius: var(--radius-lg);
-      padding: 26px;
-      display: flex; flex-direction: column; justify-content: space-between;
       color: #fff;
     }
     .tile--gradient { background: radial-gradient(130% 90% at 50% 0%, var(--violet) 0%, var(--violet-deep) 45%, #000 80%); }
@@ -229,6 +227,9 @@
     .tile small { font-size: 13px; font-weight: 500; }
     small.muted, .muted { color: var(--hero-muted); }
     .tile p { font-size: clamp(18px, 1.5vw, 26px); font-weight: 500; letter-spacing: -0.04em; line-height: 1.1; }
+    .card-caption { padding-top: 14px; }
+    .card-caption small { display: block; font-size: 13px; font-weight: 500; margin-bottom: 4px; color: var(--muted); }
+    .card-caption p { font-size: 17px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.3; color: var(--ink); }
     .spark { width: 36px; height: 36px; color: var(--yellow); }
     .tile-label { position: relative; z-index: 2; font-size: clamp(28px, 2.4vw, 40px); font-weight: 500; letter-spacing: -0.04em; }
 
@@ -614,31 +615,38 @@
       </div>
 
       <div class="card-row">
-        <article class="tile tile--gradient">
-          <!-- PENDIENTE: imagen PNG transparente del usuario. Reemplazar la ruta de fondo abajo. -->
-          <div class="tile-image" style="background-image: url('assets/tile-hecho-a-medida.png');" aria-hidden="true"></div>
-          <svg class="spark" viewBox="0 0 36 36" fill="currentColor" aria-hidden="true" style="position:relative;z-index:2;"><path d="M18 6l3.3 7.2 7.7.9-5.7 5.3 1.6 7.6L18 23.1 11.1 27l1.6-7.6L7 14.1l7.7-.9z"/><circle cx="6" cy="6" r="1.6"/><circle cx="30" cy="5" r="1.2"/></svg>
-          <div style="position:relative;z-index:2;">
+        <div>
+          <article class="tile tile--gradient">
+            <!-- PENDIENTE: imagen PNG transparente del usuario. Reemplazar la ruta de fondo abajo. -->
+            <div class="tile-image" style="background-image: url('assets/tile-hecho-a-medida.png');" aria-hidden="true"></div>
+          </article>
+          <div class="card-caption">
             <small class="muted">Hecho a medida</small>
             <p>Apps que se sienten parte del sistema, no traducidas a él.</p>
           </div>
-        </article>
+        </div>
 
-        <article class="tile tile--device">
-          <!-- PENDIENTE: imagen PNG transparente del usuario. Reemplazar la ruta de fondo abajo. -->
-          <div class="tile-image" style="background-image: url('assets/tile-2.png');" aria-hidden="true"></div>
-        </article>
-
-        <article class="tile tile--soft">
-          <!-- PENDIENTE: imagen PNG transparente del usuario. Reemplazar la ruta de fondo abajo. -->
-          <div class="tile-image" style="background-image: url('assets/tile-3.png');" aria-hidden="true"></div>
-          <div class="tile-foot" style="position:relative;z-index:2;margin-top:auto;flex-direction:column;align-items:center;text-align:center;gap:10px;">
-            <small style="font-size:16px;">iOS, iPadOS, macOS, watchOS, visionOS y tvOS.</small>
-            <span class="swatches" aria-hidden="true">
-              <i style="background:var(--yellow)"></i><i style="background:var(--turquoise)"></i><i style="background:var(--violet)"></i>
-            </span>
+        <div>
+          <article class="tile tile--device">
+            <!-- PENDIENTE: imagen PNG transparente del usuario. Reemplazar la ruta de fondo abajo. -->
+            <div class="tile-image" style="background-image: url('assets/tile-2.png');" aria-hidden="true"></div>
+          </article>
+          <div class="card-caption">
+            <small class="muted">Integración</small>
+            <p>La integración completa con los frameworks de Apple.</p>
           </div>
-        </article>
+        </div>
+
+        <div>
+          <article class="tile tile--soft">
+            <!-- PENDIENTE: imagen PNG transparente del usuario. Reemplazar la ruta de fondo abajo. -->
+            <div class="tile-image" style="background-image: url('assets/tile-3.png');" aria-hidden="true"></div>
+          </article>
+          <div class="card-caption">
+            <small class="muted">Plataformas</small>
+            <p>iOS, iPadOS, macOS, watchOS, visionOS y tvOS.</p>
+          </div>
+        </div>
       </div>
 
     </section>
@@ -721,11 +729,11 @@
 
         <!-- PENDIENTE: imágenes PNG/JPG del usuario para cada cuadro. Reemplazar las rutas de fondo abajo. -->
         <div class="service-visual" aria-hidden="true">
-          <div class="sv sv-1 is-active"><div class="sv-shape has-image" style="background-image:url('assets/servicio-01.jpg');"></div></div>
-          <div class="sv sv-2"><div class="sv-shape has-image" style="background-image:url('assets/servicio-02.jpg');"></div></div>
-          <div class="sv sv-3"><div class="sv-shape has-image" style="background-image:url('assets/servicio-03.jpg');"></div></div>
-          <div class="sv sv-4"><div class="sv-shape has-image" style="background-image:url('assets/servicio-04.jpg');"></div></div>
-          <div class="sv sv-5"><div class="sv-shape has-image" style="background-image:url('assets/servicio-05.jpg');"></div></div>
+          <div class="sv sv-1 is-active"><div class="sv-shape has-image" style="background-image:url('assets/servicio-01.png');"></div></div>
+          <div class="sv sv-2"><div class="sv-shape has-image" style="background-image:url('assets/servicio-02.png');"></div></div>
+          <div class="sv sv-3"><div class="sv-shape has-image" style="background-image:url('assets/servicio-03.png');"></div></div>
+          <div class="sv sv-4"><div class="sv-shape has-image" style="background-image:url('assets/servicio-04.png');"></div></div>
+          <div class="sv sv-5"><div class="sv-shape has-image" style="background-image:url('assets/servicio-05.png');"></div></div>
         </div>
       </div>
     </section>
@@ -825,9 +833,9 @@
       <div class="manifesto">
         <div>
           <div class="manifesto-media" data-carousel>
-            <div class="manifesto-slide is-active" style="background-image:url('assets/historia-01-italia.jpg');"><span>8+/01</span></div>
-            <div class="manifesto-slide" style="background-image:url('assets/historia-02-lima.jpg');"><span>8+/02</span></div>
-            <div class="manifesto-slide" style="background-image:url('assets/historia-03-8pluscore.jpg');"><span>8+/03</span></div>
+            <div class="manifesto-slide is-active" style="background-image:url('assets/historia-01-italia.png');"><span>8+/01</span></div>
+            <div class="manifesto-slide" style="background-image:url('assets/historia-02-lima.png');"><span>8+/02</span></div>
+            <div class="manifesto-slide" style="background-image:url('assets/historia-03-8pluscore.png');"><span>8+/03</span></div>
           </div>
           <div class="manifesto-dots" aria-hidden="true">
             <i class="is-active"></i><i></i><i></i>
@@ -871,11 +879,11 @@
 
         <div class="team-grid">
           <!-- PENDIENTE: foto real del fundador. Reemplazar la ruta de fondo abajo. -->
-          <article class="team-card team-card--portrait" style="background-image:url('assets/equipo-fundador.jpg');background-size:cover;background-position:center;">
+          <article class="team-card team-card--portrait" style="background-image:url('assets/equipo-fundador.png');background-size:cover;background-position:center;">
             <span class="pill">Fundador</span>
           </article>
           <!-- PENDIENTE: imagen del usuario para esta tarjeta. Reemplazar la ruta de fondo abajo. -->
-          <article class="team-card team-card--glow" style="background-image:url('assets/equipo-ia.jpg');background-size:cover;background-position:center;">
+          <article class="team-card team-card--glow" style="background-image:url('assets/equipo-ia.png');background-size:cover;background-position:center;">
             <svg class="spark" viewBox="0 0 36 36" fill="currentColor" aria-hidden="true"><path d="M18 6l3.3 7.2 7.7.9-5.7 5.3 1.6 7.6L18 23.1 11.1 27l1.6-7.6L7 14.1l7.7-.9z"/></svg>
             <div>
               <small class="muted">Ingeniería con IA</small>
@@ -941,7 +949,7 @@
       </div>
       <div class="faq-grid">
         <!-- PENDIENTE: imagen del usuario. Reemplazar la ruta de fondo abajo. -->
-        <div class="faq-visual" aria-hidden="true" style="background-image:url('assets/faq.jpg');background-size:cover;background-position:center;border:1px solid rgba(120,120,130,.25);"></div>
+        <div class="faq-visual" aria-hidden="true" style="background-image:url('assets/faq.png');background-size:cover;background-position:center;border:1px solid rgba(120,120,130,.25);"></div>
         <div class="faq-list">
           <details class="faq-item" name="faq">
             <summary>¿Por qué solo Apple?<span class="dot"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 1v8M1 5h8"/></svg></span></summary>
