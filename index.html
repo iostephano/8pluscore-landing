@@ -463,14 +463,6 @@
        ========================================================= */
     .faq { padding-top: clamp(100px, 12vw, 170px); padding-bottom: clamp(80px, 8vw, 120px); }
     .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 56px); padding-top: 40px; }
-    .faq-visual {
-      aspect-ratio: 1.15; border-radius: var(--radius-lg); overflow: hidden; position: relative;
-      background: linear-gradient(180deg, #DADCE8, #C9CCDD);
-    }
-    .faq-visual .orb { position: absolute; border-radius: 50%; filter: blur(2px); }
-    .faq-visual .orb-1 { width: 40%; aspect-ratio: 1; left: 30%; top: 18%; background: radial-gradient(circle at 35% 30%, #fff, var(--lilac) 45%, var(--violet) 100%); box-shadow: 0 40px 80px rgba(42,14,122,.35); }
-    .faq-visual .orb-2 { width: 14%; aspect-ratio: 1; left: 62%; top: 58%; background: radial-gradient(circle at 35% 30%, #fff, var(--turquoise)); }
-    .faq-visual .orb-3 { width: 8%; aspect-ratio: 1; left: 22%; top: 64%; background: radial-gradient(circle at 35% 30%, #fff, var(--yellow)); }
     .faq-list { display: flex; flex-direction: column; gap: 14px; }
     .faq-item { border: 1px solid var(--line); background: #fff; border-radius: var(--radius-md); }
     .faq-item summary {
@@ -931,24 +923,14 @@
         <p class="lead">Lo que conviene saber antes de empezar un proyecto.</p>
       </div>
       <div class="faq-grid">
-        <!-- PENDIENTE: imagen del usuario. Reemplazar la ruta de fondo abajo. -->
-        <div class="faq-visual" aria-hidden="true" style="background-image:url('assets/faq.png');background-size:cover;background-position:center;border:1px solid rgba(120,120,130,.25);"></div>
         <div class="faq-list">
-          <details class="faq-item" name="faq">
-            <summary>¿Por qué solo Apple?<span class="dot"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 1v8M1 5h8"/></svg></span></summary>
-            <p>Porque especializarnos nos permite usar a fondo lo que cada dispositivo ofrece: rendimiento nativo, privacidad en el dispositivo y frameworks que no existen en otras plataformas.</p>
+          <details class="faq-item" name="faq" open>
+            <summary>¿Por qué construir en Apple y no en Android?<span class="dot"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 1v8M1 5h8"/></svg></span></summary>
+            <p>El usuario de iPhone gasta más en apps y paga más fácil por ellas, sumado a los frameworks de Apple, suele ser la plataforma más rentable para lanzar primero.</p>
           </details>
           <details class="faq-item" name="faq">
-            <summary>¿Trabajan con otras agencias?<span class="dot"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 1v8M1 5h8"/></svg></span></summary>
-            <p>Sí. Podemos integrarnos a tu equipo solo para la parte Apple, mientras tú mantienes la relación con el cliente, el diseño y el backend.</p>
-          </details>
-          <details class="faq-item" name="faq">
-            <summary>¿Cuánto dura un proyecto?<span class="dot"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 1v8M1 5h8"/></svg></span></summary>
-            <p>Depende del alcance. Tras la primera conversación te enviamos una propuesta con fases y tiempos estimados.</p>
-          </details>
-          <details class="faq-item" name="faq">
-            <summary>¿Trabajan fuera de Perú?<span class="dot"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 1v8M1 5h8"/></svg></span></summary>
-            <p>Sí. Trabajamos de forma remota con equipos de cualquier país, en español.</p>
+            <summary>¿Cuánto cuesta y cuánto dura un proyecto?<span class="dot"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 1v8M1 5h8"/></svg></span></summary>
+            <p>Depende del alcance y la complejidad técnica, escríbenos y conversemos sobre tu idea para darte una cotización y tiempos reales.</p>
           </details>
           <details class="faq-item" name="faq">
             <summary>¿Cómo empezamos?<span class="dot"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 1v8M1 5h8"/></svg></span></summary>
@@ -956,7 +938,41 @@
           </details>
           <details class="faq-item" name="faq">
             <summary>¿Quién es el dueño del código y del producto final?<span class="dot"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 1v8M1 5h8"/></svg></span></summary>
-            <p>El código y la propiedad intelectual son tuyos desde el primer día. Nosotros lo construimos, tú lo posees.</p>
+            <p>El código y la propiedad intelectual son tuyos desde el primer día, nosotros lo construimos, tú lo posees.</p>
+          </details>
+          <details class="faq-item" name="faq">
+            <summary>¿Firman acuerdos de confidencialidad (NDA)?<span class="dot"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 1v8M1 5h8"/></svg></span></summary>
+            <p>Sí, es estándar, sea cliente, agencia o empresa.</p>
+          </details>
+          <details class="faq-item" name="faq">
+            <summary>¿Dan soporte y mantenimiento después del lanzamiento?<span class="dot"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 1v8M1 5h8"/></svg></span></summary>
+            <p>Sí, el trabajo termina cuando tu app está en el App Store, pero si quieres que sigamos contigo, seguimos, es lo más recomendable, ya que nosotros la construimos.</p>
+          </details>
+        </div>
+        <div class="faq-list">
+          <details class="faq-item" name="faq">
+            <summary>¿Necesito tener ya un diseño (UX/UI) antes de contactarlos?<span class="dot"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 1v8M1 5h8"/></svg></span></summary>
+            <p>No necesariamente, si no lo tienes, podemos incorporar un especialista UX/UI al proyecto.</p>
+          </details>
+          <details class="faq-item" name="faq">
+            <summary>¿Trabajan con agencias o consultoras?<span class="dot"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 1v8M1 5h8"/></svg></span></summary>
+            <p>Sí, nos integramos como tu equipo Apple especializado, siempre detrás de tu marca.</p>
+          </details>
+          <details class="faq-item" name="faq">
+            <summary>¿Tienen contacto directo con mi cliente final?<span class="dot"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 1v8M1 5h8"/></svg></span></summary>
+            <p>No manejamos tu relación con el cliente, tú entregas cada etapa a tu ritmo y decides qué comunicarle, solo intervenimos si necesitas que expliquemos algo técnico puntual, contigo presente.</p>
+          </details>
+          <details class="faq-item" name="faq">
+            <summary>¿Una app de uso interno puede quedar fuera del App Store, certificada y lista para mi empresa?<span class="dot"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 1v8M1 5h8"/></svg></span></summary>
+            <p>Sí, la construimos, la certificamos y te la entregamos lista, fuera del App Store público si lo necesitas, tú mantienes tu propia cuenta de desarrollador Apple, nosotros nos encargamos del resto.</p>
+          </details>
+          <details class="faq-item" name="faq">
+            <summary>¿Pueden integrar hardware o sistemas que ya usamos en la empresa?<span class="dot"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 1v8M1 5h8"/></svg></span></summary>
+            <p>Sí, es parte de nuestra línea de soluciones empresariales.</p>
+          </details>
+          <details class="faq-item" name="faq">
+            <summary>¿Trabajan fuera de Perú?<span class="dot"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 1v8M1 5h8"/></svg></span></summary>
+            <p>Sí, trabajamos de forma remota con equipos de cualquier país, en español.</p>
           </details>
         </div>
       </div>
