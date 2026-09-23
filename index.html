@@ -29,10 +29,6 @@
       --lilac: #B9A4FF;
       --yellow: #DAFE51;
       --turquoise: #2EE6D0;
-      --emerald: #1FA25A;
-      --amber: #F2A13B;
-      --crimson: #E5473C;
-      --graylight: #7A7883;
 
       --font: "Geist", -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
       --font-brand: "Poppins", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
@@ -291,12 +287,7 @@
       transition: transform .35s var(--ease), background-color .3s;
     }
     .toggle svg { width: 16px; height: 16px; }
-    .acc-item.is-open .toggle { transform: rotate(45deg); }
-    .acc-item:nth-child(1).is-open .toggle { background: var(--violet); }
-    .acc-item:nth-child(2).is-open .toggle { background: var(--emerald); }
-    .acc-item:nth-child(3).is-open .toggle { background: var(--amber); }
-    .acc-item:nth-child(4).is-open .toggle { background: var(--crimson); }
-    .acc-item:nth-child(5).is-open .toggle { background: var(--graylight); }
+    .acc-item.is-open .toggle { transform: rotate(45deg); background: var(--violet); }
     .acc-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .45s var(--ease); }
     .acc-item.is-open .acc-panel { grid-template-rows: 1fr; }
     .acc-inner { overflow: hidden; }
@@ -314,26 +305,10 @@
     .sv {
       position: absolute; inset: 0;
       opacity: 0; transition: opacity .6s var(--ease);
-      display: grid; place-items: center;
+      background-color: #000;
+      background-size: cover; background-position: center;
     }
     .sv.is-active { opacity: 1; }
-    .sv-1 { background: radial-gradient(75% 75% at 50% 25%, var(--violet) 0%, #1a0f38 55%, #000 100%); }
-    .sv-2 { background: radial-gradient(75% 75% at 50% 25%, var(--emerald) 0%, #0d2e1a 55%, #000 100%); }
-    .sv-3 { background: radial-gradient(75% 75% at 50% 25%, var(--amber) 0%, #3a260a 55%, #000 100%); }
-    .sv-4 { background: radial-gradient(75% 75% at 50% 25%, var(--crimson) 0%, #380f0b 55%, #000 100%); }
-    .sv-5 { background: radial-gradient(75% 75% at 50% 25%, var(--graylight) 0%, #1a1a1f 55%, #000 100%); }
-    .sv-shape {
-      width: 46%; aspect-ratio: 1; border-radius: 28%;
-      background: rgba(255,255,255,.55);
-      background-size: cover; background-position: center;
-      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(255,255,255,.7);
-      box-shadow: 0 40px 80px rgba(0,0,0,.18);
-      display: grid; place-items: center;
-      font-size: clamp(40px, 5vw, 84px); font-weight: 600; letter-spacing: -0.06em; color: var(--ink);
-    }
-    .sv-shape.has-image { color: transparent; }
-    .sv-1 .sv-shape, .sv-2 .sv-shape, .sv-3 .sv-shape, .sv-4 .sv-shape, .sv-5 .sv-shape { background-color: rgba(255,255,255,.1); border-color: rgba(255,255,255,.25); color: #fff; }
 
     /* =========================================================
        PROCESO
@@ -729,11 +704,11 @@
 
         <!-- PENDIENTE: imágenes PNG/JPG del usuario para cada cuadro. Reemplazar las rutas de fondo abajo. -->
         <div class="service-visual" aria-hidden="true">
-          <div class="sv sv-1 is-active"><div class="sv-shape has-image" style="background-image:url('assets/servicio-01.png');"></div></div>
-          <div class="sv sv-2"><div class="sv-shape has-image" style="background-image:url('assets/servicio-02.png');"></div></div>
-          <div class="sv sv-3"><div class="sv-shape has-image" style="background-image:url('assets/servicio-03.png');"></div></div>
-          <div class="sv sv-4"><div class="sv-shape has-image" style="background-image:url('assets/servicio-04.png');"></div></div>
-          <div class="sv sv-5"><div class="sv-shape has-image" style="background-image:url('assets/servicio-05.png');"></div></div>
+          <div class="sv sv-1 is-active" style="background-image:url('assets/servicio-01.png');"></div>
+          <div class="sv sv-2" style="background-image:url('assets/servicio-02.png');"></div>
+          <div class="sv sv-3" style="background-image:url('assets/servicio-03.png');"></div>
+          <div class="sv sv-4" style="background-image:url('assets/servicio-04.png');"></div>
+          <div class="sv sv-5" style="background-image:url('assets/servicio-05.png');"></div>
         </div>
       </div>
     </section>
