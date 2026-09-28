@@ -91,6 +91,7 @@
       letter-spacing: -0.045em;
       line-height: 1.05;
     }
+    .faq .section-head .lead { font-size: clamp(20px, 2vw, 30px); letter-spacing: -0.03em; line-height: 1.2; }
 
     /* Botón principal */
     .btn {
@@ -106,6 +107,9 @@
     .btn:hover svg { transform: translateX(3px); }
     .btn:active { transform: scale(.97); }
     .btn--light { background: #fff; height: 44px; font-size: 14px; }
+    .btn--light { position: relative; overflow: hidden; isolation: isolate; }
+    .btn--light::before { content: ""; position: absolute; inset: 0; z-index: -1; opacity: 0; transition: opacity .3s var(--ease); background: linear-gradient(90deg, var(--yellow) 0%, #F0FF8F 100%); }
+    .btn--light:hover::before, .btn--light:focus-visible::before { opacity: 1; }
 
     .link-underline { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
 
