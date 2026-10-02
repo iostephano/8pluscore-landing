@@ -448,9 +448,11 @@
     .team-card--glow { background: radial-gradient(120% 80% at 50% 0%, var(--violet) 0%, var(--violet-deep) 40%, #000 80%); color: #fff; justify-content: space-between; }
     .team-card--glow p { font-size: clamp(20px, 1.7vw, 28px); font-weight: 500; letter-spacing: -0.04em; line-height: 1.12; }
     .team-card--glow small { font-size: 13px; font-weight: 500; display: block; margin-bottom: 8px; }
-    .team-card--light { background: #fff; border: 1px solid var(--line); justify-content: space-between; }
-    .team-card--light .big { font-size: clamp(54px, 5.4vw, 92px); font-weight: 600; letter-spacing: -0.06em; color: var(--violet); line-height: 1; }
-    .team-card--light .foot { display: flex; justify-content: space-between; align-items: end; font-size: 14px; }
+    .team-card--code { background: linear-gradient(160deg, var(--lilac) 0%, var(--turquoise) 110%); }
+    .code-glyph { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 45%; height: auto; fill: none; stroke: var(--ink); stroke-linecap: round; stroke-linejoin: round; }
+    .code-badge { position: absolute; top: 20px; right: 20px; width: 12%; height: auto; }
+    .code-badge circle { fill: var(--yellow); }
+    .code-badge path { fill: none; stroke: var(--ink); stroke-linecap: round; stroke-linejoin: round; }
 
     .team-cta { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin: 50px auto 0; max-width: 1300px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 16px; }
     .team-cta p { font-size: clamp(20px, 2vw, 30px); font-weight: 500; letter-spacing: -0.03em; line-height: 1.2; max-width: 34ch; }
@@ -877,10 +879,20 @@
           </div>
 
           <div>
-            <article class="team-card team-card--light" style="background-image:url('assets/swiftlatam-logo.png');background-size:contain;background-repeat:no-repeat;background-position:center;"></article>
+            <article class="team-card team-card--code">
+              <svg class="code-glyph" viewBox="0 0 120 80" aria-hidden="true" focusable="false">
+                <path d="M38 18 L14 40 L38 62" stroke-width="7"/>
+                <path d="M82 18 L106 40 L82 62" stroke-width="7"/>
+                <path d="M68 10 L52 70" stroke-width="7"/>
+              </svg>
+              <svg class="code-badge" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+                <circle cx="20" cy="20" r="20"/>
+                <path d="M12 20.5 L17.5 26 L28.5 14.5" stroke-width="3.5"/>
+              </svg>
+            </article>
             <div class="card-caption">
-              <small class="muted">SwiftLATAM</small>
-              <p>Compartimos lo que aprendemos con desarrolladores Apple de Latinoamérica.</p>
+              <small class="muted">Propiedad</small>
+              <p>El código y la propiedad intelectual son tuyos. Nosotros lo construimos, tú lo posees.</p>
             </div>
           </div>
         </div>
