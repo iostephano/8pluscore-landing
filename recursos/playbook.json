@@ -1,0 +1,14 @@
+{
+  "slug": "playbook",
+  "tipo": "pdf_tercero",
+  "titulo": "The Founder's Playbook de Anthropic, explicado en español",
+  "descripcion": "Guía de Anthropic para crear startups con IA, explicada en español. Aquí está el PDF oficial.",
+  "resumen": [
+    "Anthropic publicó en mayo de 2026 una guía para crear startups con IA. Divide el camino en cuatro etapas: Idea, MVP, Launch y Scale. Su idea central es que el founder deja de ejecutarlo todo y pasa a dirigir agentes de IA.",
+    "En mi serie explico la etapa de Idea: por qué un prototipo no es evidencia, por qué construir no es lo mismo que validar y por qué tu IA siempre te va a dar la razón si no le pides que ataque tu idea.",
+    "El PDF original está en inglés."
+  ],
+  "etiqueta": "Ver PDF oficial",
+  "url": "https://claude.com/blog/the-founders-playbook",
+  "session_url": ""
+}
