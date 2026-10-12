@@ -35,6 +35,12 @@ a { color: inherit; }
   margin: 0 auto;
   padding: 24px var(--gutter) 96px;
 }
+.etiqueta-kit {
+  margin-bottom: 12px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--muted);
+}
 .recurso h1 {
   font-size: clamp(32px, 7vw, 48px);
   font-weight: 600;
@@ -59,6 +65,7 @@ a { color: inherit; }
 .recurso p + p { margin-top: 16px; }
 
 .resumen { margin-top: 32px; }
+.recurso h1 + .entrega { margin-top: 32px; padding-top: 0; border-top: 0; }
 .entrega, .cierre {
   margin-top: 56px;
   padding-top: 40px;
@@ -111,6 +118,7 @@ a { color: inherit; }
   user-select: text;
 }
 .prompt-caja .btn { margin-top: 16px; }
+.prompt-caja + .prompt-caja { margin-top: 24px; }
 .recurso .enlace { display: inline-block; margin-top: 24px; }
 .autoria { margin-top: 32px; font-size: 15px !important; color: var(--muted); }
 

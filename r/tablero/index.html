@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Tablero de consumo para Claude Code, 8+Core</title>
+  <meta name="description" content="Un mod gratis que muestra en vivo cuántos tokens gastas y cuánto llevas del límite de tu plan en Claude Code. Se abre con /consumo.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://8pluscore.com/r/tablero/">
+  <meta name="theme-color" content="#F6F5F3">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="8+Core">
+  <meta property="og:title" content="Tablero de consumo para Claude Code">
+  <meta property="og:description" content="Un mod gratis que muestra en vivo cuántos tokens gastas y cuánto llevas del límite de tu plan en Claude Code. Se abre con /consumo.">
+  <meta property="og:url" content="https://8pluscore.com/r/tablero/">
+  <meta property="og:image" content="https://8pluscore.com/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Poppins:wght@600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="../../assets/recursos.css">
+  <script src="../../assets/recursos.js" defer></script>
+</head>
+<body>
+  <header class="header">
+    <a href="../../index.html" class="brand-name">8+Core</a>
+  </header>
+
+  <main class="recurso">
+    <p class="etiqueta-kit">Kit #01 · 💻 Computadora</p>
+    <h1>Tablero de consumo para Claude Code</h1>
+
+    <section class="entrega" aria-labelledby="entrega-t">
+      <h2 id="entrega-t">Qué es</h2>
+      <p>Un mod gratis que muestra, mientras Claude trabaja, cuántos tokens gastas, cuánto llevas del límite de tu plan, qué tan lleno está el contexto, qué herramientas usa y cuánto dura la sesión. Se abre con /consumo.</p>
+      <h3>Requisitos</h3>
+      <p>Claude Code 2.1.287 o posterior, en la terminal o en la pestaña Code de la app de escritorio. Pensado para el plan Pro o Max.</p>
+      <h3>Seguridad</h3>
+      <p>Un mod corre con tus permisos. Este solo lee datos de la sesión y dibuja el panel: no lee archivos, no ejecuta procesos y no hace llamadas de red. El código es público y puedes revisarlo antes de instalar.</p>
+      <h3 id="prompt-t">Pega esto en Claude Code</h3>
+      <div class="prompt-caja">
+        <pre class="prompt" id="prompt" tabindex="0" aria-labelledby="prompt-t">Quiero instalar el mod tablero-consumo del repositorio github.com/kit-para-devs/mods, versión v1.1.0. Antes de instalar nada, explícame qué vas a instalar y qué hace, y espera mi confirmación. Si confirmo, ejecuta en la terminal claude plugin marketplace add kit-para-devs/mods@v1.1.0 y claude plugin install tablero-consumo@kit-para-devs, y luego dime que escriba /reload-plugins y después /consumo.</pre>
+        <button class="btn btn-copiar" type="button" data-target="prompt" data-estado="prompt-estado" hidden>Copiar</button>
+        <p class="nota" id="prompt-estado" role="status" aria-live="polite"></p>
+      </div>
+      <h3 id="comandos-t">Si prefieres escribirlo tú</h3>
+      <p>Escribe estos comandos en la terminal, uno por uno.</p>
+      <div class="prompt-caja">
+        <pre class="prompt" id="comando-1" tabindex="0" aria-labelledby="comandos-t">claude plugin marketplace add kit-para-devs/mods@v1.1.0</pre>
+        <button class="btn btn-copiar" type="button" data-target="comando-1" data-estado="comando-1-estado" hidden>Copiar</button>
+        <p class="nota" id="comando-1-estado" role="status" aria-live="polite"></p>
+      </div>
+      <div class="prompt-caja">
+        <pre class="prompt" id="comando-2" tabindex="0" aria-labelledby="comandos-t">claude plugin install tablero-consumo@kit-para-devs</pre>
+        <button class="btn btn-copiar" type="button" data-target="comando-2" data-estado="comando-2-estado" hidden>Copiar</button>
+        <p class="nota" id="comando-2-estado" role="status" aria-live="polite"></p>
+      </div>
+      <p><a class="enlace" href="https://github.com/kit-para-devs/mods" target="_blank" rel="noopener noreferrer">Ver el repo en GitHub</a></p>
+      <p class="autoria">Creado por Stephano, @iOStephano, 8pluscore.com</p>
+    </section>
+
+    <section class="cierre" aria-labelledby="cierre-t">
+      <h2 id="cierre-t">Siguiente paso</h2>
+      <p>Esto es parte de lo que trabajamos en la Session 01 de 8+Core, Valida tu idea antes de construir.</p>
+      <button class="btn" type="button" disabled>Próximamente: fechas de la Session 01</button>
+    </section>
+  </main>
+</body>
+</html>

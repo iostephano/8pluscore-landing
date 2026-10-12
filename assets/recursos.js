@@ -1,16 +1,9 @@
-// Botón Copiar con respaldo para navegadores internos (TikTok, Instagram).
+// Botones Copiar con respaldo para navegadores internos (TikTok, Instagram).
 (function () {
-  var btn = document.getElementById('copiar');
-  var estado = document.getElementById('copiar-estado');
-  if (!btn) return;
-  var fuente = document.getElementById(btn.getAttribute('data-target'));
-  var original = btn.textContent;
-  btn.hidden = false;
+  var botones = document.querySelectorAll('.btn-copiar');
+  if (!botones.length) return;
 
-  function aviso(msg) {
-    if (estado) estado.textContent = msg;
-  }
-  function seleccionar() {
+  function seleccionar(fuente) {
     var sel = window.getSelection();
     var rango = document.createRange();
     rango.selectNodeContents(fuente);
@@ -31,26 +24,35 @@
     document.body.removeChild(ta);
     return ok;
   }
-  function listo() {
-    btn.textContent = 'Copiado';
-    aviso('Prompt copiado.');
-    setTimeout(function () { btn.textContent = original; }, 2000);
-  }
-  function manual() {
-    seleccionar();
-    aviso('Tu navegador no deja copiar solo. Mantén presionado el texto seleccionado y elige Copiar.');
-  }
 
-  btn.addEventListener('click', function () {
-    var texto = fuente.textContent;
-    if (navigator.clipboard && window.isSecureContext) {
-      navigator.clipboard.writeText(texto).then(listo, function () {
-        if (respaldo(texto)) listo(); else manual();
-      });
-    } else if (respaldo(texto)) {
-      listo();
-    } else {
-      manual();
+  Array.prototype.forEach.call(botones, function (btn) {
+    var fuente = document.getElementById(btn.getAttribute('data-target'));
+    var estado = document.getElementById(btn.getAttribute('data-estado'));
+    var original = btn.textContent;
+    btn.hidden = false;
+
+    function aviso(msg) { if (estado) estado.textContent = msg; }
+    function listo() {
+      btn.textContent = 'Copiado';
+      aviso('Copiado.');
+      setTimeout(function () { btn.textContent = original; }, 2000);
     }
+    function manual() {
+      seleccionar(fuente);
+      aviso('Tu navegador no deja copiar solo. Mantén presionado el texto seleccionado y elige Copiar.');
+    }
+
+    btn.addEventListener('click', function () {
+      var texto = fuente.textContent;
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(texto).then(listo, function () {
+          if (respaldo(texto)) listo(); else manual();
+        });
+      } else if (respaldo(texto)) {
+        listo();
+      } else {
+        manual();
+      }
+    });
   });
 })();

@@ -25,7 +25,8 @@ function validar(r, file) {
   if (r.slug !== path.basename(file, '.json')) return fail(file, 'el slug debe coincidir con el nombre del archivo');
   if (!TIPOS.includes(r.tipo)) return fail(file, `tipo debe ser uno de: ${TIPOS.join(', ')}`);
   if (!need('titulo')) return fail(file, 'falta titulo');
-  if (!Array.isArray(r.resumen) || r.resumen.length < 1 || r.resumen.length > 4 || !r.resumen.every((p) => typeof p === 'string' && p.trim()))
+  const sinResumen = r.tipo === 'repo' && r.resumen === undefined; // en repo, "que_es" hace de resumen
+  if (!sinResumen && (!Array.isArray(r.resumen) || r.resumen.length < 1 || r.resumen.length > 4 || !r.resumen.every((p) => typeof p === 'string' && p.trim())))
     return fail(file, 'resumen debe ser una lista de 1 a 4 párrafos');
   if (r.tipo === 'pdf_tercero') {
     if (!need('etiqueta') || !/^https:\/\//.test(r.url || '')) return fail(file, 'pdf_tercero requiere etiqueta y url https');
@@ -41,12 +42,31 @@ function validar(r, file) {
     if (!r.prompt.includes(r.ref)) return fail(file, 'el prompt debe mencionar la versión fija indicada en "ref"');
     if (!/confirm/i.test(r.prompt) || !/(explic|expl[ií]c)/i.test(r.prompt))
       return fail(file, 'el prompt debe pedir que Claude explique qué va a instalar y espere confirmación');
+    if (r.comandos !== undefined && (!Array.isArray(r.comandos) || !r.comandos.every((c) => typeof c === 'string' && c.trim())))
+      return fail(file, 'comandos debe ser una lista de textos');
     if (r.imagen && !existsSync(path.join(root, 'assets/recursos', r.slug, r.imagen))) return fail(file, `no existe assets/recursos/${r.slug}/${r.imagen}`);
   }
   if (r.session_url && !/^https:\/\//.test(r.session_url)) return fail(file, 'session_url debe estar vacío o ser https');
   const texto = JSON.stringify(r);
   if (/[–—]/.test(texto)) return fail(file, 'no uses guiones largos ni rayas en los textos');
   return true;
+}
+
+function cajaCopiar(id, texto, labelId) {
+  return `      <div class="prompt-caja">
+        <pre class="prompt" id="${id}" tabindex="0" aria-labelledby="${labelId}">${esc(texto)}</pre>
+        <button class="btn btn-copiar" type="button" data-target="${id}" data-estado="${id}-estado" hidden>Copiar</button>
+        <p class="nota" id="${id}-estado" role="status" aria-live="polite"></p>
+      </div>`;
+}
+
+function comandos(r) {
+  if (!r.comandos || r.comandos.length === 0) return '';
+  const cajas = r.comandos.map((c, i) => cajaCopiar(`comando-${i + 1}`, c, 'comandos-t')).join('\n');
+  return `
+      <h3 id="comandos-t">Si prefieres escribirlo tú</h3>
+      <p>Escribe estos comandos en la terminal, uno por uno.</p>
+${cajas}`;
 }
 
 function entrega(r) {
@@ -76,12 +96,8 @@ function entrega(r) {
       <p>${esc(r.que_es)}</p>${img}
       <h3>Requisitos</h3>
       <p>${esc(r.requisitos)}</p>
-      <h3 id="prompt-t">Pega esto en Claude Code</h3>
-      <div class="prompt-caja">
-        <pre class="prompt" id="prompt" tabindex="0" aria-labelledby="prompt-t">${esc(r.prompt)}</pre>
-        <button class="btn" type="button" id="copiar" data-target="prompt" hidden>Copiar</button>
-        <p class="nota" id="copiar-estado" role="status" aria-live="polite"></p>
-      </div>
+${r.seguridad ? `      <h3>Seguridad</h3>\n      <p>${esc(r.seguridad)}</p>\n` : ''}      <h3 id="prompt-t">Pega esto en Claude Code</h3>
+${cajaCopiar('prompt', r.prompt, 'prompt-t')}${comandos(r)}
       <p><a class="enlace" href="${esc(r.repo_url)}" target="_blank" rel="noopener noreferrer">Ver el repo en GitHub</a></p>
       <p class="autoria">Creado por Stephano, @iOStephano, 8pluscore.com</p>
     </section>`;
@@ -100,10 +116,12 @@ function cierre(r) {
 }
 
 function pagina(r) {
-  const desc = r.descripcion || r.resumen[0].slice(0, 155);
+  const desc = r.descripcion || (r.resumen ? r.resumen[0] : r.que_es).slice(0, 155);
   const titulo = `${r.titulo}, 8+Core`;
   const url = `${SITE}/r/${r.slug}/`;
-  const parrafos = r.resumen.map((p) => `      <p>${esc(p)}</p>`).join('\n');
+  const parrafos = (r.resumen || []).map((p) => `      <p>${esc(p)}</p>`).join('\n');
+  const kit = r.kit ? `    <p class="etiqueta-kit">${esc(r.kit)}</p>\n` : '';
+  const bloqueResumen = parrafos ? `    <section class="resumen" aria-label="Resumen">\n${parrafos}\n    </section>\n` : '';
   const js = r.tipo === 'repo' ? '\n  <script src="../../assets/recursos.js" defer></script>' : '';
   return `<!DOCTYPE html>
 <html lang="es">
@@ -137,12 +155,8 @@ function pagina(r) {
   </header>
 
   <main class="recurso">
-    <h1>${esc(r.titulo)}</h1>
-
-    <section class="resumen" aria-label="Resumen">
-${parrafos}
-    </section>
-${entrega(r)}
+${kit}    <h1>${esc(r.titulo)}</h1>
+${bloqueResumen ? '\n' + bloqueResumen : ''}${entrega(r)}
 ${cierre(r)}
   </main>
 </body>

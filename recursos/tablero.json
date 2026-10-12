@@ -1,0 +1,18 @@
+{
+  "slug": "tablero",
+  "tipo": "repo",
+  "kit": "Kit #01 · 💻 Computadora",
+  "titulo": "Tablero de consumo para Claude Code",
+  "descripcion": "Un mod gratis que muestra en vivo cuántos tokens gastas y cuánto llevas del límite de tu plan en Claude Code. Se abre con /consumo.",
+  "que_es": "Un mod gratis que muestra, mientras Claude trabaja, cuántos tokens gastas, cuánto llevas del límite de tu plan, qué tan lleno está el contexto, qué herramientas usa y cuánto dura la sesión. Se abre con /consumo.",
+  "requisitos": "Claude Code 2.1.287 o posterior, en la terminal o en la pestaña Code de la app de escritorio. Pensado para el plan Pro o Max.",
+  "seguridad": "Un mod corre con tus permisos. Este solo lee datos de la sesión y dibuja el panel: no lee archivos, no ejecuta procesos y no hace llamadas de red. El código es público y puedes revisarlo antes de instalar.",
+  "prompt": "Quiero instalar el mod tablero-consumo del repositorio github.com/kit-para-devs/mods, versión v1.1.0. Antes de instalar nada, explícame qué vas a instalar y qué hace, y espera mi confirmación. Si confirmo, ejecuta en la terminal claude plugin marketplace add kit-para-devs/mods@v1.1.0 y claude plugin install tablero-consumo@kit-para-devs, y luego dime que escriba /reload-plugins y después /consumo.",
+  "comandos": [
+    "claude plugin marketplace add kit-para-devs/mods@v1.1.0",
+    "claude plugin install tablero-consumo@kit-para-devs"
+  ],
+  "repo_url": "https://github.com/kit-para-devs/mods",
+  "ref": "v1.1.0",
+  "session_url": ""
+}
