@@ -46,6 +46,7 @@ function validar(r, file) {
       return fail(file, 'comandos debe ser una lista de textos');
     if (r.imagen && !existsSync(path.join(root, 'assets/recursos', r.slug, r.imagen))) return fail(file, `no existe assets/recursos/${r.slug}/${r.imagen}`);
   }
+  if (r.cierre_session !== undefined && typeof r.cierre_session !== 'boolean') return fail(file, 'cierre_session debe ser true o false');
   if (r.session_url && !/^https:\/\//.test(r.session_url)) return fail(file, 'session_url debe estar vacío o ser https');
   const texto = JSON.stringify(r);
   if (/[–—]/.test(texto)) return fail(file, 'no uses guiones largos ni rayas en los textos');
@@ -104,6 +105,7 @@ ${cajaCopiar('prompt', r.prompt, 'prompt-t')}${comandos(r)}
 }
 
 function cierre(r) {
+  if (r.cierre_session === false) return '';
   const boton = r.session_url
     ? `<a class="btn" href="${esc(r.session_url)}">Ver fechas de la Session 01</a>`
     : `<button class="btn" type="button" disabled>Próximamente: fechas de la Session 01</button>`;
@@ -156,8 +158,7 @@ function pagina(r) {
 
   <main class="recurso">
 ${kit}    <h1>${esc(r.titulo)}</h1>
-${bloqueResumen ? '\n' + bloqueResumen : ''}${entrega(r)}
-${cierre(r)}
+${bloqueResumen ? '\n' + bloqueResumen : ''}${entrega(r)}${cierre(r) ? '\n' + cierre(r) : ''}
   </main>
 </body>
 </html>

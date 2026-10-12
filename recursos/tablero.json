@@ -14,5 +14,6 @@
   ],
   "repo_url": "https://github.com/kit-para-devs/mods",
   "ref": "v1.1.0",
+  "cierre_session": false,
   "session_url": ""
 }

@@ -30,6 +30,7 @@ Comunes a todos los tipos:
 | `titulo` | Título del video |
 | `descripcion` | Opcional. Meta description y Open Graph (si falta, se usa el inicio del primer párrafo) |
 | `resumen` | Lista de 1 a 4 párrafos |
+| `cierre_session` | Opcional, por defecto `true`. Con `false` se omite todo el cierre de la Session |
 | `session_url` | Enlace a la página de Sessions. Vacío deshabilita el botón del cierre |
 
 Sin guiones largos ni rayas en ningún texto: el script lo rechaza.
