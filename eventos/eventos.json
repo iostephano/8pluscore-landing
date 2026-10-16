@@ -1,58 +1,104 @@
 {
-  "whatsapp": "[NÚMERO]",
-  "pago": {
-    "yape": { "numero": "[NÚMERO]", "titular": "[CONFIRMAR]", "qr": "qr/yape.png" },
-    "plin": { "numero": "[NÚMERO]", "titular": "[CONFIRMAR]", "qr": "qr/plin.png" }
+  "whatsapp": "51993208452",
+  "yape": {
+    "qr": "qr/yape.jpg",
+    "numero": "993 208 452",
+    "numeroInternacional": "+51 993 208 452",
+    "titular": "Stephano Luciano Portella Cardenas"
+  },
+  "config": {
+    "rangoSemanas": 6,
+    "cierreHoras": 12,
+    "zonaHoraria": "America/Lima",
+    "cupo": 15
   },
   "eventos": [
     {
-      "id": "session-1",
+      "id": "S1",
       "badge": "S1",
-      "tipo": "Session",
-      "titulo": "Session 1 · [CONFIRMAR]",
-      "descripcion": "[CONFIRMAR] Descripción de la Session 1.",
-      "precio": "S/ [CONFIRMAR]",
-      "precioUsd": "US$ [CONFIRMAR]",
-      "horario": "[CONFIRMAR] (hora de Lima, GMT−5)",
-      "duracion": "[CONFIRMAR]",
-      "gumroad": "[CONFIRMAR]",
+      "etiqueta": "Session 01 · Para founders y quien piensa construir",
+      "titulo": "Valida tu idea antes de construir",
+      "descripcion": "¿Vale la pena construirla? Trabaja tu propia idea en 7 pasos, con un cuaderno guiado y una IA que te cuestiona en lugar de aplaudirte. Sales con una decisión: construir, pivotar o descartar.",
+      "precio": "S/ 80",
+      "horario": "7:30 a 9:30 p. m. (hora de Lima)",
+      "duracion": "2 h",
+      "gradiente": "linear-gradient(160deg,#2A0E7A,#6B2CF5)",
       "fechas": [
-        { "etiqueta": "[FECHA 1]", "ocupados": 9, "en_validacion": 2 },
-        { "etiqueta": "[FECHA 2]", "ocupados": 15, "en_validacion": 0 },
-        { "etiqueta": "[FECHA 3]", "ocupados": 3, "en_validacion": 1 }
+        { "inicio": "2026-10-26T19:30:00-05:00", "ocupados": 0, "en_validacion": 0 },
+        { "inicio": "2026-11-09T19:30:00-05:00", "ocupados": 0, "en_validacion": 0 },
+        { "inicio": "2026-11-23T19:30:00-05:00", "ocupados": 0, "en_validacion": 0 },
+        { "inicio": "2026-12-07T19:30:00-05:00", "ocupados": 0, "en_validacion": 0 }
       ]
     },
     {
-      "id": "session-2",
+      "id": "S2",
       "badge": "S2",
-      "tipo": "Session",
-      "titulo": "Session 2 · [CONFIRMAR]",
-      "descripcion": "[CONFIRMAR] Descripción de la Session 2.",
-      "precio": "S/ [CONFIRMAR]",
-      "precioUsd": "US$ [CONFIRMAR]",
-      "horario": "[CONFIRMAR] (hora de Lima, GMT−5)",
-      "duracion": "[CONFIRMAR]",
-      "gumroad": "[CONFIRMAR]",
+      "etiqueta": "Session 02 · Para founders, CEO y CTO",
+      "titulo": "Domina tu equipo con IA",
+      "descripcion": "Ya tienes un equipo y quieres que la IA trabaje dentro de él, con el control en tus manos. Aprende a manejar la IA para guiar a tu equipo: dónde implementarla, dónde no y cómo mejorarla. Sigues una ruta de 8 pasos que te ayuda a ser tú quien toma las decisiones.",
+      "precio": "S/ 80",
+      "horario": "7:30 a 9:30 p. m. (hora de Lima)",
+      "duracion": "2 h",
+      "gradiente": "linear-gradient(160deg,#1b0a4d,#6B2CF5)",
       "fechas": [
-        { "etiqueta": "[FECHA 1]", "ocupados": 5, "en_validacion": 3 },
-        { "etiqueta": "[FECHA 2]", "ocupados": 0, "en_validacion": 0 }
+        { "inicio": "2026-11-02T19:30:00-05:00", "ocupados": 0, "en_validacion": 0 },
+        { "inicio": "2026-11-16T19:30:00-05:00", "ocupados": 0, "en_validacion": 0 },
+        { "inicio": "2026-11-30T19:30:00-05:00", "ocupados": 0, "en_validacion": 0 },
+        { "inicio": "2026-12-14T19:30:00-05:00", "ocupados": 0, "en_validacion": 0 }
       ]
     },
     {
-      "id": "workshop",
+      "id": "W",
       "badge": "W",
-      "tipo": "Workshop",
-      "titulo": "Workshop · [CONFIRMAR]",
-      "descripcion": "[CONFIRMAR] Descripción del Workshop.",
-      "precio": "S/ [CONFIRMAR]",
-      "precioUsd": "US$ [CONFIRMAR]",
-      "horario": "[CONFIRMAR] (hora de Lima, GMT−5)",
-      "duracion": "[CONFIRMAR]",
-      "gumroad": "[CONFIRMAR]",
-      "noches": ["[FECHA 1] · Noche 1", "[FECHA 2] · Noche 2", "[FECHA 3] · Noche 3"],
-      "fechas": [
-        { "etiqueta": "[FECHA 1]", "ocupados": 12, "en_validacion": 1 },
-        { "etiqueta": "[FECHA 2]", "ocupados": 4, "en_validacion": 2 }
+      "etiqueta": "Workshop · Para quienes quieren construir con IA",
+      "titulo": "De cero a infraestructura agéntica",
+      "descripcion": "Pasa de usar IA a construir con agentes. Aprendes construyendo, paso a paso, y terminas con tu propio proyecto funcionando.",
+      "precio": "S/ 600",
+      "precioNota": "un solo pago · 8 encuentros",
+      "horario": "7:30 a 9:30 p. m. (hora de Lima)",
+      "duracion": "2 h",
+      "gradiente": "linear-gradient(160deg,#0A0A0F,#2A0E7A)",
+      "temas": [
+        "IA generativa vs agéntica",
+        "Claude API",
+        "Tool use",
+        "MCP",
+        "Claude Code",
+        "Skills y subagentes",
+        "Producción",
+        "Gobernanza y proyecto final"
+      ],
+      "grupos": [
+        {
+          "nombre": "Grupo 1",
+          "ocupados": 0,
+          "en_validacion": 0,
+          "fechas": [
+            "2026-11-04T19:30:00-05:00",
+            "2026-11-06T19:30:00-05:00",
+            "2026-11-11T19:30:00-05:00",
+            "2026-11-13T19:30:00-05:00",
+            "2026-11-18T19:30:00-05:00",
+            "2026-11-20T19:30:00-05:00",
+            "2026-11-25T19:30:00-05:00",
+            "2026-11-27T19:30:00-05:00"
+          ]
+        },
+        {
+          "nombre": "Grupo 2",
+          "ocupados": 0,
+          "en_validacion": 0,
+          "fechas": [
+            "2026-12-02T19:30:00-05:00",
+            "2026-12-04T19:30:00-05:00",
+            "2026-12-09T19:30:00-05:00",
+            "2026-12-11T19:30:00-05:00",
+            "2026-12-16T19:30:00-05:00",
+            "2026-12-18T19:30:00-05:00",
+            "2026-12-23T19:30:00-05:00",
+            "2026-12-30T19:30:00-05:00"
+          ]
+        }
       ]
     }
   ]
