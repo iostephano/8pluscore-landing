@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Eventos, 8+Core</title>
+  <meta name="description" content="Sessions y Workshops online de 8+Core. Elige tu evento y fecha, reserva tu asiento en una sala de 15 y paga con Yape.">
+  <meta name="theme-color" content="#FFFFFF">
+  <link rel="canonical" href="https://8pluscore.com/eventos/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="8+Core">
+  <meta property="og:title" content="Eventos, 8+Core">
+  <meta property="og:description" content="Sessions y Workshops online de 8+Core.">
+  <meta property="og:url" content="https://8pluscore.com/eventos/">
+  <meta property="og:image" content="https://8pluscore.com/assets/og-image.png">
+
+  <style>
+    :root {
+      --ink: #0A0A0F;
+      --paper: #F6F5F3;
+      --paper-2: #EFEEEB;
+      --line: #DCDAD6;
+      --muted: #6E6C75;
+      --body: #4A4852;
+
+      --violet: #6B2CF5;
+      --violet-deep: #2A0E7A;
+      --lilac: #B9A4FF;
+      --yellow: #DAFE51;
+      --turquoise: #2EE6D0;
+
+      --hold-border: #6C7F00;
+
+      --font: "Geist", -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+      --font-brand: "Poppins", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      --mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+      --gutter: clamp(20px, 2.2vw, 40px);
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --ease: cubic-bezier(.2, .7, .2, 1);
+
+      box-sizing: border-box;
+    }
+
+    *, *::before, *::after { box-sizing: inherit; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: var(--font);
+      background: #fff;
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+    }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+    :focus-visible { outline: 2px solid var(--violet); outline-offset: 3px; border-radius: 6px; }
+    [hidden] { display: none !important; }
+
+    .wrap { padding-inline: var(--gutter); }
+    .mono { font-family: var(--mono); font-size: 13px; letter-spacing: 0; }
+    .link { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+
+    /* Botón principal (igual que el landing) */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      height: 52px; padding: 0 22px;
+      border-radius: 999px;
+      background: var(--yellow);
+      color: var(--ink);
+      font-weight: 500; font-size: 16px; letter-spacing: -0.02em;
+      transition: transform .3s var(--ease), background-color .3s var(--ease);
+    }
+    .btn:active { transform: scale(.97); }
+    .btn svg { width: 16px; height: 16px; flex: none; }
+    .btn[disabled], .btn[aria-disabled="true"] {
+      background: var(--paper-2); color: #5A5862; cursor: not-allowed; transform: none;
+    }
+
+    /* Header claro */
+    .header {
+      display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+      padding: 28px var(--gutter);
+      background: #fff; color: var(--ink);
+      border-bottom: 1px solid var(--line);
+      font-family: var(--font-brand);
+    }
+    .brand { display: flex; align-items: baseline; gap: 14px; }
+    .brand-name { font-size: 22px; font-weight: 600; letter-spacing: -0.04em; }
+    .brand-time { font-size: 12px; color: var(--muted); }
+    .nav { display: flex; gap: 22px; font-size: 22px; letter-spacing: -0.03em; }
+    .nav a:hover, .nav a[aria-current="page"] { text-decoration: underline; text-underline-offset: 5px; }
+    .nav a[aria-current="page"] { text-decoration-color: var(--violet); text-decoration-thickness: 2px; }
+    .header-cta { justify-self: end; font-size: 22px; letter-spacing: -0.03em; }
+
+    /* Título */
+    .page-head { padding-top: clamp(48px, 7vw, 96px); padding-bottom: clamp(28px, 4vw, 48px); }
+    .section-title {
+      display: inline-block;
+      font-size: clamp(48px, 9vw, 160px);
+      font-weight: 600;
+      letter-spacing: -0.055em;
+      line-height: 0.92;
+      background: linear-gradient(90deg, var(--violet-deep) 0%, var(--violet) 45%, var(--lilac) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      padding-bottom: .06em;
+      padding-right: .07em;
+    }
+
+    /* Filas de eventos */
+    .events { border-bottom: 1px solid var(--line); }
+    .event {
+      display: grid;
+      grid-template-columns: 200px minmax(0, 1fr) 248px;
+      gap: clamp(24px, 3.4vw, 56px);
+      padding: 44px 0;
+      border-top: 1px solid var(--line);
+    }
+    .event--soon { grid-template-columns: 200px minmax(0, 1fr); }
+
+    /* a) Afiche */
+    .poster {
+      position: relative; width: 200px; max-width: 100%;
+      aspect-ratio: 1 / 2;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--violet-deep);
+    }
+    .poster img { width: 100%; height: 100%; object-fit: cover; }
+    .poster-fallback {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; justify-content: space-between;
+      padding: 20px 18px;
+      color: #fff;
+      font-family: var(--font-brand);
+    }
+    .poster-brand { font-size: 20px; font-weight: 700; letter-spacing: -0.03em; }
+    .poster-letter { font-size: 96px; font-weight: 800; letter-spacing: -0.04em; line-height: .9; color: var(--yellow); }
+    .poster-title { font-size: 20px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; overflow-wrap: anywhere; }
+    .poster-date { margin-top: 10px; font-family: var(--mono); font-size: 13px; overflow-wrap: anywhere; }
+
+    /* b) Información */
+    .info { min-width: 0; display: flex; flex-direction: column; gap: 18px; align-items: flex-start; }
+    .kind { font-family: var(--mono); font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--violet); }
+    .ev-title { font-size: clamp(28px, 3vw, 44px); font-weight: 600; letter-spacing: -0.045em; line-height: 1.04; }
+    .ev-desc { font-size: 17px; line-height: 1.5; color: var(--body); max-width: 56ch; }
+    .field-label { font-size: 13px; font-weight: 500; color: var(--muted); margin-bottom: 8px; display: block; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; }
+    .chip { padding: 6px 12px; border-radius: 999px; background: #EEE8FF; color: var(--violet-deep); font-size: 14px; font-weight: 500; }
+    .dates { display: flex; flex-wrap: wrap; gap: 10px; }
+    .date-btn {
+      display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
+      min-width: 128px; padding: 12px 16px;
+      border: 1px solid var(--line); border-radius: var(--radius-md);
+      background: #fff; text-align: left;
+      transition: border-color .2s, background-color .2s;
+    }
+    .date-btn:hover { border-color: var(--violet); }
+    .date-btn .d-label { font-size: 16px; font-weight: 500; letter-spacing: -0.02em; }
+    .date-btn .d-sub { font-size: 13px; color: var(--body); }
+    .date-btn .d-stock { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+    .date-btn[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
+    .date-btn[aria-pressed="true"] .d-sub { color: #E9E1FF; }
+    .date-btn[aria-pressed="true"] .d-stock { color: var(--lilac); }
+    .facts { display: flex; flex-wrap: wrap; gap: 8px 32px; }
+    .facts div { min-width: 0; }
+    .facts dt { font-size: 13px; color: var(--muted); }
+    .facts dd { font-size: 17px; font-weight: 500; letter-spacing: -0.02em; overflow-wrap: anywhere; }
+    .price { font-size: 28px; font-weight: 600; letter-spacing: -0.04em; }
+    .price small { font-size: 15px; font-weight: 500; color: var(--body); margin-left: 6px; letter-spacing: -0.01em; }
+    .soon-tag { display: inline-flex; align-items: center; height: 44px; padding: 0 20px; border-radius: 999px; background: var(--paper-2); color: #5A5862; font-weight: 500; }
+
+    /* c) Sala */
+    .room { min-width: 0; }
+    .screen {
+      height: 8px; border-radius: 999px; margin: 0 8px 18px;
+      background: linear-gradient(90deg, var(--violet-deep), var(--violet), var(--lilac));
+    }
+    .seats { display: grid; grid-template-columns: repeat(5, 36px); gap: 10px; justify-content: space-between; max-width: 248px; }
+    .seat { width: 36px; height: 36px; border-radius: 10px 10px 6px 6px; border: 2px solid transparent; }
+    .seat--free { background: var(--lilac); border-color: var(--violet); }
+    .seat--hold { background: var(--yellow); border: 2px dashed var(--hold-border); }
+    .seat--taken { background: var(--ink); border-color: var(--ink); }
+    .room-count { margin-top: 18px; font-size: 17px; font-weight: 500; letter-spacing: -0.02em; }
+    .legend { margin-top: 14px; display: flex; flex-direction: column; gap: 8px; list-style: none; font-size: 14px; color: var(--body); }
+    .legend li { display: flex; align-items: center; gap: 10px; }
+    .legend .seat { width: 18px; height: 18px; border-radius: 6px 6px 4px 4px; flex: none; }
+
+    /* Mensajes */
+    .notice {
+      margin: 0 0 60px; padding: 24px 26px;
+      border: 1px solid var(--line); border-radius: var(--radius-lg);
+      background: var(--paper); font-size: 17px; line-height: 1.5; color: var(--body);
+    }
+    .notice strong { color: var(--ink); display: block; font-size: 20px; letter-spacing: -0.03em; margin-bottom: 6px; }
+    .notice--error { border-color: var(--violet); }
+
+    /* Reserva y pago */
+    .block { padding-top: clamp(64px, 8vw, 110px); }
+    .block h2 { font-size: clamp(32px, 4vw, 56px); font-weight: 600; letter-spacing: -0.05em; line-height: 1; margin-bottom: 28px; }
+    #pago { scroll-margin-top: 24px; }
+    .panels { display: flex; flex-direction: column; gap: 16px; }
+    .panel { border: 1px solid var(--line); border-radius: var(--radius-lg); padding: clamp(20px, 3vw, 32px); background: var(--paper); min-width: 0; }
+    .panel-step { font-family: var(--mono); font-size: 13px; color: var(--violet); display: block; margin-bottom: 6px; }
+    .panel h3 { font-size: 24px; font-weight: 600; letter-spacing: -0.04em; margin-bottom: 18px; }
+    .panel h4 { font-size: 18px; font-weight: 600; letter-spacing: -0.03em; margin-bottom: 10px; }
+    .panel p { font-size: 16px; line-height: 1.5; color: var(--body); }
+    .panel.is-locked { opacity: .45; }
+    .lock-note { font-size: 14px; color: var(--body); margin-bottom: 14px; }
+    .resume { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 16px 24px; }
+    .resume dt { font-size: 13px; color: var(--muted); }
+    .resume dd { font-size: 18px; font-weight: 500; letter-spacing: -0.02em; overflow-wrap: anywhere; }
+    .code { display: inline-block; margin-top: 6px; padding: 10px 16px; border-radius: var(--radius-md); background: var(--ink); color: var(--yellow); font-family: var(--mono); font-size: 20px; font-weight: 500; letter-spacing: .02em; overflow-wrap: anywhere; }
+    .empty { font-size: 16px; color: var(--body); }
+    .yape-grid { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: clamp(20px, 3vw, 40px); align-items: start; }
+    .qr-box { background: #fff; border: 1px solid var(--line); border-radius: var(--radius-md); padding: 12px; margin: 16px 0 12px; }
+    .qr { width: 100%; height: auto; border-radius: 8px; }
+    .qr-missing { display: grid; place-items: center; text-align: center; aspect-ratio: 1; padding: 12px; font-size: 15px; font-weight: 500; color: #5A5862; border: 1px dashed var(--muted); border-radius: 8px; background: var(--paper-2); }
+    .amount { font-size: 28px; font-weight: 600; letter-spacing: -0.04em; color: var(--ink); }
+    .y-num { font-family: var(--mono); font-size: 18px; font-weight: 500; color: var(--ink); margin-top: 4px; }
+    .y-holder { font-size: 15px; color: var(--body); }
+    .abroad { background: #fff; border: 1px solid var(--line); border-radius: var(--radius-md); padding: clamp(18px, 2.4vw, 26px); }
+    .abroad ol { margin: 14px 0 14px 22px; display: flex; flex-direction: column; gap: 8px; font-size: 16px; line-height: 1.45; color: var(--body); }
+    .abroad ol strong { color: var(--ink); font-weight: 600; }
+    .warn { padding: 12px 14px; border-radius: 12px; background: #F3FFC4; border: 1px dashed var(--hold-border); color: var(--ink); font-size: 15px; font-weight: 500; }
+
+    /* Formulario */
+    .form { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 20px; }
+    .field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+    .field--full { grid-column: 1 / -1; }
+    .field label { font-size: 14px; font-weight: 500; color: var(--ink); }
+    .field .opt { font-weight: 400; color: var(--muted); }
+    .field input {
+      height: 52px; padding: 0 16px; width: 100%;
+      border: 1px solid #B8B5BE; border-radius: var(--radius-md); background: #fff;
+      font: inherit; font-size: 16px; color: var(--ink);
+    }
+    .field input::placeholder { color: #75737C; }
+    .field input[aria-invalid="true"] { border-color: #B3261E; }
+    .check { display: flex; align-items: flex-start; gap: 12px; text-align: left; font-size: 16px; line-height: 1.4; color: var(--ink); padding: 4px 0; }
+    .check-box { flex: none; width: 26px; height: 26px; border-radius: 8px; border: 2px solid var(--violet-deep); background: #fff; display: grid; place-items: center; }
+    .check-box svg { width: 14px; height: 14px; opacity: 0; color: var(--ink); }
+    .check[aria-checked="true"] .check-box { background: var(--yellow); }
+    .check[aria-checked="true"] .check-box svg { opacity: 1; }
+    .preview-label { font-size: 14px; font-weight: 500; margin: 22px 0 8px; display: block; }
+    .preview { white-space: pre-wrap; overflow-wrap: anywhere; font-family: var(--mono); font-size: 13px; line-height: 1.55; background: #fff; border: 1px solid var(--line); border-radius: var(--radius-md); padding: 16px; color: var(--body); }
+    .send { margin-top: 20px; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+    .send .missing { font-size: 14px; color: var(--body); }
+    .send .privacy { font-size: 13px; color: var(--body); }
+
+    /* Cómo funciona: banda oscura */
+    .how { margin-top: clamp(72px, 9vw, 120px); background: var(--ink); color: #fff; padding: clamp(56px, 8vw, 100px) var(--gutter); }
+    .how h2 {
+      font-size: clamp(44px, 8vw, 64px); font-weight: 600; letter-spacing: -0.05em; line-height: 1;
+      display: inline-block; padding-bottom: .08em; padding-right: .07em;
+      background: linear-gradient(90deg, #E9E1FF 0%, #B9A4FF 50%, #DAFE51 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .how .sub { margin-top: 14px; font-size: 20px; letter-spacing: -0.02em; color: #CFC8E6; }
+    .steps { margin-top: 40px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; list-style: none; }
+    .step { border-radius: var(--radius-lg); padding: 26px; min-width: 0; display: flex; flex-direction: column; gap: 14px; color: var(--ink); }
+    .step .n { font-family: var(--font-brand); font-weight: 700; font-size: 88px; line-height: .9; letter-spacing: -0.04em; }
+    .step p { font-size: 17px; line-height: 1.45; }
+    .step p strong { font-weight: 600; }
+    .step--1 { background: var(--violet); color: #fff; } .step--1 .n { color: var(--yellow); }
+    .step--2 { background: var(--lilac); } .step--2 .n { color: var(--violet-deep); }
+    .step--3 { background: var(--yellow); } .step--3 .n { color: var(--violet); }
+    .step--4 { background: var(--turquoise); } .step--4 .n { color: var(--violet-deep); }
+
+    /* Pie */
+    .footer { padding-block: 32px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 14px; color: var(--muted); }
+    .footer a { text-decoration: underline; text-underline-offset: 3px; }
+
+    @media (max-width: 1024px) {
+      .header { grid-template-columns: 1fr auto; row-gap: 14px; }
+      .nav { grid-column: 1 / -1; grid-row: 2; font-size: 18px; gap: 20px; flex-wrap: wrap; }
+      .steps { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 900px) {
+      .event, .event--soon { grid-template-columns: 1fr; padding: 36px 0; }
+      .yape-grid { grid-template-columns: 1fr; }
+      .qr-wrap { max-width: 300px; }
+    }
+    @media (max-width: 680px) {
+      .brand-time { display: none; }
+      .header { padding-block: 20px; }
+      .header-cta { font-size: 17px; }
+      .steps { grid-template-columns: 1fr; }
+      .form { grid-template-columns: 1fr; }
+      .btn { max-width: 100%; text-align: center; height: auto; min-height: 52px; padding-block: 8px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="brand">
+      <a href="/" class="brand-name">8+Core</a>
+      <span class="brand-time">· Lima, <span id="clock">--:--</span> (GMT−5)</span>
+    </div>
+    <nav class="nav" aria-label="Principal">
+      <a href="/#nosotros">Nosotros</a>
+      <a href="/#servicios">Servicios</a>
+      <a href="/#equipo">Equipo</a>
+      <a href="/eventos/" aria-current="page">Eventos</a>
+      <a href="/#faq">FAQ</a>
+    </nav>
+    <a href="mailto:hola@8pluscore.com" class="header-cta">Hablemos</a>
+  </header>
+
+  <main>
+    <section class="page-head wrap" aria-labelledby="titulo">
+      <h1 class="section-title" id="titulo">Próximos eventos</h1>
+    </section>
+
+    <section class="wrap" id="eventos" aria-label="Lista de eventos">
+      <div id="events" class="events" aria-busy="true"></div>
+      <div id="status" class="notice" role="status">Cargando eventos…</div>
+      <noscript><div class="notice notice--error"><strong>Activa JavaScript</strong>Necesitamos JavaScript para mostrar los eventos y los asientos disponibles.</div></noscript>
+    </section>
+
+    <section class="block wrap" id="pago" aria-labelledby="pago-titulo" tabindex="-1" hidden>
+      <h2 id="pago-titulo">Reserva y pago</h2>
+      <div class="panels">
+
+        <!-- Panel 1 -->
+        <article class="panel" aria-labelledby="p1-t">
+          <span class="panel-step">Paso 1</span>
+          <h3 id="p1-t">Tu reserva</h3>
+          <div id="resume" aria-live="polite"></div>
+        </article>
+
+        <!-- Panel 2 -->
+        <article class="panel is-locked" id="panel-pay" aria-labelledby="p2-t">
+          <span class="panel-step">Paso 2</span>
+          <h3 id="p2-t">Paga con Yape</h3>
+          <p class="lock-note" id="lock-note">Reserva tu asiento para ver el monto y tu código.</p>
+          <div class="yape-grid">
+            <div class="qr-wrap">
+              <h4>Desde Perú</h4>
+              <p>Escanea el QR desde tu app de Yape. Paga el monto exacto. En el motivo escribe tu código de reserva.</p>
+              <div class="qr-box" id="qr-box"></div>
+              <p class="amount" id="amount">—</p>
+              <p class="y-num" id="y-num"></p>
+              <p class="y-holder" id="y-holder"></p>
+            </div>
+            <div class="abroad">
+              <h4>Si estás fuera de Perú</h4>
+              <p>Envía una remesa a mi Yape con una remesadora asociada, como Western Union, Ria Money Transfer o Remitly. Yape trabaja con varias más, desde más de 50 países (Ecuador, Colombia, Chile, México, Argentina, España, Italia, Estados Unidos y otros). <a class="link" href="https://www.yape.com.pe/productos/remesas" target="_blank" rel="noopener">Ver la lista oficial</a></p>
+              <ol>
+                <li>En la app o web de la remesadora, elige <strong>Yape</strong> como forma de entrega.</li>
+                <li>Nombre del destinatario: <strong data-y="titular"></strong>. País: <strong>Perú</strong>.</li>
+                <li>Número de Yape: <strong data-y="numero"></strong>. Si te piden el código de país, usa <strong data-y="numeroInternacional"></strong>.</li>
+                <li>Asegúrate de que llegue exactamente el monto en soles; la comisión de la remesadora la pagas tú, aparte.</li>
+                <li>Guarda el número de orden de la remesa.</li>
+              </ol>
+              <p class="warn">Si llega menos, tu asiento no se confirma hasta completar la diferencia.</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Panel 3 -->
+        <article class="panel" aria-labelledby="p3-t">
+          <span class="panel-step">Paso 3</span>
+          <h3 id="p3-t">Confirma por WhatsApp</h3>
+          <form id="form" class="form" novalidate autocomplete="on">
+            <div class="field">
+              <label for="f-nombre">Nombre completo</label>
+              <input id="f-nombre" name="nombre" type="text" autocomplete="name" required aria-required="true" placeholder="Nombre y apellidos">
+            </div>
+            <div class="field">
+              <label for="f-correo">Correo</label>
+              <input id="f-correo" name="correo" type="email" autocomplete="email" inputmode="email" required aria-required="true" placeholder="tu@correo.com">
+            </div>
+            <div class="field">
+              <label for="f-tel">Teléfono con código de país</label>
+              <input id="f-tel" name="tel" type="tel" autocomplete="tel" inputmode="tel" required aria-required="true" placeholder="+51 999 999 999">
+            </div>
+            <div class="field">
+              <label for="f-linkedin">LinkedIn</label>
+              <input id="f-linkedin" name="linkedin" type="text" autocomplete="url" inputmode="url" required aria-required="true" placeholder="linkedin.com/in/tu-perfil">
+            </div>
+            <div class="field field--full">
+              <label for="f-orden">Número de orden de la remesa <span class="opt">(solo si pagas desde el exterior)</span></label>
+              <input id="f-orden" name="orden" type="text" autocomplete="off">
+            </div>
+            <div class="field field--full">
+              <button type="button" id="chk" class="check" role="checkbox" aria-checked="false" aria-labelledby="chk-l">
+                <span class="check-box" aria-hidden="true"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M2 7.5l3.2 3.2L12 3.5"/></svg></span>
+                <span id="chk-l">Ya pagué y tengo mi comprobante a la mano</span>
+              </button>
+            </div>
+          </form>
+          <span class="preview-label" id="pv-l">Vista previa del mensaje</span>
+          <pre class="preview" id="preview" aria-labelledby="pv-l"></pre>
+          <div class="send">
+            <div id="send-slot"></div>
+            <p class="missing" id="missing"></p>
+            <p class="privacy">Usamos tus datos solo para gestionar tu inscripción. <a class="link" href="/eventos/privacidad/">Aviso de privacidad</a></p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="how" id="como-funciona" aria-labelledby="cf-titulo">
+      <h2 id="cf-titulo">Cómo funciona</h2>
+      <p class="sub">Cuatro pasos, en orden y sin vueltas atrás.</p>
+      <ol class="steps">
+        <li class="step step--1"><span class="n" aria-hidden="true">01</span><p><strong>Elige evento y fecha:</strong> mira cuántos asientos quedan en cada fecha y reserva el tuyo.</p></li>
+        <li class="step step--2"><span class="n" aria-hidden="true">02</span><p><strong>Paga con Yape:</strong> desde Perú, escanea el QR. Desde otro país, envía una remesa a mi Yape.</p></li>
+        <li class="step step--3"><span class="n" aria-hidden="true">03</span><p><strong>Completa tus datos:</strong> nombre, correo, teléfono y LinkedIn. Se abre WhatsApp con tu mensaje listo: adjunta tu comprobante.</p></li>
+        <li class="step step--4"><span class="n" aria-hidden="true">04</span><p><strong>Recibe tu acceso:</strong> validamos tu pago y te enviamos tu enlace personal a la sala.</p></li>
+      </ol>
+    </section>
+  </main>
+
+  <footer class="footer wrap">
+    <span>© <span id="year">2026</span> 8+Core.</span>
+    <a href="/privacidad.html">Privacidad</a>
+  </footer>
+
+  <script>
+    (() => {
+      'use strict';
+
+      const DATA_URL = 'eventos.json';
+      const WD = ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'];
+      const MO = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+      const WD_EN = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+      // ---------- Utilidades ----------
+      const h = (tag, props = {}, ...kids) => {
+        const el = document.createElement(tag);
+        for (const [k, v] of Object.entries(props)) {
+          if (v == null || v === false) continue;
+          if (k === 'class') el.className = v;
+          else if (k === 'text') el.textContent = v;
+          else el.setAttribute(k, v === true ? '' : v);
+        }
+        kids.flat().forEach(c => c != null && el.append(c));
+        return el;
+      };
+      const $ = id => document.getElementById(id);
+      const isStr = v => typeof v === 'string' && v.trim() !== '';
+      const isCount = v => Number.isInteger(v) && v >= 0;
+      const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+      const pad = n => String(n).padStart(2, '0');
+      const arrow = () => {
+        const NS = 'http://www.w3.org/2000/svg';
+        const s = document.createElementNS(NS, 'svg');
+        s.setAttribute('viewBox', '0 0 16 16'); s.setAttribute('fill', 'none');
+        s.setAttribute('stroke', 'currentColor'); s.setAttribute('stroke-width', '1.8');
+        s.setAttribute('aria-hidden', 'true');
+        const p = document.createElementNS(NS, 'path');
+        p.setAttribute('d', 'M2 8h11M9 4l4 4-4 4'); s.append(p);
+        return s;
+      };
+
+      $('year').textContent = new Date().getFullYear();
+      const clock = $('clock');
+      const clockFmt = new Intl.DateTimeFormat('es-PE', { hour: '2-digit', minute: '2-digit', hour12: true, timeZone: 'America/Lima' });
+      const tick = () => { clock.textContent = clockFmt.format(new Date()); };
+      tick(); setInterval(tick, 30000);
+
+      // ---------- Fechas (zona horaria configurable) ----------
+      let TZ = 'America/Lima';
+      const zoneParts = date => {
+        const o = {};
+        new Intl.DateTimeFormat('en-US', {
+          timeZone: TZ, hourCycle: 'h23', year: 'numeric', month: 'numeric', day: 'numeric',
+          hour: 'numeric', minute: 'numeric', weekday: 'short'
+        }).formatToParts(date).forEach(p => { o[p.type] = p.value; });
+        return { y: +o.year, m: +o.month, d: +o.day, h: +o.hour, mi: +o.minute, wd: WD_EN.indexOf(o.weekday) };
+      };
+      // "YYYY-MM-DDTHH:mm" sin zona se interpreta en la zona del evento
+      const parseNow = str => {
+        const m = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::\d{2})?(Z|[+-]\d{2}:?\d{2})?$/i.exec(str || '');
+        if (!m) return null;
+        if (m[6]) { const t = Date.parse(str); return Number.isNaN(t) ? null : new Date(t); }
+        const guess = Date.UTC(+m[1], +m[2] - 1, +m[3], +m[4], +m[5]);
+        const p = zoneParts(new Date(guess));
+        return new Date(guess - (Date.UTC(p.y, p.m - 1, p.d, p.h, p.mi) - guess));
+      };
+      const dayLabel = (d, capital = true) => {
+        const p = zoneParts(d);
+        const s = `${WD[p.wd]} ${p.d} ${MO[p.m - 1]}`;
+        return capital ? cap(s) : s;
+      };
+      const timeLabel = d => {
+        const p = zoneParts(d);
+        const h12 = p.h % 12 === 0 ? 12 : p.h % 12;
+        return `${h12}:${pad(p.mi)} ${p.h < 12 ? 'a. m.' : 'p. m.'}`;
+      };
+      const codeDate = d => { const p = zoneParts(d); return `${pad(p.d)}${MO[p.m - 1].toUpperCase()}`; };
+
+      // ---------- Validación ----------
+      const ISO_RE = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?(Z|[+-]\d{2}:\d{2})$/i;
+      const isIso = v => typeof v === 'string' && ISO_RE.test(v) && !Number.isNaN(Date.parse(v));
+
+      function validate(d) {
+        const obj = v => v && typeof v === 'object' && !Array.isArray(v);
+        if (!obj(d)) return 'El archivo no tiene el formato esperado.';
+        if (!isStr(d.whatsapp)) return 'Falta "whatsapp".';
+        const y = d.yape;
+        if (!obj(y) || !['qr', 'numero', 'numeroInternacional', 'titular'].every(k => isStr(y[k]))) return 'Datos incompletos en "yape".';
+        const c = d.config;
+        if (!obj(c)) return 'Falta "config".';
+        if (!(Number.isFinite(c.rangoSemanas) && c.rangoSemanas > 0)) return '"config.rangoSemanas" no es válido.';
+        if (!(Number.isFinite(c.cierreHoras) && c.cierreHoras >= 0)) return '"config.cierreHoras" no es válido.';
+        if (!isStr(c.zonaHoraria)) return 'Falta "config.zonaHoraria".';
+        try { new Intl.DateTimeFormat('en-US', { timeZone: c.zonaHoraria }); } catch { return '"config.zonaHoraria" no es válida.'; }
+        const cupo = c.cupo == null ? 15 : c.cupo;
+        if (!Number.isInteger(cupo) || cupo < 1 || cupo > 60) return '"config.cupo" no es válido.';
+        if (!Array.isArray(d.eventos) || d.eventos.length === 0) return 'No hay eventos en la lista.';
+        const ids = new Set();
+        const seatsOk = (o, n) => isCount(o.ocupados) && isCount(o.en_validacion) && o.ocupados + o.en_validacion <= cupo || `${n} tiene asientos inválidos.`;
+        for (const [i, e] of d.eventos.entries()) {
+          const n = `eventos[${i}]`;
+          if (!obj(e)) return `${n} no es válido.`;
+          for (const k of ['id', 'badge', 'etiqueta', 'titulo', 'descripcion', 'precio', 'horario', 'duracion']) {
+            if (!isStr(e[k])) return `Falta "${k}" en ${n}.`;
+          }
+          if (ids.has(e.id)) return `El id "${e.id}" está repetido.`;
+          ids.add(e.id);
+          if (e.afiche != null && typeof e.afiche !== 'string') return `"afiche" no es válido en ${n}.`;
+          if (e.gradiente != null && !(typeof e.gradiente === 'string' && CSS.supports('background', e.gradiente))) return `"gradiente" no es válido en ${n}.`;
+          if (e.precioNota != null && typeof e.precioNota !== 'string') return `"precioNota" no es válido en ${n}.`;
+          if (e.temas != null && (!Array.isArray(e.temas) || !e.temas.every(isStr))) return `"temas" no es válido en ${n}.`;
+          const list = e.grupos || e.fechas;
+          if (!Array.isArray(list)) return `Faltan "fechas" o "grupos" en ${n}.`;
+          for (const [j, f] of list.entries()) {
+            const m = `${n}.${e.grupos ? 'grupos' : 'fechas'}[${j}]`;
+            if (!obj(f)) return `${m} no es válido.`;
+            const ok = seatsOk(f, m); if (ok !== true) return ok;
+            if (e.grupos) {
+              if (!Array.isArray(f.fechas) || f.fechas.length === 0 || !f.fechas.every(isIso)) return `Las fechas de ${m} deben ser ISO con hora y zona.`;
+            } else if (!isIso(f.inicio)) return `"inicio" de ${m} debe ser ISO con hora y zona.`;
+          }
+        }
+        return null;
+      }
+
+      // ---------- Estado ----------
+      let data = null, now = new Date(), CUPO = 15;
+      let reservation = null; // { ev, opt, code }
+      const remaining = o => CUPO - o.ocupados - o.en_validacion;
+
+      // Opciones visibles de un evento (fechas o grupos) según reglas de cierre y rango
+      function visibleOptions(ev) {
+        const { rangoSemanas, cierreHoras } = data.config;
+        const closeMs = cierreHoras * 3600e3;
+        if (ev.grupos) {
+          return ev.grupos
+            .map((g, i) => {
+              const dates = g.fechas.map(f => new Date(f)).sort((a, b) => a - b);
+              const first = dates[0], last = dates[dates.length - 1];
+              return {
+                key: `g${i}`, group: true, ocupados: g.ocupados, en_validacion: g.en_validacion, dates, first,
+                label: `Inicia ${dayLabel(first, false)}`, sub: `Hasta ${dayLabel(last, false)}`,
+                posterDate: `Inicia ${dayLabel(first, false)}`,
+                name: g.nombre || `Grupo ${i + 1}`,
+                messageDate: `${g.nombre || `Grupo ${i + 1}`} · del ${dayLabel(first, false)} al ${dayLabel(last, false)}`
+              };
+            })
+            .filter(o => o.first - now >= closeMs)
+            .sort((a, b) => a.first - b.first)
+            .slice(0, 2);
+        }
+        const rangeMs = rangoSemanas * 7 * 864e5;
+        return ev.fechas
+          .map((f, i) => {
+            const d = new Date(f.inicio);
+            return { key: `f${i}`, group: false, ocupados: f.ocupados, en_validacion: f.en_validacion, first: d,
+              label: dayLabel(d), posterDate: dayLabel(d), messageDate: dayLabel(d) };
+          })
+          .filter(o => { const ms = o.first - now; return ms >= closeMs && ms <= rangeMs; })
+          .sort((a, b) => a.first - b.first);
+      }
+
+      // ---------- Reserva ----------
+      function reservationCode(ev, opt) {
+        const dd = codeDate(opt.first);
+        const key = `reserva:${ev.id}:${dd}`;
+        try { const s = sessionStorage.getItem(key); if (s) return s; } catch { /* sin storage */ }
+        const buf = new Uint32Array(1);
+        crypto.getRandomValues(buf);
+        const code = `${ev.id}-${dd}-${1000 + (buf[0] % 9000)}`;
+        try { sessionStorage.setItem(key, code); } catch { /* sin storage */ }
+        return code;
+      }
+
+      function renderResume() {
+        const box = $('resume');
+        box.replaceChildren();
+        const panel = $('panel-pay');
+        if (!reservation) {
+          box.append(h('p', { class: 'empty', text: 'Elige un evento y una fecha arriba y pulsa “Reservar mi asiento”.' }));
+          panel.classList.add('is-locked'); panel.inert = true;
+          $('lock-note').hidden = false;
+          $('amount').textContent = '—';
+          return;
+        }
+        const { ev, opt, code } = reservation;
+        const row = (t, v) => h('div', {}, h('dt', { text: t }), h('dd', { text: v }));
+        box.append(
+          h('dl', { class: 'resume' },
+            row('Evento', ev.titulo),
+            row(opt.group ? 'Grupo' : 'Fecha', opt.group ? opt.messageDate : opt.label),
+            row('Hora', ev.horario),
+            row('Precio', ev.precioNota ? `${ev.precio} · ${ev.precioNota}` : ev.precio)
+          ),
+          h('p', { class: 'field-label', style: 'margin-top:20px', text: 'Código de reserva' }),
+          h('span', { class: 'code', text: code })
+        );
+        panel.classList.remove('is-locked'); panel.inert = false;
+        $('lock-note').hidden = true;
+        $('amount').textContent = `Monto exacto: ${ev.precio}`;
+      }
+
+      // ---------- Panel Yape ----------
+      function renderYape() {
+        const y = data.yape;
+        $('y-num').textContent = `Yape: ${y.numero}`;
+        $('y-holder').textContent = `Titular: ${y.titular}`;
+        document.querySelectorAll('[data-y]').forEach(el => { el.textContent = y[el.dataset.y]; });
+        const box = $('qr-box');
+        const missing = () => h('div', { class: 'qr-missing', role: 'img', 'aria-label': 'QR de Yape por cargar', text: 'QR por cargar' });
+        const img = h('img', { class: 'qr', src: y.qr, alt: 'Código QR de Yape para pagar' });
+        img.addEventListener('error', () => img.replaceWith(missing()));
+        box.replaceChildren(img);
+      }
+
+      // ---------- Formulario WhatsApp ----------
+      const F = { nombre: $('f-nombre'), correo: $('f-correo'), tel: $('f-tel'), linkedin: $('f-linkedin'), orden: $('f-orden') };
+      const chk = $('chk');
+      const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+      const checks = {
+        nombre: v => v.split(/\s+/).filter(w => w.length >= 2).length >= 2,
+        correo: v => EMAIL_RE.test(v),
+        tel: v => /^\+/.test(v) && /^[+\d\s().-]+$/.test(v) && v.replace(/\D/g, '').length >= 8 && v.replace(/\D/g, '').length <= 15,
+        linkedin: v => v.length >= 3
+      };
+      const val = k => F[k].value.trim();
+
+      function renderForm() {
+        const miss = [];
+        if (!reservation) miss.push('tu reserva');
+        if (!checks.nombre(val('nombre'))) miss.push('nombre completo');
+        if (!checks.correo(val('correo'))) miss.push('correo válido');
+        if (!checks.tel(val('tel'))) miss.push('teléfono con código de país');
+        if (!checks.linkedin(val('linkedin'))) miss.push('LinkedIn');
+        if (chk.getAttribute('aria-checked') !== 'true') miss.push('confirmar que ya pagaste');
+
+        for (const k of ['correo', 'tel']) {
+          const bad = val(k) !== '' && !checks[k](val(k));
+          F[k].setAttribute('aria-invalid', String(bad));
+        }
+
+        const ph = s => s || '…';
+        const lines = [
+          'Hola, pagué mi asiento.', '',
+          `Evento: ${reservation ? reservation.ev.titulo : '…'}`,
+          `Fecha: ${reservation ? `${reservation.opt.messageDate} · ${timeLabel(reservation.opt.first)} (hora de Lima)` : '…'}`,
+          `Código de reserva: ${reservation ? reservation.code : '…'}`,
+          `Nombre: ${ph(val('nombre'))}`,
+          `Correo: ${ph(val('correo'))}`,
+          `Teléfono: ${ph(val('tel'))}`,
+          `LinkedIn: ${ph(val('linkedin'))}`
+        ];
+        if (val('orden')) lines.push(`Orden de remesa: ${val('orden')}`);
+        lines.push('', 'Te adjunto mi comprobante a continuación.');
+        const text = lines.join('\n');
+        $('preview').textContent = text;
+
+        const slot = $('send-slot');
+        const num = data.whatsapp.replace(/\D/g, '');
+        if (miss.length || !num) {
+          slot.replaceChildren(h('button', { class: 'btn', type: 'button', disabled: true }, 'Enviar por WhatsApp'));
+          $('missing').textContent = miss.length ? `Para enviar falta: ${miss.join(', ')}.` : 'WhatsApp no está disponible por ahora.';
+        } else {
+          slot.replaceChildren(h('a', { class: 'btn', href: `https://wa.me/${num}?text=${encodeURIComponent(text)}`, target: '_blank', rel: 'noopener' }, 'Enviar por WhatsApp', arrow()));
+          $('missing').textContent = 'Todo listo: se abrirá WhatsApp con tu mensaje.';
+        }
+      }
+      Object.values(F).forEach(el => el.addEventListener('input', renderForm));
+      chk.addEventListener('click', () => {
+        chk.setAttribute('aria-checked', String(chk.getAttribute('aria-checked') !== 'true'));
+        renderForm();
+      });
+      $('form').addEventListener('submit', e => e.preventDefault());
+
+      // ---------- Evento ----------
+      function buildEvent(ev) {
+        const opts = visibleOptions(ev);
+        const titleId = `ev-${ev.id}-t`;
+        const grad = ev.gradiente || 'linear-gradient(160deg,#2A0E7A,#6B2CF5)';
+        let idx = Math.max(0, opts.findIndex(o => remaining(o) > 0));
+
+        // a) Afiche: con imagen solo la imagen; sin imagen, degradado con textos
+        const poster = h('div', { class: 'poster' });
+        const pDate = h('p', { class: 'poster-date', text: opts.length ? opts[idx].posterDate : 'Próximamente' });
+        const fallback = h('div', { class: 'poster-fallback', style: `background:${grad}`, 'aria-hidden': 'true' },
+          h('p', { class: 'poster-brand', text: '8+Core' }),
+          h('p', { class: 'poster-letter', text: ev.badge }),
+          h('div', {}, h('p', { class: 'poster-title', text: ev.titulo }), pDate));
+        const showFallback = () => {
+          poster.replaceChildren(fallback);
+          poster.setAttribute('role', 'img');
+          poster.setAttribute('aria-label', `Afiche de ${ev.titulo}`);
+        };
+        if (isStr(ev.afiche)) {
+          const img = h('img', { src: ev.afiche, alt: `Afiche de ${ev.titulo}`, width: '200', height: '400' });
+          img.addEventListener('error', showFallback);
+          poster.append(img);
+        } else showFallback();
+
+        // b) Información
+        const reserveSlot = h('div');
+        const dateBtns = opts.map((o, i) => {
+          const stock = h('span', { class: 'd-stock' });
+          const b = h('button', { class: 'date-btn', type: 'button', 'aria-pressed': 'false', 'aria-label': o.group ? `${o.name}: ${o.label}, ${o.sub}` : null },
+            h('span', { class: 'd-label', text: o.label }),
+            o.sub ? h('span', { class: 'd-sub', text: o.sub }) : null,
+            stock);
+          const left = remaining(o);
+          stock.textContent = left <= 0 ? 'Agotado' : left === 1 ? 'Queda 1' : `Quedan ${left}`;
+          b.addEventListener('click', () => { idx = i; update(); });
+          return b;
+        });
+        const isGroup = !!ev.grupos;
+        const pillsHost = h('div');
+        const info = h('div', { class: 'info' },
+          h('p', { class: 'kind', text: ev.etiqueta }),
+          h('h2', { class: 'ev-title', id: titleId, text: ev.titulo }),
+          h('p', { class: 'ev-desc', text: ev.descripcion }),
+          opts.length ? h('div', {},
+            h('span', { class: 'field-label', id: `${titleId}-f`, text: isGroup ? 'Elige tu grupo: un solo pago por los 8 encuentros' : 'Elige tu fecha' }),
+            h('div', { class: 'dates', role: 'group', 'aria-labelledby': `${titleId}-f` }, dateBtns)) : null,
+          isGroup && opts.length ? pillsHost : null,
+          h('dl', { class: 'facts' },
+            h('div', {}, h('dt', { text: 'Horario' }), h('dd', { text: ev.horario })),
+            h('div', {}, h('dt', { text: 'Duración' }), h('dd', { text: ev.duracion })),
+            h('div', {}, h('dt', { text: 'Precio' }),
+              h('dd', { class: 'price' }, ev.precio, ev.precioNota ? h('small', { text: ev.precioNota }) : null))),
+          reserveSlot);
+
+        if (!opts.length) {
+          reserveSlot.append(h('span', { class: 'soon-tag', text: 'Próximamente' }));
+          return h('article', { class: 'event event--soon', 'aria-labelledby': titleId }, poster, info);
+        }
+
+        // c) Sala
+        const seatsEl = h('div', { class: 'seats', role: 'group', 'aria-label': `Sala de ${CUPO} asientos` });
+        const count = h('p', { class: 'room-count', 'aria-live': 'polite' });
+        const room = h('div', { class: 'room' },
+          h('div', { class: 'screen', 'aria-hidden': 'true' }), seatsEl, count,
+          h('ul', { class: 'legend' },
+            h('li', {}, h('span', { class: 'seat seat--free', 'aria-hidden': 'true' }), 'Libre'),
+            h('li', {}, h('span', { class: 'seat seat--hold', 'aria-hidden': 'true' }), 'Pago en validación'),
+            h('li', {}, h('span', { class: 'seat seat--taken', 'aria-hidden': 'true' }), 'Ocupado')));
+
+        function update() {
+          const o = opts[idx];
+          const left = remaining(o);
+          dateBtns.forEach((b, i) => b.setAttribute('aria-pressed', String(i === idx)));
+          pDate.textContent = o.posterDate;
+
+          if (isGroup) {
+            const temas = ev.temas || [];
+            pillsHost.replaceChildren(
+              h('span', { class: 'field-label', id: `${titleId}-p`, text: `Los ${o.dates.length} encuentros de ${o.name}` }),
+              h('ol', { class: 'chips', 'aria-labelledby': `${titleId}-p` },
+                o.dates.map((d, i) => h('li', { class: 'chip', text: `${pad(i + 1)} · ${dayLabel(d)}${temas[i] ? ` · ${temas[i]}` : ''}` }))));
+          }
+
+          seatsEl.replaceChildren(...Array.from({ length: CUPO }, (_, i) => {
+            const [cls, label] = i < o.ocupados ? ['taken', 'ocupado']
+              : i < o.ocupados + o.en_validacion ? ['hold', 'pago en validación']
+              : ['free', 'libre'];
+            return h('span', { class: `seat seat--${cls}`, role: 'img', 'aria-label': `Asiento ${i + 1}, ${label}` });
+          }));
+          count.textContent = left === 1 ? `Queda 1 asiento de ${CUPO}` : `Quedan ${left} asientos de ${CUPO}`;
+
+          if (left > 0) {
+            const a = h('a', { class: 'btn', href: '#pago' }, 'Reservar mi asiento →');
+            a.addEventListener('click', () => {
+              reservation = { ev, opt: o, code: reservationCode(ev, o) };
+              renderResume(); renderForm();
+            });
+            reserveSlot.replaceChildren(a);
+          } else {
+            reserveSlot.replaceChildren(h('button', { class: 'btn', type: 'button', disabled: true }, 'Agotado · elige otra fecha'));
+          }
+        }
+        update();
+
+        return h('article', { class: 'event', 'aria-labelledby': titleId }, poster, info, room);
+      }
+
+      // ---------- Carga ----------
+      function showError(detail) {
+        const st = $('status');
+        st.className = 'notice notice--error';
+        st.setAttribute('role', 'alert');
+        st.replaceChildren(
+          h('strong', { text: 'No pudimos cargar los eventos' }),
+          'Recarga la página en unos minutos. Si el problema continúa, escríbenos a ',
+          h('a', { href: 'mailto:hola@8pluscore.com', class: 'link', text: 'hola@8pluscore.com' }),
+          '.',
+          h('span', { class: 'mono', style: 'display:block;margin-top:10px;color:#5A5862', text: `Detalle: ${detail}` }));
+        $('events').setAttribute('aria-busy', 'false');
+      }
+
+      async function load() {
+        let json;
+        try {
+          const res = await fetch(DATA_URL, { cache: 'no-cache' });
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          json = await res.json();
+        } catch (err) {
+          return showError(err instanceof SyntaxError ? 'eventos.json no es un JSON válido.' : `no se pudo leer eventos.json (${err.message}).`);
+        }
+        const problem = validate(json);
+        if (problem) return showError(problem);
+
+        data = json;
+        TZ = data.config.zonaHoraria;
+        CUPO = data.config.cupo == null ? 15 : data.config.cupo;
+        const sim = parseNow(new URLSearchParams(location.search).get('hoy'));
+        now = sim || new Date();
+
+        const list = $('events');
+        list.replaceChildren(...data.eventos.map(buildEvent));
+        list.setAttribute('aria-busy', 'false');
+        $('status').remove();
+
+        renderYape(); renderResume(); renderForm();
+        $('pago').hidden = false;
+        if (location.hash === '#pago') $('pago').scrollIntoView();
+      }
+
+      load();
+    })();
+  </script>
+</body>
+</html>
