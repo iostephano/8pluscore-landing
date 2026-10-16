@@ -256,7 +256,6 @@
     .send { margin-top: 20px; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
     .send .missing { font-size: 14px; color: var(--body); }
     .send .privacy { font-size: 13px; color: var(--body); }
-    .privacy .todo { color: var(--violet-deep); font-family: var(--mono); font-size: 12px; }
 
     /* Cómo funciona: banda oscura */
     .how { margin-top: clamp(72px, 9vw, 120px); background: var(--ink); color: #fff; padding: clamp(56px, 8vw, 100px) var(--gutter); }
@@ -409,7 +408,7 @@
           <div class="send">
             <div id="send-slot"></div>
             <p class="missing" id="missing"></p>
-            <p class="privacy">Usamos tus datos solo para gestionar tu inscripción. <span class="todo">[Aviso de privacidad: redacción por confirmar]</span></p>
+            <p class="privacy">Usamos tus datos solo para gestionar tu inscripción. <a class="link" href="/eventos/privacidad/">Aviso de privacidad</a></p>
           </div>
         </article>
 
