@@ -1,0 +1,59 @@
+{
+  "whatsapp": "[NÚMERO]",
+  "pago": {
+    "yape": { "numero": "[NÚMERO]", "titular": "[CONFIRMAR]", "qr": "qr/yape.png" },
+    "plin": { "numero": "[NÚMERO]", "titular": "[CONFIRMAR]", "qr": "qr/plin.png" }
+  },
+  "eventos": [
+    {
+      "id": "session-1",
+      "badge": "S1",
+      "tipo": "Session",
+      "titulo": "Session 1 · [CONFIRMAR]",
+      "descripcion": "[CONFIRMAR] Descripción de la Session 1.",
+      "precio": "S/ [CONFIRMAR]",
+      "precioUsd": "US$ [CONFIRMAR]",
+      "horario": "[CONFIRMAR] (hora de Lima, GMT−5)",
+      "duracion": "[CONFIRMAR]",
+      "gumroad": "[CONFIRMAR]",
+      "fechas": [
+        { "etiqueta": "[FECHA 1]", "ocupados": 9, "en_validacion": 2 },
+        { "etiqueta": "[FECHA 2]", "ocupados": 15, "en_validacion": 0 },
+        { "etiqueta": "[FECHA 3]", "ocupados": 3, "en_validacion": 1 }
+      ]
+    },
+    {
+      "id": "session-2",
+      "badge": "S2",
+      "tipo": "Session",
+      "titulo": "Session 2 · [CONFIRMAR]",
+      "descripcion": "[CONFIRMAR] Descripción de la Session 2.",
+      "precio": "S/ [CONFIRMAR]",
+      "precioUsd": "US$ [CONFIRMAR]",
+      "horario": "[CONFIRMAR] (hora de Lima, GMT−5)",
+      "duracion": "[CONFIRMAR]",
+      "gumroad": "[CONFIRMAR]",
+      "fechas": [
+        { "etiqueta": "[FECHA 1]", "ocupados": 5, "en_validacion": 3 },
+        { "etiqueta": "[FECHA 2]", "ocupados": 0, "en_validacion": 0 }
+      ]
+    },
+    {
+      "id": "workshop",
+      "badge": "W",
+      "tipo": "Workshop",
+      "titulo": "Workshop · [CONFIRMAR]",
+      "descripcion": "[CONFIRMAR] Descripción del Workshop.",
+      "precio": "S/ [CONFIRMAR]",
+      "precioUsd": "US$ [CONFIRMAR]",
+      "horario": "[CONFIRMAR] (hora de Lima, GMT−5)",
+      "duracion": "[CONFIRMAR]",
+      "gumroad": "[CONFIRMAR]",
+      "noches": ["[FECHA 1] · Noche 1", "[FECHA 2] · Noche 2", "[FECHA 3] · Noche 3"],
+      "fechas": [
+        { "etiqueta": "[FECHA 1]", "ocupados": 12, "en_validacion": 1 },
+        { "etiqueta": "[FECHA 2]", "ocupados": 4, "en_validacion": 2 }
+      ]
+    }
+  ]
+}

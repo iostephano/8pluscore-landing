@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Eventos, 8+Core</title>
+  <meta name="description" content="Sessions y Workshops online de 8+Core. Elige tu evento y fecha, reserva tu asiento en una sala de 15 y paga con Yape, Plin o Gumroad.">
+  <meta name="theme-color" content="#FFFFFF">
+  <link rel="canonical" href="https://8pluscore.com/eventos/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="8+Core">
+  <meta property="og:title" content="Eventos, 8+Core">
+  <meta property="og:description" content="Sessions y Workshops online de 8+Core.">
+  <meta property="og:url" content="https://8pluscore.com/eventos/">
+  <meta property="og:image" content="https://8pluscore.com/assets/og-image.png">
+
+  <style>
+    :root {
+      --ink: #0A0A0F;
+      --paper: #F6F5F3;
+      --paper-2: #EFEEEB;
+      --line: #DCDAD6;
+      --muted: #6E6C75;
+      --body: #4A4852;
+
+      --violet: #6B2CF5;
+      --violet-deep: #2A0E7A;
+      --lilac: #B9A4FF;
+      --yellow: #DAFE51;
+
+      --hold-border: #6C7F00;
+
+      --font: "Geist", -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+      --font-brand: "Poppins", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      --mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+      --gutter: clamp(20px, 2.2vw, 40px);
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --ease: cubic-bezier(.2, .7, .2, 1);
+
+      box-sizing: border-box;
+    }
+
+    *, *::before, *::after { box-sizing: inherit; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: var(--font);
+      background: #fff;
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+    }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+    :focus-visible { outline: 2px solid var(--violet); outline-offset: 3px; border-radius: 6px; }
+    [hidden] { display: none !important; }
+
+    .wrap { padding-inline: var(--gutter); }
+    .mono { font-family: var(--mono); font-size: 13px; letter-spacing: 0; }
+
+    /* Botón principal (igual que el landing) */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      height: 52px; padding: 0 22px;
+      border-radius: 999px;
+      background: var(--yellow);
+      color: var(--ink);
+      font-weight: 500; font-size: 16px; letter-spacing: -0.02em;
+      transition: transform .3s var(--ease), background-color .3s var(--ease);
+    }
+    .btn:active { transform: scale(.97); }
+    .btn--ink { background: var(--ink); color: #fff; }
+    .btn--ink svg { color: var(--yellow); }
+    .btn svg { width: 16px; height: 16px; flex: none; }
+    .btn[disabled], .btn[aria-disabled="true"] {
+      background: var(--paper-2); color: #5A5862; cursor: not-allowed; transform: none;
+    }
+
+    /* Header claro */
+    .header {
+      display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+      padding: 28px var(--gutter);
+      background: #fff; color: var(--ink);
+      border-bottom: 1px solid var(--line);
+      font-family: var(--font-brand);
+    }
+    .brand { display: flex; align-items: baseline; gap: 14px; }
+    .brand-name { font-size: 22px; font-weight: 600; letter-spacing: -0.04em; }
+    .brand-time { font-size: 12px; color: var(--muted); }
+    .nav { display: flex; gap: 22px; font-size: 22px; letter-spacing: -0.03em; }
+    .nav a:hover, .nav a[aria-current="page"] { text-decoration: underline; text-underline-offset: 5px; }
+    .nav a[aria-current="page"] { text-decoration-color: var(--violet); text-decoration-thickness: 2px; }
+    .header-cta { justify-self: end; font-size: 22px; letter-spacing: -0.03em; }
+
+    /* Título */
+    .page-head { padding-top: clamp(48px, 7vw, 96px); padding-bottom: clamp(28px, 4vw, 48px); }
+    .section-title {
+      display: inline-block;
+      font-size: clamp(48px, 9vw, 160px);
+      font-weight: 600;
+      letter-spacing: -0.055em;
+      line-height: 0.92;
+      background: linear-gradient(90deg, var(--violet-deep) 0%, var(--violet) 45%, var(--lilac) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      padding-bottom: .06em;
+      padding-right: .07em;
+    }
+
+    /* Filas de eventos */
+    .events { border-bottom: 1px solid var(--line); }
+    .event {
+      display: grid;
+      grid-template-columns: 200px minmax(0, 1fr) 248px;
+      gap: clamp(24px, 3.4vw, 56px);
+      padding: 44px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    /* a) Afiche */
+    .poster {
+      position: relative; width: 200px; max-width: 100%;
+      aspect-ratio: 1 / 2;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--violet-deep);
+    }
+    .poster img { width: 100%; height: 100%; object-fit: cover; }
+    .poster-fallback {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; justify-content: space-between;
+      padding: 20px 18px;
+      color: #fff;
+      background:
+        radial-gradient(90% 45% at 100% 0%, rgba(185, 164, 255, .55), transparent 70%),
+        linear-gradient(170deg, var(--violet-deep) 0%, var(--violet) 80%);
+      font-family: var(--font-brand);
+    }
+    .poster-brand { font-size: 20px; font-weight: 700; letter-spacing: -0.03em; }
+    .poster-letter { font-size: 96px; font-weight: 800; letter-spacing: -0.04em; line-height: .9; color: var(--yellow); }
+    .poster-title { font-size: 20px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; overflow-wrap: anywhere; }
+    .poster-date { margin-top: 10px; font-family: var(--mono); font-size: 13px; overflow-wrap: anywhere; }
+
+    /* b) Información */
+    .info { min-width: 0; display: flex; flex-direction: column; gap: 18px; align-items: flex-start; }
+    .kind { font-family: var(--mono); font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--violet); }
+    .ev-title { font-size: clamp(28px, 3vw, 44px); font-weight: 600; letter-spacing: -0.045em; line-height: 1.04; }
+    .ev-desc { font-size: 17px; line-height: 1.5; color: var(--body); max-width: 56ch; }
+    .field-label { font-size: 13px; font-weight: 500; color: var(--muted); margin-bottom: 8px; display: block; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; }
+    .chip { padding: 6px 12px; border-radius: 999px; background: #EEE8FF; color: var(--violet-deep); font-size: 14px; font-weight: 500; }
+    .dates { display: flex; flex-wrap: wrap; gap: 10px; }
+    .date-btn {
+      display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
+      min-width: 128px; padding: 12px 16px;
+      border: 1px solid var(--line); border-radius: var(--radius-md);
+      background: #fff; text-align: left;
+      transition: border-color .2s, background-color .2s;
+    }
+    .date-btn:hover { border-color: var(--violet); }
+    .date-btn .d-label { font-size: 16px; font-weight: 500; letter-spacing: -0.02em; }
+    .date-btn .d-stock { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+    .date-btn[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
+    .date-btn[aria-pressed="true"] .d-stock { color: var(--lilac); }
+    .facts { display: flex; flex-wrap: wrap; gap: 8px 32px; }
+    .facts div { min-width: 0; }
+    .facts dt { font-size: 13px; color: var(--muted); }
+    .facts dd { font-size: 17px; font-weight: 500; letter-spacing: -0.02em; overflow-wrap: anywhere; }
+    .price { font-size: 28px; font-weight: 600; letter-spacing: -0.04em; }
+    .price small { font-size: 15px; font-weight: 500; color: var(--body); margin-left: 6px; }
+
+    /* c) Sala */
+    .room { min-width: 0; }
+    .screen {
+      height: 8px; border-radius: 999px; margin: 0 8px 18px;
+      background: linear-gradient(90deg, var(--violet-deep), var(--violet), var(--lilac));
+    }
+    .seats { display: grid; grid-template-columns: repeat(5, 36px); gap: 10px 10px; justify-content: space-between; max-width: 248px; }
+    .seat {
+      width: 36px; height: 36px; border-radius: 10px 10px 6px 6px;
+      border: 2px solid transparent;
+    }
+    .seat--free { background: var(--lilac); border-color: var(--violet); }
+    .seat--hold { background: var(--yellow); border: 2px dashed var(--hold-border); }
+    .seat--taken { background: var(--ink); border-color: var(--ink); }
+    .room-count { margin-top: 18px; font-size: 17px; font-weight: 500; letter-spacing: -0.02em; }
+    .legend { margin-top: 14px; display: flex; flex-direction: column; gap: 8px; list-style: none; font-size: 14px; color: var(--body); }
+    .legend li { display: flex; align-items: center; gap: 10px; }
+    .legend .seat { width: 18px; height: 18px; border-radius: 6px 6px 4px 4px; border-width: 2px; flex: none; }
+
+    /* Mensajes */
+    .notice {
+      margin: 0 0 60px; padding: 24px 26px;
+      border: 1px solid var(--line); border-radius: var(--radius-lg);
+      background: var(--paper); font-size: 17px; line-height: 1.5; color: var(--body);
+    }
+    .notice strong { color: var(--ink); display: block; font-size: 20px; letter-spacing: -0.03em; margin-bottom: 6px; }
+    .notice--error { border-color: var(--violet); }
+
+    /* Secciones inferiores */
+    .block { padding-top: clamp(64px, 8vw, 110px); }
+    .block h2 {
+      font-size: clamp(32px, 4vw, 56px); font-weight: 600; letter-spacing: -0.05em; line-height: 1;
+      margin-bottom: 28px;
+    }
+    #pago { scroll-margin-top: 24px; }
+    .reserving {
+      background: var(--ink); color: #fff; border-radius: var(--radius-lg);
+      padding: 22px 26px; font-size: clamp(18px, 2vw, 24px); letter-spacing: -0.03em; line-height: 1.3;
+      overflow-wrap: anywhere;
+    }
+    .reserving .lbl { color: var(--lilac); }
+    .pay-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 16px; margin-top: 16px; }
+    .pay-card { border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 26px; background: var(--paper); min-width: 0; }
+    .pay-card h3 { font-size: 22px; font-weight: 600; letter-spacing: -0.04em; margin-bottom: 4px; }
+    .pay-card > p { font-size: 15px; color: var(--body); margin-bottom: 20px; }
+    .methods { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .method { background: #fff; border: 1px solid var(--line); border-radius: var(--radius-md); padding: 16px; min-width: 0; }
+    .method h4 { font-size: 16px; font-weight: 600; margin-bottom: 12px; }
+    .qr { width: 100%; max-width: 180px; aspect-ratio: 1; border-radius: 10px; background: var(--paper-2); object-fit: contain; margin-bottom: 12px; }
+    .qr-missing { display: grid; place-items: center; text-align: center; padding: 10px; font-size: 13px; color: #5A5862; border: 1px dashed var(--muted); }
+    .method .num { font-family: var(--mono); font-size: 16px; font-weight: 500; overflow-wrap: anywhere; }
+    .method .holder { font-size: 14px; color: var(--body); overflow-wrap: anywhere; }
+    .pay-card .usd { font-size: 17px; margin-bottom: 18px; }
+    .wa-row { margin-top: 24px; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+    .wa-row p { font-size: 15px; color: var(--body); }
+
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; list-style: none; }
+    .step { border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px; }
+    .step .n { font-family: var(--mono); font-size: 13px; color: var(--violet); display: block; margin-bottom: 18px; }
+    .step h3 { font-size: 20px; font-weight: 600; letter-spacing: -0.035em; margin-bottom: 8px; }
+    .step p { font-size: 15px; line-height: 1.45; color: var(--body); }
+    .privacy { margin-top: 28px; font-size: 14px; color: var(--body); }
+    .privacy .todo { color: var(--violet-deep); font-family: var(--mono); font-size: 13px; }
+
+    /* Pie */
+    .footer { margin-top: clamp(72px, 9vw, 120px); padding-block: 32px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 14px; color: var(--muted); }
+    .footer a { text-decoration: underline; text-underline-offset: 3px; }
+
+    @media (max-width: 1024px) {
+      .header { grid-template-columns: 1fr auto; row-gap: 14px; }
+      .nav { grid-column: 1 / -1; grid-row: 2; font-size: 18px; gap: 20px; flex-wrap: wrap; }
+      .steps { grid-template-columns: repeat(2, 1fr); }
+      .pay-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 900px) {
+      .event { grid-template-columns: 1fr; padding: 36px 0; }
+      .seats { max-width: 248px; }
+    }
+    @media (max-width: 680px) {
+      .brand-time { display: none; }
+      .header { padding-block: 20px; }
+      .header-cta { font-size: 17px; }
+      .methods { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; }
+      .btn { max-width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="brand">
+      <a href="/" class="brand-name">8+Core</a>
+      <span class="brand-time">· Lima, <span id="clock">--:--</span> (GMT−5)</span>
+    </div>
+    <nav class="nav" aria-label="Principal">
+      <a href="/#nosotros">Nosotros</a>
+      <a href="/#servicios">Servicios</a>
+      <a href="/#equipo">Equipo</a>
+      <a href="/eventos/" aria-current="page">Eventos</a>
+      <a href="/#faq">FAQ</a>
+    </nav>
+    <a href="mailto:hola@8pluscore.com" class="header-cta">Hablemos</a>
+  </header>
+
+  <main>
+    <section class="page-head wrap" aria-labelledby="titulo">
+      <h1 class="section-title" id="titulo">Próximos eventos</h1>
+    </section>
+
+    <section class="wrap" id="eventos" aria-label="Lista de eventos">
+      <div id="events" class="events" aria-busy="true"></div>
+      <div id="status" class="notice" role="status">Cargando eventos…</div>
+      <noscript><div class="notice notice--error"><strong>Activa JavaScript</strong>Necesitamos JavaScript para mostrar los eventos y los asientos disponibles.</div></noscript>
+    </section>
+
+    <section class="block wrap" id="pago" aria-labelledby="pago-titulo" tabindex="-1">
+      <h2 id="pago-titulo">Pago</h2>
+      <div class="reserving" id="reserving" aria-live="polite"></div>
+      <div id="pay-body" hidden>
+        <div class="pay-grid">
+          <article class="pay-card" aria-labelledby="pe-titulo">
+            <h3 id="pe-titulo">Perú · soles</h3>
+            <p>Paga con Yape o Plin y guarda tu comprobante.</p>
+            <div class="methods" id="methods"></div>
+          </article>
+          <article class="pay-card" aria-labelledby="la-titulo">
+            <h3 id="la-titulo">Resto de Latinoamérica · dólares</h3>
+            <p>Paga con tarjeta en Gumroad.</p>
+            <p class="usd" id="usd"></p>
+            <div id="gumroad"></div>
+          </article>
+        </div>
+        <div class="wa-row">
+          <div id="whatsapp"></div>
+          <p>Después de pagar, confírmanos por WhatsApp con tu nombre completo.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block wrap" id="como-funciona" aria-labelledby="cf-titulo">
+      <h2 id="cf-titulo">Cómo funciona</h2>
+      <ol class="steps">
+        <li class="step"><span class="n">01</span><h3>Elige evento y fecha</h3><p>Revisa los asientos libres de la sala y escoge la fecha que mejor te acomode.</p></li>
+        <li class="step"><span class="n">02</span><h3>Paga</h3><p>Yape o Plin si estás en Perú; Gumroad si estás en el resto de Latinoamérica.</p></li>
+        <li class="step"><span class="n">03</span><h3>Confirma por WhatsApp</h3><p>Escríbenos con tu nombre completo y validamos tu pago.</p></li>
+        <li class="step"><span class="n">04</span><h3>Entra a la sala</h3><p>Te enviamos el acceso a tu sala online antes de empezar.</p></li>
+      </ol>
+      <p class="privacy">Usamos tus datos solo para gestionar tu inscripción. <span class="todo">[Aviso de privacidad: redacción por confirmar]</span></p>
+    </section>
+  </main>
+
+  <footer class="footer wrap">
+    <span>© <span id="year">2026</span> 8+Core.</span>
+    <a href="/privacidad.html">Privacidad</a>
+  </footer>
+
+  <script>
+    (() => {
+      'use strict';
+
+      const SEATS = 15;
+      const DATA_URL = 'eventos.json';
+
+      // ---------- Utilidades ----------
+      const h = (tag, props = {}, ...kids) => {
+        const el = document.createElement(tag);
+        for (const [k, v] of Object.entries(props)) {
+          if (v == null || v === false) continue;
+          if (k === 'class') el.className = v;
+          else if (k === 'text') el.textContent = v;
+          else el.setAttribute(k, v === true ? '' : v);
+        }
+        kids.flat().forEach(c => c != null && el.append(c));
+        return el;
+      };
+      const $ = id => document.getElementById(id);
+      const isStr = v => typeof v === 'string' && v.trim() !== '';
+      const isCount = v => Number.isInteger(v) && v >= 0;
+      const safeUrl = u => {
+        try { const x = new URL(u); return /^https?:$/.test(x.protocol) ? x.href : null; } catch { return null; }
+      };
+      const arrow = () => {
+        const s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        s.setAttribute('viewBox', '0 0 16 16'); s.setAttribute('fill', 'none');
+        s.setAttribute('stroke', 'currentColor'); s.setAttribute('stroke-width', '1.8');
+        s.setAttribute('aria-hidden', 'true');
+        const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        p.setAttribute('d', 'M2 8h11M9 4l4 4-4 4'); s.append(p);
+        return s;
+      };
+
+      // Reloj de Lima y año (igual que el landing)
+      const clock = $('clock');
+      const fmt = new Intl.DateTimeFormat('es-PE', { hour: '2-digit', minute: '2-digit', hour12: true, timeZone: 'America/Lima' });
+      const tick = () => { clock.textContent = fmt.format(new Date()); };
+      tick(); setInterval(tick, 30000);
+      $('year').textContent = new Date().getFullYear();
+
+      // ---------- Validación ----------
+      function validate(d) {
+        const obj = v => v && typeof v === 'object' && !Array.isArray(v);
+        if (!obj(d)) return 'El archivo no tiene el formato esperado.';
+        if (!isStr(d.whatsapp)) return 'Falta "whatsapp".';
+        if (!obj(d.pago)) return 'Falta "pago".';
+        for (const k of ['yape', 'plin']) {
+          const m = d.pago[k];
+          if (!obj(m) || !isStr(m.numero) || !isStr(m.titular) || !isStr(m.qr)) return `Datos incompletos en "pago.${k}".`;
+        }
+        if (!Array.isArray(d.eventos) || d.eventos.length === 0) return 'No hay eventos en la lista.';
+        const ids = new Set();
+        for (const [i, e] of d.eventos.entries()) {
+          const n = `eventos[${i}]`;
+          if (!obj(e)) return `${n} no es válido.`;
+          for (const k of ['id', 'badge', 'tipo', 'titulo', 'descripcion', 'precio', 'precioUsd', 'horario', 'duracion', 'gumroad']) {
+            if (!isStr(e[k])) return `Falta "${k}" en ${n}.`;
+          }
+          if (ids.has(e.id)) return `El id "${e.id}" está repetido.`;
+          ids.add(e.id);
+          if (e.afiche != null && typeof e.afiche !== 'string') return `"afiche" no es válido en ${n}.`;
+          if (e.noches != null && (!Array.isArray(e.noches) || !e.noches.every(isStr))) return `"noches" no es válido en ${n}.`;
+          if (!Array.isArray(e.fechas) || e.fechas.length === 0) return `Faltan "fechas" en ${n}.`;
+          for (const [j, f] of e.fechas.entries()) {
+            if (!obj(f) || !isStr(f.etiqueta) || !isCount(f.ocupados) || !isCount(f.en_validacion)) return `Fecha ${j + 1} no válida en ${n}.`;
+            if (f.ocupados + f.en_validacion > SEATS) return `Fecha ${j + 1} de ${n} supera los ${SEATS} asientos.`;
+          }
+        }
+        return null;
+      }
+
+      const remaining = f => SEATS - f.ocupados - f.en_validacion;
+
+      // ---------- Reserva / pago ----------
+      let data = null;
+      let reservation = null; // { ev, fecha }
+
+      function renderPago() {
+        const box = $('reserving'), body = $('pay-body');
+        if (!data) { box.hidden = true; body.hidden = true; return; }
+        box.hidden = false;
+        box.replaceChildren();
+        if (!reservation) {
+          box.append('Primero elige un evento y una fecha, y pulsa ');
+          box.append(h('strong', { text: '“Reservar mi asiento”' }));
+          box.append('.');
+          body.hidden = true;
+          return;
+        }
+        const { ev, fecha } = reservation;
+        box.append(
+          h('span', { class: 'lbl', text: 'Estás reservando: ' }),
+          `${ev.titulo} · ${fecha.etiqueta} · ${ev.precio}`
+        );
+        body.hidden = false;
+
+        // Yape y Plin
+        const methods = $('methods');
+        methods.replaceChildren();
+        for (const [key, name] of [['yape', 'Yape'], ['plin', 'Plin']]) {
+          const m = data.pago[key];
+          const qr = h('img', { class: 'qr', src: m.qr, alt: `QR de ${name}`, width: '180', height: '180', loading: 'lazy' });
+          qr.addEventListener('error', () => {
+            qr.replaceWith(h('div', { class: 'qr qr-missing', role: 'img', 'aria-label': `QR de ${name} no disponible`, text: 'QR por cargar' }));
+          });
+          methods.append(h('div', { class: 'method' },
+            h('h4', { text: name }), qr,
+            h('p', { class: 'num', text: m.numero }),
+            h('p', { class: 'holder', text: `Titular: ${m.titular}` })
+          ));
+        }
+
+        // Gumroad
+        $('usd').textContent = `Precio: ${ev.precioUsd}`;
+        const g = safeUrl(ev.gumroad);
+        $('gumroad').replaceChildren(g
+          ? h('a', { class: 'btn', href: g, target: '_blank', rel: 'noopener' }, 'Pagar en Gumroad', arrow())
+          : h('button', { class: 'btn', type: 'button', disabled: true }, 'Enlace de Gumroad por confirmar'));
+
+        // WhatsApp
+        const num = data.whatsapp.replace(/\D/g, '');
+        const text = `Hola, quiero reservar un asiento en ${ev.titulo}, ${fecha.etiqueta}. Mi nombre completo es: `;
+        $('whatsapp').replaceChildren(num
+          ? h('a', { class: 'btn btn--ink', href: `https://wa.me/${num}?text=${encodeURIComponent(text)}`, target: '_blank', rel: 'noopener' }, 'Confirmar por WhatsApp', arrow())
+          : h('button', { class: 'btn btn--ink', type: 'button', disabled: true }, 'WhatsApp por confirmar'));
+      }
+
+      // ---------- Evento ----------
+      function buildEvent(ev) {
+        let idx = Math.max(0, ev.fechas.findIndex(f => remaining(f) > 0));
+        const titleId = `ev-${ev.id}-t`;
+
+        // a) Afiche
+        const poster = h('div', { class: 'poster' });
+        const pDate = h('p', { class: 'poster-date' });
+        const fallback = h('div', { class: 'poster-fallback', 'aria-hidden': 'true' },
+          h('div', {}, h('p', { class: 'poster-brand', text: '8+Core' })),
+          h('p', { class: 'poster-letter', text: ev.badge }),
+          h('div', {}, h('p', { class: 'poster-title', text: ev.titulo }), pDate)
+        );
+        if (isStr(ev.afiche)) {
+          const img = h('img', { src: ev.afiche, alt: `Afiche de ${ev.titulo}`, width: '200', height: '400' });
+          img.addEventListener('error', () => { img.replaceWith(fallback); poster.setAttribute('role', 'img'); poster.setAttribute('aria-label', `Afiche de ${ev.titulo}`); update(); });
+          poster.append(img);
+        } else {
+          poster.setAttribute('role', 'img');
+          poster.setAttribute('aria-label', `Afiche de ${ev.titulo}`);
+          poster.append(fallback);
+        }
+
+        // b) Información
+        const dateBtns = ev.fechas.map((f, i) => {
+          const b = h('button', { class: 'date-btn', type: 'button', 'aria-pressed': 'false' },
+            h('span', { class: 'd-label', text: f.etiqueta }),
+            h('span', { class: 'd-stock', text: remaining(f) > 0 ? `Quedan ${remaining(f)}` : 'Agotado' })
+          );
+          b.addEventListener('click', () => { idx = i; update(); });
+          return b;
+        });
+        const reserveSlot = h('div');
+        const info = h('div', { class: 'info' },
+          h('p', { class: 'kind', text: ev.tipo }),
+          h('h2', { class: 'ev-title', id: titleId, text: ev.titulo }),
+          h('p', { class: 'ev-desc', text: ev.descripcion }),
+          Array.isArray(ev.noches) && ev.noches.length
+            ? h('div', {}, h('span', { class: 'field-label', text: 'Noches del Workshop' }),
+                h('ul', { class: 'chips' }, ev.noches.map(n => h('li', { class: 'chip', text: n }))))
+            : null,
+          h('div', {}, h('span', { class: 'field-label', id: `${titleId}-f`, text: 'Elige tu fecha' }),
+            h('div', { class: 'dates', role: 'group', 'aria-labelledby': `${titleId}-f` }, dateBtns)),
+          h('dl', { class: 'facts' },
+            h('div', {}, h('dt', { text: 'Horario' }), h('dd', { text: ev.horario })),
+            h('div', {}, h('dt', { text: 'Duración' }), h('dd', { text: ev.duracion })),
+            h('div', {}, h('dt', { text: 'Precio' }),
+              h('dd', { class: 'price' }, ev.precio, h('small', { text: `o ${ev.precioUsd}` })))
+          ),
+          reserveSlot
+        );
+
+        // c) Sala
+        const seatsEl = h('div', { class: 'seats', role: 'group', 'aria-label': `Sala de ${SEATS} asientos` });
+        const count = h('p', { class: 'room-count', 'aria-live': 'polite' });
+        const room = h('div', { class: 'room' },
+          h('div', { class: 'screen', 'aria-hidden': 'true' }),
+          seatsEl, count,
+          h('ul', { class: 'legend' },
+            h('li', {}, h('span', { class: 'seat seat--free', 'aria-hidden': 'true' }), 'Libre'),
+            h('li', {}, h('span', { class: 'seat seat--hold', 'aria-hidden': 'true' }), 'Pago en validación'),
+            h('li', {}, h('span', { class: 'seat seat--taken', 'aria-hidden': 'true' }), 'Ocupado'))
+        );
+
+        function update() {
+          const f = ev.fechas[idx];
+          const left = remaining(f);
+          dateBtns.forEach((b, i) => b.setAttribute('aria-pressed', String(i === idx)));
+          pDate.textContent = f.etiqueta;
+
+          // Asientos: primero ocupados, luego en validación, luego libres
+          seatsEl.replaceChildren(...Array.from({ length: SEATS }, (_, i) => {
+            const [cls, label] = i < f.ocupados ? ['taken', 'ocupado']
+              : i < f.ocupados + f.en_validacion ? ['hold', 'pago en validación']
+              : ['free', 'libre'];
+            return h('span', { class: `seat seat--${cls}`, role: 'img', 'aria-label': `Asiento ${i + 1}, ${label}` });
+          }));
+          count.textContent = `Quedan ${left} ${left === 1 ? 'asiento' : 'asientos'} de ${SEATS}`;
+
+          if (left > 0) {
+            const a = h('a', { class: 'btn', href: '#pago' }, 'Reservar mi asiento →');
+            a.addEventListener('click', () => { reservation = { ev, fecha: ev.fechas[idx] }; renderPago(); });
+            reserveSlot.replaceChildren(a);
+          } else {
+            reserveSlot.replaceChildren(h('button', { class: 'btn', type: 'button', disabled: true }, 'Agotado · elige otra fecha'));
+          }
+        }
+        update();
+
+        return h('article', { class: 'event', 'aria-labelledby': titleId }, poster, info, room);
+      }
+
+      // ---------- Carga ----------
+      function showError(detail) {
+        const st = $('status');
+        st.className = 'notice notice--error';
+        st.setAttribute('role', 'alert');
+        st.replaceChildren(
+          h('strong', { text: 'No pudimos cargar los eventos' }),
+          'Recarga la página en unos minutos. Si el problema continúa, escríbenos a ',
+          h('a', { href: 'mailto:hola@8pluscore.com', class: 'link', style: 'text-decoration:underline', text: 'hola@8pluscore.com' }),
+          '.',
+          h('span', { class: 'mono', style: 'display:block;margin-top:10px;color:#5A5862', text: `Detalle: ${detail}` })
+        );
+        $('events').setAttribute('aria-busy', 'false');
+        renderPago();
+      }
+
+      async function load() {
+        renderPago();
+        let json;
+        try {
+          const res = await fetch(DATA_URL, { cache: 'no-cache' });
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          json = await res.json();
+        } catch (err) {
+          return showError(err instanceof SyntaxError ? 'eventos.json no es un JSON válido.' : `no se pudo leer eventos.json (${err.message}).`);
+        }
+        const problem = validate(json);
+        if (problem) return showError(problem);
+
+        data = json;
+        const list = $('events');
+        list.replaceChildren(...data.eventos.map(buildEvent));
+        list.setAttribute('aria-busy', 'false');
+        $('status').remove();
+        renderPago();
+      }
+
+      load();
+    })();
+  </script>
+</body>
+</html>
