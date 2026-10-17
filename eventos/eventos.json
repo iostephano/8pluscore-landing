@@ -25,7 +25,7 @@
       "duracion": "2 h",
       "gradiente": "linear-gradient(160deg,#2A0E7A,#6B2CF5)",
       "fechas": [
-        { "inicio": "2026-10-26T19:30:00-05:00", "ocupados": 0, "en_validacion": 0 },
+        { "inicio": "2026-10-26T19:30:00-05:00", "ocupados": 3, "en_validacion": 0 },
         { "inicio": "2026-11-09T19:30:00-05:00", "ocupados": 0, "en_validacion": 0 },
         { "inicio": "2026-11-23T19:30:00-05:00", "ocupados": 0, "en_validacion": 0 },
         { "inicio": "2026-12-07T19:30:00-05:00", "ocupados": 0, "en_validacion": 0 }
@@ -43,7 +43,7 @@
       "duracion": "2 h",
       "gradiente": "linear-gradient(160deg,#1b0a4d,#6B2CF5)",
       "fechas": [
-        { "inicio": "2026-11-02T19:30:00-05:00", "ocupados": 0, "en_validacion": 0 },
+        { "inicio": "2026-11-02T19:30:00-05:00", "ocupados": 2, "en_validacion": 0 },
         { "inicio": "2026-11-16T19:30:00-05:00", "ocupados": 0, "en_validacion": 0 },
         { "inicio": "2026-11-30T19:30:00-05:00", "ocupados": 0, "en_validacion": 0 },
         { "inicio": "2026-12-14T19:30:00-05:00", "ocupados": 0, "en_validacion": 0 }
@@ -74,7 +74,7 @@
       "grupos": [
         {
           "nombre": "Grupo 1",
-          "ocupados": 0,
+          "ocupados": 3,
           "en_validacion": 0,
           "fechas": [
             "2026-11-04T19:30:00-05:00",
