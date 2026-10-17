@@ -518,7 +518,7 @@
         if (!obj(y) || !['qr', 'numero', 'numeroInternacional', 'titular'].every(k => isStr(y[k]))) return 'Datos incompletos en "yape".';
         const c = d.config;
         if (!obj(c)) return 'Falta "config".';
-        if (!(Number.isFinite(c.rangoSemanas) && c.rangoSemanas > 0)) return '"config.rangoSemanas" no es válido.';
+        if (!Number.isInteger(c.maxOpciones) || c.maxOpciones < 1) return '"config.maxOpciones" no es válido.';
         if (!(Number.isFinite(c.cierreHoras) && c.cierreHoras >= 0)) return '"config.cierreHoras" no es válido.';
         if (!isStr(c.zonaHoraria)) return 'Falta "config.zonaHoraria".';
         try { new Intl.DateTimeFormat('en-US', { timeZone: c.zonaHoraria }); } catch { return '"config.zonaHoraria" no es válida.'; }
@@ -558,9 +558,9 @@
       let reservation = null; // { ev, opt, code }
       const remaining = o => CUPO - o.ocupados - o.en_validacion;
 
-      // Opciones visibles de un evento (fechas o grupos) según reglas de cierre y rango
+      // Próximas "maxOpciones" opciones abiertas (fechas o grupos): futuras y a más de "cierreHoras" de su inicio
       function visibleOptions(ev) {
-        const { rangoSemanas, cierreHoras } = data.config;
+        const { maxOpciones, cierreHoras } = data.config;
         const closeMs = cierreHoras * 3600e3;
         if (ev.grupos) {
           return ev.grupos
@@ -575,19 +575,19 @@
                 messageDate: `${g.nombre || `Grupo ${i + 1}`} · del ${dayLabel(first, false)} al ${dayLabel(last, false)}`
               };
             })
-            .filter(o => o.first - now >= closeMs)
+            .filter(o => o.first - now > closeMs)
             .sort((a, b) => a.first - b.first)
-            .slice(0, 2);
+            .slice(0, maxOpciones);
         }
-        const rangeMs = rangoSemanas * 7 * 864e5;
         return ev.fechas
           .map((f, i) => {
             const d = new Date(f.inicio);
             return { key: `f${i}`, group: false, ocupados: f.ocupados, en_validacion: f.en_validacion, first: d,
               label: dayLabel(d), posterDate: dayLabel(d), messageDate: dayLabel(d) };
           })
-          .filter(o => { const ms = o.first - now; return ms >= closeMs && ms <= rangeMs; })
-          .sort((a, b) => a.first - b.first);
+          .filter(o => o.first - now > closeMs)
+          .sort((a, b) => a.first - b.first)
+          .slice(0, maxOpciones);
       }
 
       // ---------- Reserva ----------
