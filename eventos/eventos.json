@@ -15,6 +15,7 @@
   "eventos": [
     {
       "id": "S1",
+      "afiche": "afiches/s1.webp",
       "badge": "S1",
       "etiqueta": "Session 01 · Para founders y quien piensa construir",
       "titulo": "Valida tu idea antes de construir",
@@ -32,6 +33,7 @@
     },
     {
       "id": "S2",
+      "afiche": "afiches/s2.webp",
       "badge": "S2",
       "etiqueta": "Session 02 · Para founders, CEO y CTO",
       "titulo": "Domina tu equipo con IA",
@@ -49,6 +51,7 @@
     },
     {
       "id": "W",
+      "afiche": "afiches/w.webp",
       "badge": "W",
       "etiqueta": "Workshop · Para quienes quieren construir con IA",
       "titulo": "De cero a infraestructura agéntica",
