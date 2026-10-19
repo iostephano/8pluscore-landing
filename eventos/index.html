@@ -181,6 +181,17 @@
 
     /* c) Sala */
     .room { min-width: 0; }
+    .ev-descs { display: flex; flex-direction: column; gap: 12px; }
+    .capsula-slot { margin-top: 16px; }
+    .capsula {
+      display: flex; align-items: center; justify-content: center; text-align: center;
+      width: fit-content; max-width: 100%; min-height: 52px; padding: 14px 22px;
+      border-radius: 14px; color: #fff; font-size: 15px; font-weight: 600; line-height: 1.25;
+    }
+    .capsula--naranja { background: #B8694D; }
+    .capsula--negro { background: var(--ink); border: 1px solid rgba(255, 255, 255, .18); }
+    .capsula-img { display: block; max-width: 100%; height: auto; }
+    .disclaimer { margin-top: 20px; font-size: 13px; line-height: 1.5; color: var(--muted); }
     .screen {
       height: 8px; border-radius: 999px; margin: 0 8px 18px;
       background: linear-gradient(90deg, var(--violet-deep), var(--violet), var(--lilac));
@@ -288,6 +299,7 @@
     @media (max-width: 900px) {
       .event, .event--soon { grid-template-columns: 1fr; padding: 36px 0; }
       .yape-grid { grid-template-columns: 1fr; }
+      .capsula { width: 100%; }
       .qr-wrap { max-width: 300px; }
     }
     @media (max-width: 680px) {
@@ -328,6 +340,7 @@
     <section class="wrap" id="eventos" aria-label="Lista de eventos">
       <div id="events" class="events" aria-busy="true"></div>
       <div id="status" class="notice" role="status">Cargando eventos…</div>
+      <p class="disclaimer">8+Core es independiente y no está afiliada, patrocinada ni respaldada por Anthropic. Claude es una marca de Anthropic.</p>
       <noscript><div class="notice notice--error"><strong>Activa JavaScript</strong>Necesitamos JavaScript para mostrar los eventos y los asientos disponibles.</div></noscript>
     </section>
 
@@ -539,6 +552,10 @@
           if (e.gradiente != null && !(typeof e.gradiente === 'string' && CSS.supports('background', e.gradiente))) return `"gradiente" no es válido en ${n}.`;
           if (e.precioNota != null && typeof e.precioNota !== 'string') return `"precioNota" no es válido en ${n}.`;
           if (e.temas != null && (!Array.isArray(e.temas) || !e.temas.every(isStr))) return `"temas" no es válido en ${n}.`;
+          if (e.capsula != null && !isStr(e.capsula)) return `"capsula" no es válida en ${n}.`;
+          if (e.capsulaEstilo != null && !['naranja', 'negro'].includes(e.capsulaEstilo)) return `"capsulaEstilo" debe ser "naranja" o "negro" en ${n}.`;
+          if (e.capsulaImagen != null && !isStr(e.capsulaImagen)) return `"capsulaImagen" no es válida en ${n}.`;
+          if (e.capsulaImagen != null && e.capsula == null) return `"capsulaImagen" requiere "capsula" (texto alternativo) en ${n}.`;
           const list = e.grupos || e.fechas;
           if (!Array.isArray(list)) return `Faltan "fechas" o "grupos" en ${n}.`;
           for (const [j, f] of list.entries()) {
@@ -703,6 +720,19 @@
       $('form').addEventListener('submit', e => e.preventDefault());
 
       // ---------- Evento ----------
+      // Cápsula de texto; si hay imagen la reemplaza y, si falla al cargar, vuelve al texto
+      function buildCapsula(ev) {
+        if (!isStr(ev.capsula)) return null;
+        const text = h('p', { class: `capsula capsula--${ev.capsulaEstilo === 'negro' ? 'negro' : 'naranja'}`, text: ev.capsula });
+        const slot = h('div', { class: 'capsula-slot' });
+        if (isStr(ev.capsulaImagen)) {
+          const img = h('img', { class: 'capsula-img', src: ev.capsulaImagen, alt: ev.capsula });
+          img.addEventListener('error', () => img.replaceWith(text));
+          slot.append(img);
+        } else slot.append(text);
+        return slot;
+      }
+
       function buildEvent(ev) {
         const opts = visibleOptions(ev);
         const titleId = `ev-${ev.id}-t`;
@@ -745,7 +775,8 @@
         const info = h('div', { class: 'info' },
           h('p', { class: 'kind', text: ev.etiqueta }),
           h('h2', { class: 'ev-title', id: titleId, text: ev.titulo }),
-          h('p', { class: 'ev-desc', text: ev.descripcion }),
+          h('div', { class: 'ev-descs' },
+            ev.descripcion.split(/\n\s*\n/).map(t => t.trim()).filter(Boolean).map(t => h('p', { class: 'ev-desc', text: t }))),
           opts.length ? h('div', {},
             h('span', { class: 'field-label', id: `${titleId}-f`, text: isGroup ? 'Elige tu grupo: un solo pago por los 8 encuentros' : 'Elige tu fecha' }),
             h('div', { class: 'dates', role: 'group', 'aria-labelledby': `${titleId}-f` }, dateBtns)) : null,
@@ -759,6 +790,8 @@
 
         if (!opts.length) {
           reserveSlot.append(h('span', { class: 'soon-tag', text: 'Próximamente' }));
+          const soonCap = buildCapsula(ev);
+          if (soonCap) info.append(soonCap);
           return h('article', { class: 'event event--soon', 'aria-labelledby': titleId }, poster, info);
         }
 
@@ -770,7 +803,8 @@
           h('ul', { class: 'legend' },
             h('li', {}, h('span', { class: 'seat seat--free', 'aria-hidden': 'true' }), 'Libre'),
             h('li', {}, h('span', { class: 'seat seat--hold', 'aria-hidden': 'true' }), 'Pago en validación'),
-            h('li', {}, h('span', { class: 'seat seat--taken', 'aria-hidden': 'true' }), 'Ocupado')));
+            h('li', {}, h('span', { class: 'seat seat--taken', 'aria-hidden': 'true' }), 'Ocupado')),
+          buildCapsula(ev));
 
         function update() {
           const o = opts[idx];

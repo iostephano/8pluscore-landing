@@ -16,6 +16,8 @@
     {
       "id": "S1",
       "afiche": "afiches/s1.webp",
+      "capsula": "Basada en documentación de Claude",
+      "capsulaEstilo": "naranja",
       "badge": "S1",
       "etiqueta": "Session 01 · Para founders y quien piensa construir",
       "titulo": "Valida tu idea antes de construir",
@@ -36,6 +38,8 @@
     {
       "id": "S2",
       "afiche": "afiches/s2.webp",
+      "capsula": "Basada en documentación de Claude",
+      "capsulaEstilo": "naranja",
       "badge": "S2",
       "etiqueta": "Session 02 · Para founders, CEO y CTO",
       "titulo": "Domina tu equipo con IA",
@@ -56,10 +60,12 @@
     {
       "id": "W",
       "afiche": "afiches/w.webp",
+      "capsula": "Basado en documentación de Claude Code",
+      "capsulaEstilo": "negro",
       "badge": "W",
       "etiqueta": "Workshop · Para quienes quieren construir con IA",
       "titulo": "De cero a infraestructura agéntica",
-      "descripcion": "Pasa de usar IA a construir con agentes. Aprendes construyendo, paso a paso, y terminas con tu propio proyecto funcionando.",
+      "descripcion": "Pasa de usar IA a construir con agentes. Aprendes construyendo, paso a paso, y terminas con tu propio proyecto funcionando.\n\nEn 8 encuentros trabajas con Claude API, tool use, MCP, Claude Code, skills y subagentes. Pasas de un prompt a un sistema que ejecuta tareas por sí solo, lo llevas a producción y lo gobiernas. Es un Workshop técnico, de cero a avanzado, 100 % sobre Claude. Para practicar te recomendamos un plan de pago de Claude (Pro o superior). Puedes participar sin él, aunque algunas prácticas no podrás ejecutarlas.",
       "precio": "S/ 600",
       "precioNota": "un solo pago · 8 encuentros",
       "horario": "7:30 a 9:30 p. m. (hora de Lima)",
