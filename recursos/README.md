@@ -63,11 +63,21 @@ Sin guiones largos ni rayas en ningún texto: el script lo rechaza.
 Con `"codigo": "12345"` (exactamente 5 dígitos, como texto entre comillas para no perder ceros iniciales) la página pide el código que se dice al final del video antes de entregar el archivo.
 
 - La página muestra el campo "Escribe el código del final del video" y el botón "Desbloquear". Si el código es correcto, la descarga empieza sola y queda a la vista el botón por si el navegador la bloquea. Si no, aparece un aviso amable.
-- El código no está en el HTML. Se guarda el SHA-256 de `<slug>:<codigo>` y el navegador lo compara con `crypto.subtle`. Esto necesita `https` (o `localhost`).
-- El enlace de descarga no se muestra en pantalla hasta acertar. Es una puerta de cortesía y no una protección fuerte: el enlace sigue en el código fuente de la página y 5 dígitos se pueden adivinar. No lo uses para material que deba ser realmente privado.
+- El código no está en el HTML. Para descargas y pestañas se guarda el SHA-256 de `<slug>:<codigo>` y el navegador lo compara con `crypto.subtle`. Esto necesita `https` (o `localhost`).
+- Con descargas, el enlace no se muestra en pantalla hasta acertar, pero sigue en el código fuente de la página. Es una puerta de cortesía y no una protección fuerte: 5 dígitos se pueden adivinar. No lo uses para material que deba ser realmente privado.
 - Sin JavaScript, la página avisa que se necesita JavaScript.
-- Qué entrega cada tipo al acertar: `pdf_propio` descarga el PDF de `assets/recursos/<slug>/`; `pdf_tercero` abre la `url` original en una pestaña nueva; `repo` descarga el ZIP (por eso `codigo` en `repo` exige `zip: true`).
+- Qué entrega cada tipo al acertar: `pdf_propio` descarga el PDF de `assets/recursos/<slug>/`; `pdf_tercero` abre la `url` original en una pestaña nueva; `repo` con `zip: true` descarga el ZIP; `repo` sin `zip` muestra la caja del prompt y los comandos (ver más abajo).
 - Sin `codigo`, la página funciona como siempre (los recursos `tablero` y `playbook` no llevan código).
+
+### Prompt y comandos con código (`repo` sin `zip`)
+
+Si un `repo` lleva `codigo` y no lleva `zip`, el código desbloquea la caja del prompt y los comandos. Aquí el contenido no está en el HTML en texto plano: el generador lo cifra y la página lo descifra con el código.
+
+- Se cifra el HTML de las cajas con AES-256-GCM. La clave sale del código con PBKDF2-SHA256 (200000 iteraciones) y un salt que depende del slug.
+- El IV sale del contenido, así que regenerar la página no cambia el HTML y una misma clave nunca cifra dos textos con el mismo IV.
+- En la página quedan solo el salt, el IV y el texto cifrado (con su etiqueta de autenticación), en atributos `data-`. El navegador deriva la clave con el código que escribe la persona y descifra: si el código es incorrecto, el descifrado falla y la página avisa.
+- El código no se guarda en ninguna parte. La protección es la de un código de 5 dígitos: alguien con ganas podría probar los 100000 códigos fuera de la página, aunque cada intento cuesta las 200000 iteraciones. Tampoco es para material realmente privado.
+- Los demás campos (`que_es`, `requisitos`, `seguridad`, `repo_url`) siguen a la vista.
 
 ### ZIP en `repo`
 

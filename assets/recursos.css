@@ -144,6 +144,8 @@ a { color: inherit; }
 .campo[aria-invalid="true"] { border-color: #B3261E; }
 .desbloqueo-fila .btn { margin-top: 0; }
 .desbloqueo .btn-descarga { display: inline-block; margin-top: 16px; }
+#contenido:focus { outline: none; }
+#contenido:not(:empty) { margin-top: 8px; }
 
 /* Invitación final a los eventos */
 .promo {

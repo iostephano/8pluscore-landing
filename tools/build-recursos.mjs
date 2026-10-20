@@ -2,7 +2,7 @@
 // Genera r/<slug>/index.html a partir de recursos/*.json. Sin dependencias, Node >= 18.
 import { readdir, readFile, writeFile, mkdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
-import { createHash } from 'node:crypto';
+import { createHash, pbkdf2Sync, createCipheriv } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
@@ -10,6 +10,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SITE = 'https://8pluscore.com';
 const TIPOS = ['pdf_tercero', 'pdf_propio', 'repo'];
 const RAYAS = /[\u2013\u2014]/;
+const ITERACIONES = 200000; // PBKDF2 del código que cifra el prompt y los comandos
 const REPO_GITHUB = /^https:\/\/github\.com\/[^/\s]+\/[^/\s]+?(\.git)?\/?$/;
 
 const esc = (s) => String(s)
@@ -58,7 +59,6 @@ function validar(r, file) {
   if (r.zip && r.tipo !== 'repo') return fail(file, 'zip solo aplica al tipo repo');
   if (r.codigo !== undefined) {
     if (typeof r.codigo !== 'string' || !/^\d{5}$/.test(r.codigo)) return fail(file, 'codigo debe ser un texto de exactamente 5 dígitos, entre comillas (por ejemplo "04821")');
-    if (r.tipo === 'repo' && !r.zip) return fail(file, 'en repo, codigo solo aplica con "zip": true (el código desbloquea la descarga del ZIP)');
   }
   if (r.cierre_session !== undefined && typeof r.cierre_session !== 'boolean') return fail(file, 'cierre_session debe ser true o false');
   if (r.session_url !== undefined) return fail(file, 'session_url está obsoleto: elimínalo (el bloque final sale de recursos/_promo.json)');
@@ -82,6 +82,18 @@ function validarPromo(p, file) {
 
 // Hash del código: SHA-256 de "<slug>:<codigo>". El navegador calcula lo mismo con crypto.subtle.
 const hashCodigo = (r) => createHash('sha256').update(`${r.slug}:${r.codigo}`).digest('hex');
+
+// Cifra un texto con AES-256-GCM. La clave sale del código con PBKDF2-SHA256 (mismos parámetros en el navegador).
+// Salt e IV son deterministas para que regenerar la página no cambie el HTML: el salt depende del slug y el IV
+// del contenido, así que una misma clave nunca cifra dos textos distintos con el mismo IV.
+function cifrar(r, texto) {
+  const salt = createHash('sha256').update(`8pluscore:salt:${r.slug}`).digest().subarray(0, 16);
+  const clave = pbkdf2Sync(r.codigo, salt, ITERACIONES, 32, 'sha256');
+  const iv = createHash('sha256').update(Buffer.concat([salt, Buffer.from(texto, 'utf8')])).digest().subarray(0, 12);
+  const c = createCipheriv('aes-256-gcm', clave, iv);
+  const datos = Buffer.concat([c.update(texto, 'utf8'), c.final(), c.getAuthTag()]); // el navegador espera texto cifrado + etiqueta
+  return { salt: salt.toString('base64'), iv: iv.toString('base64'), datos: datos.toString('base64') };
+}
 
 function urlZip(r) {
   const base = r.repo_url.replace(/\.git$/, '').replace(/\/$/, '');
@@ -135,6 +147,22 @@ function comandos(r) {
 ${cajas}`;
 }
 
+// Repo con código y sin ZIP: el prompt y los comandos viajan cifrados y se muestran al acertar el código.
+function bloqueContenidoCifrado(r) {
+  const c = cifrar(r, `${cajaCopiar('prompt', r.prompt, 'prompt-t')}${comandos(r)}`);
+  return `      <h3 id="prompt-t">Pega esto en Claude Code</h3>
+      <form class="desbloqueo" id="desbloqueo" novalidate hidden data-modo="contenido" data-iter="${ITERACIONES}" data-salt="${c.salt}" data-iv="${c.iv}" data-datos="${c.datos}">
+        <label for="codigo">Escribe el código del final del video</label>
+        <div class="desbloqueo-fila">
+          <input class="campo" id="codigo" name="codigo" type="text" inputmode="numeric" pattern="[0-9]{5}" minlength="5" maxlength="5" autocomplete="off" autocapitalize="off" spellcheck="false" required aria-describedby="codigo-estado">
+          <button class="btn" type="submit">Desbloquear</button>
+        </div>
+        <p class="nota" id="codigo-estado" role="status" aria-live="polite"></p>
+      </form>
+      <noscript><p class="nota">Para desbloquear este recurso necesitas activar JavaScript en tu navegador.</p></noscript>
+      <div id="contenido" tabindex="-1"></div>`;
+}
+
 function entrega(r) {
   if (r.tipo === 'pdf_tercero' || r.tipo === 'pdf_propio') {
     return `
@@ -149,7 +177,9 @@ ${bloqueAcceso(r)}
   const cuerpo = r.zip
     ? `      <h3 id="zip-t">Descarga el ZIP</h3>
 ${bloqueAcceso(r)}`
-    : `      <h3 id="prompt-t">Pega esto en Claude Code</h3>
+    : r.codigo
+      ? bloqueContenidoCifrado(r)
+      : `      <h3 id="prompt-t">Pega esto en Claude Code</h3>
 ${cajaCopiar('prompt', r.prompt, 'prompt-t')}${comandos(r)}`;
   return `
     <section class="entrega" aria-labelledby="entrega-t">
