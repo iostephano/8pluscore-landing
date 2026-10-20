@@ -1,0 +1,13 @@
+{
+  "slug": "7-instrucciones",
+  "tipo": "pdf_propio",
+  "titulo": "7 instrucciones para crear con Claude",
+  "descripcion": "Instrucciones detalladas para crear con Claude una presentación, un documento, un póster, una maqueta, pantallas de app, una página web y un panel con datos.",
+  "resumen": [
+    "Las 7 instrucciones que usé en el video para crear con Claude una presentación, un documento, un póster, una maqueta, pantallas de app, una página web y un panel con datos. Completas y listas para copiar.",
+    "Cada una trae qué preparar antes, el texto con corchetes para tus datos, el ejemplo del video y frases para ajustar el resultado. Al final hay una fórmula base y un checklist antes de publicar.",
+    "Una misma instrucción puede dar resultados distintos. Revisa siempre lo que Claude te entrega antes de usarlo."
+  ],
+  "archivo": "7-instrucciones.pdf",
+  "codigo": "00000"
+}
