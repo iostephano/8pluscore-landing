@@ -4,7 +4,7 @@ Cada video entrega un recurso en `8pluscore.com/r/<slug>/`. No hay página índi
 
 ## Regla de publicación
 
-Publica cada recurso solo cuando salga su video. No hagas commit ni push del JSON (ni de su página generada) antes de ese momento. Las páginas llevan `noindex, nofollow` y no entran a `sitemap.xml`.
+Puedes preparar el recurso en una rama y un PR en borrador. No hagas merge a main antes de que salga el video. Las páginas llevan `noindex, nofollow` y no entran a `sitemap.xml`.
 
 ## Agregar un recurso nuevo
 
@@ -17,7 +17,7 @@ Publica cada recurso solo cuando salga su video. No hagas commit ni push del JSO
 
    (Node 18 o superior.) Crea o actualiza `r/<slug>/index.html` para cada JSON y avisa si falta algo. Las páginas de `r/` salen siempre del generador: no se editan a mano.
 3. Ábrelo en local. Si el recurso lleva código, sírvelo con `python3 -m http.server` y entra por `http://localhost:8000/r/<slug>/`, porque la verificación del código necesita `https` o `localhost`.
-4. Revisa en celular (390 px) y en escritorio, haz commit del JSON y de `r/<slug>/`, y publica cuando salga el video.
+4. Revisa en celular (390 px) y en escritorio, haz commit del JSON y de `r/<slug>/` en una rama, abre un PR en borrador y haz merge cuando salga el video.
 
 ## Campos del JSON
 
