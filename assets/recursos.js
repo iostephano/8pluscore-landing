@@ -89,7 +89,7 @@
     enviar.disabled = true;
   }
 
-  // Modos "descarga" y "pestana": compara el SHA-256 de "<slug>:<codigo>" con el hash de la página.
+  // Modos "descarga" y "pestana": compara el SHA-256 de "<slug>:<codigo en minúsculas>" con el hash de la página.
   function verificarHash(codigo) {
     var texto = new TextEncoder().encode(form.getAttribute('data-slug') + ':' + codigo);
     return window.crypto.subtle.digest('SHA-256', texto).then(function (buf) {
@@ -110,8 +110,8 @@
     }
     form.appendChild(enlace);
     aviso(modo === 'pestana'
-      ? 'Código correcto. Se abre el documento en una pestaña nueva. Si no se abre, usa el botón.'
-      : 'Código correcto. Tu descarga empieza ahora. Si no empieza, usa el botón.');
+      ? 'Correcto. Se abre el documento en una pestaña nueva. Si no se abre, usa el botón.'
+      : 'Correcto. Tu descarga empieza ahora. Si no empieza, usa el botón.');
     enlace.click();
     enlace.focus();
   }
@@ -136,38 +136,35 @@
     var caja = document.getElementById('contenido');
     caja.innerHTML = html; // HTML generado y cifrado por el generador, autenticado por AES-GCM
     iniciarCopiar(caja);
-    aviso('Código correcto. Aquí tienes el prompt y los comandos.');
+    aviso('Correcto. Aquí tienes el prompt y los comandos.');
     caja.focus();
   }
 
   function incorrecto() {
     marcar(true);
-    aviso('Ese código no es el correcto. Míralo otra vez al final del video e inténtalo de nuevo.');
+    aviso('Esa palabra o ese código no es el correcto. Revísalo al final del video e inténtalo de nuevo.');
     input.focus();
     input.select();
   }
 
-  input.addEventListener('input', function () {
-    var limpio = input.value.replace(/\D/g, '').slice(0, 5);
-    if (limpio !== input.value) input.value = limpio;
-    marcar(false);
-  });
+  input.addEventListener('input', function () { marcar(false); });
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     if (abierto) return;
-    var codigo = input.value;
-    if (!/^\d{5}$/.test(codigo)) {
+    // Sin distinguir mayúsculas de minúsculas ni espacios en los extremos (igual que el generador).
+    var codigo = input.value.trim().toLowerCase();
+    if (!/^[a-z0-9]{5}$/.test(codigo)) {
       marcar(true);
-      aviso('El código tiene 5 números. Lo encuentras al final del video.');
+      aviso('La palabra o el código tiene 5 letras o números, sin espacios. Lo encuentras al final del video.');
       input.focus();
       return;
     }
     if (!(window.crypto && window.crypto.subtle && window.TextEncoder)) {
-      aviso('Este navegador no puede verificar el código. Abre la página en otro navegador, con conexión segura.');
+      aviso('Este navegador no puede verificar la palabra o el código. Abre la página en otro navegador, con conexión segura.');
       return;
     }
-    var fallo = function () { aviso('No pudimos verificar el código. Inténtalo de nuevo.'); };
+    var fallo = function () { aviso('No pudimos verificar la palabra o el código. Inténtalo de nuevo.'); };
     if (modo === 'contenido') {
       descifrar(codigo).then(function (html) {
         if (html === null) incorrecto(); else mostrarContenido(html);

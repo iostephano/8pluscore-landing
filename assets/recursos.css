@@ -140,6 +140,7 @@ a { color: inherit; }
   color: var(--ink);
   font: 500 22px/1.2 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   letter-spacing: 0.3em;
+  text-transform: uppercase;
 }
 .campo[aria-invalid="true"] { border-color: #B3261E; }
 .desbloqueo-fila .btn { margin-top: 0; }
