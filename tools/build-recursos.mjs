@@ -2,12 +2,16 @@
 // Genera r/<slug>/index.html a partir de recursos/*.json. Sin dependencias, Node >= 18.
 import { readdir, readFile, writeFile, mkdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
+import { createHash, pbkdf2Sync, createCipheriv } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SITE = 'https://8pluscore.com';
 const TIPOS = ['pdf_tercero', 'pdf_propio', 'repo'];
+const RAYAS = /[\u2013\u2014]/;
+const ITERACIONES = 200000; // PBKDF2 del código que cifra el prompt y los comandos
+const REPO_GITHUB = /^https:\/\/github\.com\/[^/\s]+\/[^/\s]+?(\.git)?\/?$/;
 
 const esc = (s) => String(s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -36,21 +40,94 @@ function validar(r, file) {
     if (!existsSync(path.join(root, 'assets/recursos', r.slug, r.archivo))) return fail(file, `no existe assets/recursos/${r.slug}/${r.archivo}`);
   }
   if (r.tipo === 'repo') {
-    for (const k of ['que_es', 'requisitos', 'prompt', 'repo_url', 'ref'])
+    for (const k of ['que_es', 'requisitos', 'repo_url', 'ref'])
       if (!need(k)) return fail(file, `repo requiere ${k}`);
+    if (!r.zip && !need('prompt')) return fail(file, 'repo requiere prompt (o "zip": true para entregar el ZIP)');
     if (!/^https:\/\//.test(r.repo_url)) return fail(file, 'repo_url debe ser https');
-    if (!r.prompt.includes(r.ref)) return fail(file, 'el prompt debe mencionar la versión fija indicada en "ref"');
-    if (!/confirm/i.test(r.prompt) || !/(explic|expl[ií]c)/i.test(r.prompt))
-      return fail(file, 'el prompt debe pedir que Claude explique qué va a instalar y espere confirmación');
+    if (r.zip && !REPO_GITHUB.test(r.repo_url)) return fail(file, 'con "zip": true, repo_url debe ser un repo de github.com (https://github.com/usuario/repo)');
+    if (r.prompt !== undefined) {
+      if (!need('prompt')) return fail(file, 'prompt debe ser un texto');
+      if (!r.prompt.includes(r.ref)) return fail(file, 'el prompt debe mencionar la versión fija indicada en "ref"');
+      if (!/confirm/i.test(r.prompt) || !/(explic|expl[ií]c)/i.test(r.prompt))
+        return fail(file, 'el prompt debe pedir que Claude explique qué va a instalar y espere confirmación');
+    }
     if (r.comandos !== undefined && (!Array.isArray(r.comandos) || !r.comandos.every((c) => typeof c === 'string' && c.trim())))
       return fail(file, 'comandos debe ser una lista de textos');
     if (r.imagen && !existsSync(path.join(root, 'assets/recursos', r.slug, r.imagen))) return fail(file, `no existe assets/recursos/${r.slug}/${r.imagen}`);
   }
+  if (r.zip !== undefined && typeof r.zip !== 'boolean') return fail(file, 'zip debe ser true o false');
+  if (r.zip && r.tipo !== 'repo') return fail(file, 'zip solo aplica al tipo repo');
+  if (r.codigo !== undefined) {
+    if (typeof r.codigo !== 'string' || !/^\d{5}$/.test(r.codigo)) return fail(file, 'codigo debe ser un texto de exactamente 5 dígitos, entre comillas (por ejemplo "04821")');
+  }
   if (r.cierre_session !== undefined && typeof r.cierre_session !== 'boolean') return fail(file, 'cierre_session debe ser true o false');
-  if (r.session_url && !/^https:\/\//.test(r.session_url)) return fail(file, 'session_url debe estar vacío o ser https');
-  const texto = JSON.stringify(r);
-  if (/[–—]/.test(texto)) return fail(file, 'no uses guiones largos ni rayas en los textos');
+  if (r.session_url !== undefined) return fail(file, 'session_url está obsoleto: elimínalo (el bloque final sale de recursos/_promo.json)');
+  if (RAYAS.test(JSON.stringify(r))) return fail(file, 'no uses guiones largos ni rayas en los textos');
   return true;
+}
+
+function validarPromo(p, file) {
+  const need = (k) => typeof p[k] === 'string' && p[k].trim() !== '';
+  if (!p || typeof p !== 'object' || Array.isArray(p)) return fail(file, 'debe ser un objeto JSON');
+  for (const k of ['titulo', 'texto', 'boton']) if (!need(k)) return fail(file, `falta ${k}`);
+  if (!/^https:\/\//.test(p.url || '')) return fail(file, 'url debe ser https');
+  if (p.imagen !== undefined) {
+    if (!need('imagen')) return fail(file, 'imagen debe ser un texto (ruta dentro de assets/)');
+    if (!existsSync(path.join(root, 'assets', p.imagen))) return fail(file, `no existe assets/${p.imagen}`);
+  }
+  if (p.imagen_alt !== undefined && typeof p.imagen_alt !== 'string') return fail(file, 'imagen_alt debe ser un texto');
+  if (RAYAS.test(JSON.stringify(p))) return fail(file, 'no uses guiones largos ni rayas en los textos');
+  return true;
+}
+
+// Hash del código: SHA-256 de "<slug>:<codigo>". El navegador calcula lo mismo con crypto.subtle.
+const hashCodigo = (r) => createHash('sha256').update(`${r.slug}:${r.codigo}`).digest('hex');
+
+// Cifra un texto con AES-256-GCM. La clave sale del código con PBKDF2-SHA256 (mismos parámetros en el navegador).
+// Salt e IV son deterministas para que regenerar la página no cambie el HTML: el salt depende del slug y el IV
+// del contenido, así que una misma clave nunca cifra dos textos distintos con el mismo IV.
+function cifrar(r, texto) {
+  const salt = createHash('sha256').update(`8pluscore:salt:${r.slug}`).digest().subarray(0, 16);
+  const clave = pbkdf2Sync(r.codigo, salt, ITERACIONES, 32, 'sha256');
+  const iv = createHash('sha256').update(Buffer.concat([salt, Buffer.from(texto, 'utf8')])).digest().subarray(0, 12);
+  const c = createCipheriv('aes-256-gcm', clave, iv);
+  const datos = Buffer.concat([c.update(texto, 'utf8'), c.final(), c.getAuthTag()]); // el navegador espera texto cifrado + etiqueta
+  return { salt: salt.toString('base64'), iv: iv.toString('base64'), datos: datos.toString('base64') };
+}
+
+function urlZip(r) {
+  const base = r.repo_url.replace(/\.git$/, '').replace(/\/$/, '');
+  return /^[0-9a-f]{7,40}$/i.test(r.ref) ? `${base}/archive/${r.ref}.zip` : `${base}/archive/refs/tags/${r.ref}.zip`;
+}
+
+// Cómo se entrega el archivo: enlace, texto del botón, si abre pestaña nueva y nota.
+function acceso(r) {
+  if (r.tipo === 'pdf_tercero') return { href: r.url, etiqueta: r.etiqueta, pestana: true, nota: 'Se abre en una pestaña nueva, en el sitio original.' };
+  if (r.tipo === 'pdf_propio') return {
+    href: `../../assets/recursos/${encodeURIComponent(r.slug)}/${encodeURIComponent(r.archivo)}`,
+    etiqueta: r.etiqueta || 'Descargar PDF', pestana: false, nota: 'Si no se descarga, ábrelo en tu navegador.'
+  };
+  return { href: urlZip(r), etiqueta: 'Descargar ZIP', pestana: false, nota: 'Mejor ábrelo en tu computadora.' };
+}
+
+// Botón de descarga directo, o formulario de código (el enlace solo lo conoce el navegador tras acertar).
+function bloqueAcceso(r) {
+  const a = acceso(r);
+  if (!r.codigo) {
+    const attrs = a.pestana ? ' target="_blank" rel="noopener noreferrer"' : ' download';
+    return `      <a class="btn" href="${esc(a.href)}"${attrs}>${esc(a.etiqueta)}</a>
+      <p class="nota">${a.nota}</p>`;
+  }
+  return `      <form class="desbloqueo" id="desbloqueo" novalidate hidden data-slug="${esc(r.slug)}" data-hash="${hashCodigo(r)}" data-href="${esc(a.href)}" data-etiqueta="${esc(a.etiqueta)}" data-modo="${a.pestana ? 'pestana' : 'descarga'}">
+        <label for="codigo">Escribe el código del final del video</label>
+        <div class="desbloqueo-fila">
+          <input class="campo" id="codigo" name="codigo" type="text" inputmode="numeric" pattern="[0-9]{5}" minlength="5" maxlength="5" autocomplete="off" autocapitalize="off" spellcheck="false" required aria-describedby="codigo-estado">
+          <button class="btn" type="submit">Desbloquear</button>
+        </div>
+        <p class="nota" id="codigo-estado" role="status" aria-live="polite"></p>
+      </form>
+      <noscript><p class="nota">Para desbloquear este recurso necesitas activar JavaScript en tu navegador.</p></noscript>
+      <p class="nota">${a.nota}</p>`;
 }
 
 function cajaCopiar(id, texto, labelId) {
@@ -70,61 +147,76 @@ function comandos(r) {
 ${cajas}`;
 }
 
+// Repo con código y sin ZIP: el prompt y los comandos viajan cifrados y se muestran al acertar el código.
+function bloqueContenidoCifrado(r) {
+  const c = cifrar(r, `${cajaCopiar('prompt', r.prompt, 'prompt-t')}${comandos(r)}`);
+  return `      <h3 id="prompt-t">Pega esto en Claude Code</h3>
+      <form class="desbloqueo" id="desbloqueo" novalidate hidden data-modo="contenido" data-iter="${ITERACIONES}" data-salt="${c.salt}" data-iv="${c.iv}" data-datos="${c.datos}">
+        <label for="codigo">Escribe el código del final del video</label>
+        <div class="desbloqueo-fila">
+          <input class="campo" id="codigo" name="codigo" type="text" inputmode="numeric" pattern="[0-9]{5}" minlength="5" maxlength="5" autocomplete="off" autocapitalize="off" spellcheck="false" required aria-describedby="codigo-estado">
+          <button class="btn" type="submit">Desbloquear</button>
+        </div>
+        <p class="nota" id="codigo-estado" role="status" aria-live="polite"></p>
+      </form>
+      <noscript><p class="nota">Para desbloquear este recurso necesitas activar JavaScript en tu navegador.</p></noscript>
+      <div id="contenido" tabindex="-1"></div>`;
+}
+
 function entrega(r) {
-  if (r.tipo === 'pdf_tercero') {
+  if (r.tipo === 'pdf_tercero' || r.tipo === 'pdf_propio') {
     return `
     <section class="entrega" aria-labelledby="entrega-t">
       <h2 id="entrega-t">El documento</h2>
-      <a class="btn" href="${esc(r.url)}" target="_blank" rel="noopener noreferrer">${esc(r.etiqueta)}</a>
-      <p class="nota">Se abre en una pestaña nueva, en el sitio original.</p>
-    </section>`;
-  }
-  if (r.tipo === 'pdf_propio') {
-    const href = `../../assets/recursos/${encodeURIComponent(r.slug)}/${encodeURIComponent(r.archivo)}`;
-    return `
-    <section class="entrega" aria-labelledby="entrega-t">
-      <h2 id="entrega-t">El documento</h2>
-      <a class="btn" href="${href}" download>${esc(r.etiqueta || 'Descargar PDF')}</a>
-      <p class="nota">Si no se descarga, ábrelo en tu navegador.</p>
+${bloqueAcceso(r)}
     </section>`;
   }
   const img = r.imagen
     ? `\n      <img class="captura" src="../../assets/recursos/${encodeURIComponent(r.slug)}/${encodeURIComponent(r.imagen)}" alt="${esc(r.imagen_alt || 'Captura del recurso')}" loading="lazy">`
     : '';
+  const cuerpo = r.zip
+    ? `      <h3 id="zip-t">Descarga el ZIP</h3>
+${bloqueAcceso(r)}`
+    : r.codigo
+      ? bloqueContenidoCifrado(r)
+      : `      <h3 id="prompt-t">Pega esto en Claude Code</h3>
+${cajaCopiar('prompt', r.prompt, 'prompt-t')}${comandos(r)}`;
   return `
     <section class="entrega" aria-labelledby="entrega-t">
       <h2 id="entrega-t">Qué es</h2>
       <p>${esc(r.que_es)}</p>${img}
       <h3>Requisitos</h3>
       <p>${esc(r.requisitos)}</p>
-${r.seguridad ? `      <h3>Seguridad</h3>\n      <p>${esc(r.seguridad)}</p>\n` : ''}      <h3 id="prompt-t">Pega esto en Claude Code</h3>
-${cajaCopiar('prompt', r.prompt, 'prompt-t')}${comandos(r)}
+${r.seguridad ? `      <h3>Seguridad</h3>\n      <p>${esc(r.seguridad)}</p>\n` : ''}${cuerpo}
       <p><a class="enlace" href="${esc(r.repo_url)}" target="_blank" rel="noopener noreferrer">Ver el repo en GitHub</a></p>
       <p class="autoria">Creado por Stephano, @iOStephano, 8pluscore.com</p>
     </section>`;
 }
 
-function cierre(r) {
-  if (r.cierre_session === false) return '';
-  const boton = r.session_url
-    ? `<a class="btn" href="${esc(r.session_url)}">Ver fechas de la Session 01</a>`
-    : `<button class="btn" type="button" disabled>Próximamente: fechas de la Session 01</button>`;
+// Bloque final de invitación, igual en todas las páginas salvo "cierre_session": false.
+function promo(r, p) {
+  if (!p || r.cierre_session === false) return '';
+  const img = p.imagen
+    ? `\n      <img class="promo-img" src="../../assets/${p.imagen.split('/').map(encodeURIComponent).join('/')}" alt="${esc(p.imagen_alt || '')}" loading="lazy">`
+    : '';
   return `
-    <section class="cierre" aria-labelledby="cierre-t">
-      <h2 id="cierre-t">Siguiente paso</h2>
-      <p>Esto es parte de lo que trabajamos en la Session 01 de 8+Core, Valida tu idea antes de construir.</p>
-      ${boton}
+    <section class="promo" aria-labelledby="promo-t">
+      <h2 id="promo-t">${esc(p.titulo)}</h2>
+      <p>${esc(p.texto)}</p>${img}
+      <a class="btn btn-promo" href="${esc(p.url)}">${esc(p.boton)}</a>
     </section>`;
 }
 
-function pagina(r) {
+function pagina(r, pr) {
   const desc = r.descripcion || (r.resumen ? r.resumen[0] : r.que_es).slice(0, 155);
   const titulo = `${r.titulo}, 8+Core`;
   const url = `${SITE}/r/${r.slug}/`;
   const parrafos = (r.resumen || []).map((p) => `      <p>${esc(p)}</p>`).join('\n');
   const kit = r.kit ? `    <p class="etiqueta-kit">${esc(r.kit)}</p>\n` : '';
   const bloqueResumen = parrafos ? `    <section class="resumen" aria-label="Resumen">\n${parrafos}\n    </section>\n` : '';
-  const js = r.tipo === 'repo' ? '\n  <script src="../../assets/recursos.js" defer></script>' : '';
+  const conJs = (r.tipo === 'repo' && !r.zip) || r.codigo;
+  const js = conJs ? '\n  <script src="../../assets/recursos.js" defer></script>' : '';
+  const cierre = promo(r, pr);
   return `<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -158,7 +250,7 @@ function pagina(r) {
 
   <main class="recurso">
 ${kit}    <h1>${esc(r.titulo)}</h1>
-${bloqueResumen ? '\n' + bloqueResumen : ''}${entrega(r)}${cierre(r) ? '\n' + cierre(r) : ''}
+${bloqueResumen ? '\n' + bloqueResumen : ''}${entrega(r)}${cierre ? '\n' + cierre : ''}
   </main>
 </body>
 </html>
@@ -166,7 +258,18 @@ ${bloqueResumen ? '\n' + bloqueResumen : ''}${entrega(r)}${cierre(r) ? '\n' + ci
 }
 
 const dir = path.join(root, 'recursos');
-const archivos = (await readdir(dir)).filter((f) => f.endsWith('.json')).sort();
+// Los archivos que empiezan con "_" (como _promo.json) son configuración, no recursos.
+const archivos = (await readdir(dir)).filter((f) => f.endsWith('.json') && !f.startsWith('_')).sort();
+let pr = null;
+const promoFile = path.join(dir, '_promo.json');
+if (existsSync(promoFile)) {
+  try {
+    const p = JSON.parse(await readFile(promoFile, 'utf8'));
+    if (validarPromo(p, '_promo.json')) pr = p;
+  } catch (e) { fail('_promo.json', `JSON inválido (${e.message})`); }
+} else {
+  console.warn('Aviso: no existe recursos/_promo.json, las páginas salen sin bloque de promoción.');
+}
 let n = 0;
 for (const f of archivos) {
   let r;
@@ -175,7 +278,7 @@ for (const f of archivos) {
   if (!validar(r, f)) continue;
   const out = path.join(root, 'r', r.slug);
   await mkdir(out, { recursive: true });
-  await writeFile(path.join(out, 'index.html'), pagina(r));
+  await writeFile(path.join(out, 'index.html'), pagina(r, pr));
   console.log(`r/${r.slug}/index.html`);
   n++;
 }
