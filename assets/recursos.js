@@ -56,3 +56,85 @@
     });
   });
 })();
+
+// Código de desbloqueo: compara el SHA-256 de "<slug>:<codigo>" con el hash de la página.
+(function () {
+  var form = document.getElementById('desbloqueo');
+  if (!form) return;
+  var input = form.querySelector('input');
+  var enviar = form.querySelector('button[type="submit"]');
+  var estado = document.getElementById('codigo-estado');
+  var abierto = false;
+  form.hidden = false;
+
+  function aviso(msg) { estado.textContent = msg; }
+  function hex(buf) {
+    return Array.prototype.map.call(new Uint8Array(buf), function (b) {
+      return ('0' + b.toString(16)).slice(-2);
+    }).join('');
+  }
+  function sha256(texto) {
+    return window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(texto)).then(hex);
+  }
+  function marcar(malo) {
+    if (malo) input.setAttribute('aria-invalid', 'true'); else input.removeAttribute('aria-invalid');
+  }
+
+  function abrir() {
+    abierto = true;
+    marcar(false);
+    input.readOnly = true;
+    enviar.disabled = true;
+    var modo = form.getAttribute('data-modo');
+    var enlace = document.createElement('a');
+    enlace.className = 'btn btn-descarga';
+    enlace.href = form.getAttribute('data-href');
+    enlace.textContent = form.getAttribute('data-etiqueta');
+    if (modo === 'pestana') {
+      enlace.target = '_blank';
+      enlace.rel = 'noopener noreferrer';
+    } else {
+      enlace.setAttribute('download', '');
+    }
+    form.appendChild(enlace);
+    aviso(modo === 'pestana'
+      ? 'Código correcto. Se abre el documento en una pestaña nueva. Si no se abre, usa el botón.'
+      : 'Código correcto. Tu descarga empieza ahora. Si no empieza, usa el botón.');
+    enlace.click();
+    enlace.focus();
+  }
+
+  input.addEventListener('input', function () {
+    var limpio = input.value.replace(/\D/g, '').slice(0, 5);
+    if (limpio !== input.value) input.value = limpio;
+    marcar(false);
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (abierto) return;
+    var codigo = input.value;
+    if (!/^\d{5}$/.test(codigo)) {
+      marcar(true);
+      aviso('El código tiene 5 números. Lo encuentras al final del video.');
+      input.focus();
+      return;
+    }
+    if (!(window.crypto && window.crypto.subtle && window.TextEncoder)) {
+      aviso('Este navegador no puede verificar el código. Abre la página en otro navegador, con conexión segura.');
+      return;
+    }
+    sha256(form.getAttribute('data-slug') + ':' + codigo).then(function (h) {
+      if (h === form.getAttribute('data-hash')) {
+        abrir();
+      } else {
+        marcar(true);
+        aviso('Ese código no es el correcto. Míralo otra vez al final del video e inténtalo de nuevo.');
+        input.focus();
+        input.select();
+      }
+    }, function () {
+      aviso('No pudimos verificar el código. Inténtalo de nuevo.');
+    });
+  });
+})();

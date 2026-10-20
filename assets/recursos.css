@@ -4,6 +4,9 @@
   --line: #DCDAD6;
   --muted: #5F5D66;
   --violet: #6B2CF5;
+  --violet-deep: #2A0E7A;
+  --lilac: #B9A4FF;
+  --yellow: #DAFE51;
 
   --font: "Geist", -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
   --font-brand: "Poppins", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
@@ -66,7 +69,7 @@ a { color: inherit; }
 
 .resumen { margin-top: 32px; }
 .recurso h1 + .entrega { margin-top: 32px; padding-top: 0; border-top: 0; }
-.entrega, .cierre {
+.entrega {
   margin-top: 56px;
   padding-top: 40px;
   border-top: 1px solid var(--line);
@@ -94,8 +97,8 @@ a { color: inherit; }
   cursor: not-allowed;
 }
 .btn[hidden] { display: none; }
-.entrega .btn, .cierre .btn { margin-top: 8px; }
-.entrega p + .btn, .cierre p + .btn { margin-top: 24px; }
+.entrega .btn { margin-top: 8px; }
+.entrega p + .btn { margin-top: 24px; }
 
 .nota { margin-top: 16px; font-size: 15px !important; color: var(--muted); }
 .nota:empty { display: none; }
@@ -122,7 +125,42 @@ a { color: inherit; }
 .recurso .enlace { display: inline-block; margin-top: 24px; }
 .autoria { margin-top: 32px; font-size: 15px !important; color: var(--muted); }
 
-.cierre p { max-width: 34em; }
+/* Código de desbloqueo */
+.desbloqueo label { display: block; font-size: 17px; font-weight: 600; letter-spacing: -0.02em; }
+.desbloqueo-fila { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; }
+.campo {
+  flex: 1 1 11em;
+  min-width: 0;
+  max-width: 16em;
+  min-height: 48px;
+  padding: 10px 16px;
+  border: 1px solid #8F8C97;
+  border-radius: 12px;
+  background: #fff;
+  color: var(--ink);
+  font: 500 22px/1.2 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  letter-spacing: 0.3em;
+}
+.campo[aria-invalid="true"] { border-color: #B3261E; }
+.desbloqueo-fila .btn { margin-top: 0; }
+.desbloqueo .btn-descarga { display: inline-block; margin-top: 16px; }
+
+/* Invitación final a los eventos */
+.promo {
+  margin-top: 56px;
+  padding: 32px 28px;
+  border-radius: 20px;
+  background:
+    radial-gradient(90% 70% at 100% 0%, rgba(185, 164, 255, .45), transparent 65%),
+    linear-gradient(160deg, var(--violet-deep) 0%, var(--violet) 100%);
+  color: #fff;
+}
+.promo h2 { margin-bottom: 12px; font-size: 26px; color: #fff; }
+.promo p { max-width: 34em; color: #EDE8FF; }
+.promo-img { display: block; width: 100%; height: auto; margin-top: 24px; border-radius: 12px; }
+.promo .btn-promo { margin-top: 24px; background: var(--yellow); color: var(--ink); }
+.promo .btn-promo:hover { background: #F0FF8F; }
+.promo .btn-promo:focus-visible { outline-color: #fff; }
 
 @media (min-width: 768px) {
   .header { padding: 28px 40px; }
