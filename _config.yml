@@ -1,0 +1,6 @@
+# Archivos que no se publican en el sitio (siguen en el repo). Las carpetas que empiezan con "_" (como _archivo)
+# ya las ignora Jekyll por defecto.
+exclude:
+  - recursos
+  - tools
+  - README.md
