@@ -71,6 +71,7 @@ function validarPromo(p, file) {
   if (!p || typeof p !== 'object' || Array.isArray(p)) return fail(file, 'debe ser un objeto JSON');
   for (const k of ['titulo', 'texto', 'boton']) if (!need(k)) return fail(file, `falta ${k}`);
   if (!/^https:\/\//.test(p.url || '')) return fail(file, 'url debe ser https');
+  if (p.activo !== undefined && typeof p.activo !== 'boolean') return fail(file, 'activo debe ser true o false');
   if (p.imagen !== undefined) {
     if (!need('imagen')) return fail(file, 'imagen debe ser un texto (ruta dentro de assets/)');
     if (!existsSync(path.join(root, 'assets', p.imagen))) return fail(file, `no existe assets/${p.imagen}`);
@@ -200,7 +201,7 @@ ${r.seguridad ? `      <h3>Seguridad</h3>\n      <p>${esc(r.seguridad)}</p>\n` :
 
 // Bloque final de invitación, igual en todas las páginas salvo "cierre_session": false.
 function promo(r, p) {
-  if (!p || r.cierre_session === false) return '';
+  if (!p || p.activo === false || r.cierre_session === false) return '';
   const img = p.imagen
     ? `\n      <img class="promo-img" src="../../assets/${p.imagen.split('/').map(encodeURIComponent).join('/')}" alt="${esc(p.imagen_alt || '')}" loading="lazy">`
     : '';
@@ -270,7 +271,10 @@ const promoFile = path.join(dir, '_promo.json');
 if (existsSync(promoFile)) {
   try {
     const p = JSON.parse(await readFile(promoFile, 'utf8'));
-    if (validarPromo(p, '_promo.json')) pr = p;
+    if (validarPromo(p, '_promo.json')) {
+      pr = p;
+      if (p.activo === false) console.log('Promoción desactivada ("activo": false en _promo.json): las páginas salen sin tarjeta.');
+    }
   } catch (e) { fail('_promo.json', `JSON inválido (${e.message})`); }
 } else {
   console.warn('Aviso: no existe recursos/_promo.json, las páginas salen sin bloque de promoción.');

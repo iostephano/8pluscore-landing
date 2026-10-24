@@ -98,6 +98,7 @@ Al final de cada página, debajo de la entrega, sale una tarjeta que invita a lo
 
 | Campo | Qué es |
 | --- | --- |
+| `activo` | Opcional, `true` o `false`. Interruptor de la tarjeta: con `false` ninguna página la muestra (el resto del contenido se conserva). Si falta, se considera `true` |
 | `titulo` | Encabezado de la tarjeta |
 | `texto` | Un párrafo corto |
 | `boton` | Texto del botón |
@@ -106,9 +107,10 @@ Al final de cada página, debajo de la entrega, sale una tarjeta que invita a lo
 | `imagen_alt` | Opcional. Texto alternativo de la imagen (vacío si es decorativa) |
 
 - Los archivos de `recursos/` que empiezan con `_` no generan página: son configuración.
-- Para ocultar la tarjeta en un recurso, pon `"cierre_session": false` en su JSON (por ejemplo `tablero`).
+- Interruptor general: `"activo": false` en `_promo.json` quita la tarjeta de todas las páginas; `"activo": true` (o quitar el campo) la vuelve a poner. Después de cambiarlo, corre `node tools/build-recursos.mjs` y haz commit de `r/`. Mientras la sección de eventos esté archivada (carpeta `_archivo/eventos/`), déjalo en `false`, porque el botón apunta a una página que no existe.
+- Para ocultar la tarjeta solo en un recurso, pon `"cierre_session": false` en su JSON (por ejemplo `tablero`).
 - Si falta `_promo.json`, las páginas salen sin tarjeta y el generador avisa.
-- No pongas fechas, precios ni cupos en el texto: cambian y ahí no se actualizan solos. Para eso está la página de eventos.
+- No pongas fechas, precios ni cupos en el texto: cambian y ahí no se actualizan solos. Para eso está la página de eventos (hoy archivada).
 
 ## Archivos
 
