@@ -29,6 +29,8 @@ git push origin eventos-v1
    git mv _archivo/eventos eventos
    ```
 
+   Este `LEEME.md` viaja con la carpeta y quedaría publicado en `/eventos/LEEME.md`. Muévelo de vuelta a `_archivo/` o bórralo después de restaurar (por ejemplo `git mv eventos/LEEME.md _archivo/LEEME-eventos.md`).
+
 2. En `index.html`, vuelve a poner el enlace del menú entre "Equipo" y "FAQ" (dentro de `<nav class="nav" aria-label="Principal">`):
 
    ```html
