@@ -1,0 +1,14 @@
+{
+  "slug": "playbook-sdlc",
+  "tipo": "pdf_propio",
+  "titulo": "The AI-Native SDLC Playbook de Anthropic",
+  "descripcion": "La guía de Anthropic para construir software con agentes, en 6 etapas. Escribe la clave del video y descarga el PDF.",
+  "resumen": [
+    "Anthropic publicó una guía para construir software con agentes. Su diagnóstico es que escribir código ya no es lo lento. Lo lento es planificar, revisar y publicar.",
+    "Propone 6 etapas: Plan, Design, Build, Test, Deploy y Maintain. Cada etapa deja un archivo que la siguiente lee, y la puerta de producción siempre la abre una persona.",
+    "El PDF es la guía original de Anthropic, en inglés. Fuente oficial: claude.com/blog/the-ai-native-sdlc-playbook"
+  ],
+  "archivo": "the-ai-native-sdlc-playbook.pdf",
+  "etiqueta": "Descargar PDF",
+  "codigo": "CICLO"
+}
