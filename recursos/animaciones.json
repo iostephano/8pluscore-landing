@@ -1,0 +1,14 @@
+{
+  "slug": "animaciones",
+  "tipo": "repo",
+  "kit": "Kit #02 · 💻 Computadora",
+  "titulo": "Animaciones en tu estilo",
+  "descripcion": "Un kit gratis para crear con Claude videos verticales animados en el estilo de tu marca. Escribe la clave del video y descárgalo.",
+  "que_es": "Un kit gratis que convierte un guion en un video vertical MP4 (1080 x 1920, 30 fps) con subtítulos animados. Llenas un brief corto con tus colores, tipografías y movimiento. Claude crea tu guía de estilo y una plantilla, y desde ahí cada video sale de pegar un guion. Si tienes audio, sincroniza cada escena con tu voz.",
+  "requisitos": "Claude Code, en la terminal o en la pestaña Code de la app de escritorio, Node.js 18 o superior y ffmpeg. Descomprime la carpeta, ábrela en Claude Code y pídele que siga el archivo INSTALL.md.",
+  "seguridad": "El repo es público y puedes revisarlo antes de usarlo. Claude Code te pide permiso antes de ejecutar cualquier comando. No incluye logos de terceros: usa los tuyos o los de una marca con permiso.",
+  "repo_url": "https://github.com/kit-para-devs/animaciones-en-tu-estilo",
+  "ref": "v1.0.0",
+  "zip": true,
+  "codigo": "FR4M3"
+}
