@@ -224,8 +224,6 @@ ${cajaCopiar('prompt', r.prompt, 'prompt-t')}${comandos(r)}`;
       <h3>Requisitos</h3>
       <p>${esc(r.requisitos)}</p>
 ${r.seguridad ? `      <h3>Seguridad</h3>\n      <p>${esc(r.seguridad)}</p>\n` : ''}${cuerpo}
-      <p><a class="enlace" href="${esc(r.repo_url)}" target="_blank" rel="noopener noreferrer">Ver el repo en GitHub</a></p>
-      <p class="autoria">Creado por Stephano, @iOStephano, 8pluscore.com</p>
     </section>`;
 }
 
