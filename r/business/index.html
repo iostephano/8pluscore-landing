@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Agentes de comercio de Anthropic, 8+Core</title>
+  <meta name="description" content="Los 8 agentes de comercio que Anthropic publicó como código abierto. Escribe la clave del video y descarga el repositorio oficial.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://8pluscore.com/r/business/">
+  <meta name="theme-color" content="#F6F5F3">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="8+Core">
+  <meta property="og:title" content="Agentes de comercio de Anthropic">
+  <meta property="og:description" content="Los 8 agentes de comercio que Anthropic publicó como código abierto. Escribe la clave del video y descarga el repositorio oficial.">
+  <meta property="og:url" content="https://8pluscore.com/r/business/">
+  <meta property="og:image" content="https://8pluscore.com/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Poppins:wght@600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="../../assets/recursos.css">
+  <script src="../../assets/recursos.js" defer></script>
+</head>
+<body>
+  <header class="header">
+    <a href="../../index.html" class="brand-name">8+Core</a>
+  </header>
+
+  <main class="recurso">
+    <h1>Agentes de comercio de Anthropic</h1>
+
+    <section class="resumen" aria-label="Resumen">
+      <p>Anthropic publicó 8 agentes de comercio como código abierto.</p>
+      <p>4 atienden a los clientes dentro de una tienda online. 4 ayudan al equipo con ventas, inventario, precios y campañas.</p>
+      <p>Para usarlos necesitas Claude Code y una clave de la API de Claude con saldo. Cada mensaje consume crédito. El plan Pro no cubre este uso. Fuente oficial: github.com/anthropics/commerce-agents</p>
+    </section>
+
+    <section class="entrega" aria-labelledby="sec-0-t">
+      <h2 id="sec-0-t">Los 8 agentes</h2>
+      <table class="tabla">
+        <thead><tr><th scope="col">Video</th><th scope="col">Sector</th><th scope="col">Versión</th></tr></thead>
+        <tbody>
+          <tr><td>El agente que revisa tu tienda cada mañana</td><td>retail</td><td>PANEL</td></tr>
+          <tr><td>El agente que atiende a tus clientes en tu tienda online</td><td>retail</td><td>TIENDA</td></tr>
+          <tr><td>El agente que arma tu viaje día por día</td><td>travel</td><td>TIENDA</td></tr>
+          <tr><td>El agente que ajusta las tarifas de tu hotel</td><td>travel</td><td>PANEL</td></tr>
+          <tr><td>El agente que te muestra el precio final de tu entrada</td><td>entertainment</td><td>TIENDA</td></tr>
+          <tr><td>El agente que mide cómo se vende tu evento</td><td>entertainment</td><td>PANEL</td></tr>
+          <tr><td>El agente que te ayuda a elegir tu plan móvil</td><td>telecom</td><td>TIENDA</td></tr>
+          <tr><td>El agente que detecta qué plan pierde clientes</td><td>telecom</td><td>PANEL</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section class="entrega" aria-labelledby="sec-1-t">
+      <h2 id="sec-1-t">Cómo usarlo</h2>
+      <ol class="pasos">
+        <li>Escribe la clave y descarga el repositorio. Descomprímelo.</li>
+        <li>Abre la carpeta commerce-agents-main con Claude Code.</li>
+        <li>Copia el prompt de abajo y completa el sector y la versión de tu agente.</li>
+      </ol>
+    </section>
+    <section class="entrega" aria-labelledby="entrega-t">
+      <h2 id="entrega-t">Descarga</h2>
+      <form class="desbloqueo" id="desbloqueo" novalidate hidden data-slug="business" data-hash="63d6c32f1d5a435597aa58c7bc8a4e7fbe7b0ed1328183d6f2f335b41b03490d" data-href="https://github.com/anthropics/commerce-agents/archive/refs/heads/main.zip" data-etiqueta="Descargar el repositorio (ZIP)" data-modo="descarga">
+        <label for="codigo">Escribe la palabra o el código del final del video</label>
+        <div class="desbloqueo-fila">
+          <input class="campo" id="codigo" name="codigo" type="text" maxlength="10" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" required aria-describedby="codigo-estado">
+          <button class="btn" type="submit">Desbloquear</button>
+        </div>
+        <p class="nota" id="codigo-estado" role="status" aria-live="polite"></p>
+      </form>
+      <noscript><p class="nota">Para desbloquear este recurso necesitas activar JavaScript en tu navegador.</p></noscript>
+      <p class="nota">Se descarga desde el repositorio oficial en GitHub. Si no empieza, usa el botón.</p>
+    </section>
+    <section class="entrega" aria-labelledby="sec-3-t">
+      <h2 id="sec-3-t">El prompt</h2>
+      <div class="prompt-caja">
+        <pre class="prompt" id="prompt-3" tabindex="0" aria-labelledby="sec-3-t">Esta carpeta es el repositorio commerce-agents de Anthropic. Quiero ejecutar la demo de [SECTOR] en su versión [VERSIÓN].
+SECTOR puede ser retail, travel, entertainment o telecom.
+VERSIÓN puede ser TIENDA, el agente de compras, o PANEL, el agente de comerciante.
+
+1. Lee README.md y examples/[SECTOR]/README.md antes de hacer nada.
+2. Revisa si tengo Python 3.11 o superior y Node 22. Si falta algo, dime cómo instalarlo en mi sistema y espera.
+3. Crea el entorno virtual e instala las dependencias como dice el README.
+4. Copia .env.example a .env. No me pidas la clave de la API en el chat. Dime que la pegue yo en el archivo .env y espera a que te confirme.
+5. Ejecuta la demo con scripts/run_demo.py. Para PANEL usa la opción --merchant.
+6. Cuando esté lista, dime qué dirección abrir en el navegador.
+7. Dame en español los mensajes de prueba de la sección Try de ese sector, para que los copie en el chat de la demo.
+No modifiques ningún archivo del repositorio, salvo el .env.</pre>
+        <button class="btn btn-copiar" type="button" data-target="prompt-3" data-estado="prompt-3-estado" hidden>Copiar</button>
+        <p class="nota" id="prompt-3-estado" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+    <section class="entrega" aria-labelledby="sec-4-t">
+      <h2 id="sec-4-t">Qué esperar</h2>
+      <ul class="lista">
+        <li>Las empresas, productos y personas de las demos son ficticios. Los datos están en inglés y en dólares.</li>
+        <li>El agente no cobra ni hace pedidos reales. En el panel, todo cambio queda en borrador hasta que tú lo apruebes.</li>
+        <li>Es una implementación de referencia. Anthropic no le da soporte.</li>
+      </ul>
+    </section>
+    <section class="entrega" aria-label="Nota">
+      <p class="autoria">Código de Anthropic PBC bajo licencia Apache 2.0. Esta página solo enlaza al repositorio oficial y no es una publicación de Anthropic. Guía en español por Stephano, @iOStephano.</p>
+    </section>
+  </main>
+</body>
+</html>

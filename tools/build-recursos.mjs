@@ -8,7 +8,8 @@ import path from 'node:path';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SITE = 'https://8pluscore.com';
-const TIPOS = ['pdf_tercero', 'pdf_propio', 'repo'];
+const TIPOS = ['pdf_tercero', 'pdf_propio', 'enlace_externo', 'repo'];
+const TIPOS_SECCION = ['descarga', 'tabla', 'pasos', 'prompt', 'lista', 'nota'];
 const RAYAS = /[\u2013\u2014]/;
 const ITERACIONES = 200000; // PBKDF2 del código que cifra el prompt y los comandos
 const REPO_GITHUB = /^https:\/\/github\.com\/[^/\s]+\/[^/\s]+?(\.git)?\/?$/;
@@ -35,6 +36,10 @@ function validar(r, file) {
   if (r.tipo === 'pdf_tercero') {
     if (!need('etiqueta') || !/^https:\/\//.test(r.url || '')) return fail(file, 'pdf_tercero requiere etiqueta y url https');
   }
+  if (r.tipo === 'enlace_externo') {
+    if (!need('etiqueta') || !/^https:\/\//.test(r.url || '')) return fail(file, 'enlace_externo requiere etiqueta y url https');
+  }
+  if (r.secciones !== undefined && !validarSecciones(r, file)) return false;
   if (r.tipo === 'pdf_propio') {
     if (!need('archivo')) return fail(file, 'pdf_propio requiere archivo');
     if (!existsSync(path.join(root, 'assets/recursos', r.slug, r.archivo))) return fail(file, `no existe assets/recursos/${r.slug}/${r.archivo}`);
@@ -63,6 +68,28 @@ function validar(r, file) {
   if (r.cierre_session !== undefined && typeof r.cierre_session !== 'boolean') return fail(file, 'cierre_session debe ser true o false');
   if (r.session_url !== undefined) return fail(file, 'session_url está obsoleto: elimínalo (el bloque final sale de recursos/_promo.json)');
   if (RAYAS.test(JSON.stringify(r))) return fail(file, 'no uses guiones largos ni rayas en los textos');
+  return true;
+}
+
+// Secciones opcionales (tabla, pasos, prompt, lista, nota) y posición de la descarga ({ "tipo": "descarga" }).
+function validarSecciones(r, file) {
+  const texto = (v) => typeof v === 'string' && v.trim() !== '';
+  const textos = (v) => Array.isArray(v) && v.length > 0 && v.every(texto);
+  if (!Array.isArray(r.secciones) || r.secciones.length === 0) return fail(file, 'secciones debe ser una lista de bloques');
+  if (r.secciones.filter((s) => s && s.tipo === 'descarga').length > 1) return fail(file, 'solo puede haber una sección "descarga"');
+  for (const [i, s] of r.secciones.entries()) {
+    const donde = `secciones[${i}]`;
+    if (!s || typeof s !== 'object' || !TIPOS_SECCION.includes(s.tipo)) return fail(file, `${donde}.tipo debe ser uno de: ${TIPOS_SECCION.join(', ')}`);
+    if (s.tipo === 'descarga') continue;
+    if (s.tipo !== 'nota' && !texto(s.titulo)) return fail(file, `${donde} requiere titulo`);
+    if (s.tipo === 'tabla') {
+      if (!textos(s.columnas)) return fail(file, `${donde}.columnas debe ser una lista de textos`);
+      if (!Array.isArray(s.filas) || s.filas.length === 0 || !s.filas.every((f) => textos(f) && f.length === s.columnas.length))
+        return fail(file, `${donde}.filas debe ser una lista de filas con un texto por columna`);
+    }
+    if ((s.tipo === 'pasos' || s.tipo === 'lista') && !textos(s.items)) return fail(file, `${donde}.items debe ser una lista de textos`);
+    if ((s.tipo === 'prompt' || s.tipo === 'nota') && !texto(s.texto)) return fail(file, `${donde}.texto debe ser un texto`);
+  }
   return true;
 }
 
@@ -111,6 +138,9 @@ function acceso(r) {
   if (r.tipo === 'pdf_propio') return {
     href: `../../assets/recursos/${encodeURIComponent(r.slug)}/${encodeURIComponent(r.archivo)}`,
     etiqueta: r.etiqueta || 'Descargar PDF', pestana: false, nota: 'Si no se descarga, ábrelo en tu navegador.'
+  };
+  if (r.tipo === 'enlace_externo') return {
+    href: r.url, etiqueta: r.etiqueta, pestana: false, nota: 'Se descarga desde el repositorio oficial en GitHub. Si no empieza, usa el botón.'
   };
   return { href: urlZip(r), etiqueta: 'Descargar ZIP', pestana: false, nota: 'Mejor ábrelo en tu computadora.' };
 }
@@ -170,10 +200,10 @@ ${campoCodigo()}
 }
 
 function entrega(r) {
-  if (r.tipo === 'pdf_tercero' || r.tipo === 'pdf_propio') {
+  if (r.tipo === 'pdf_tercero' || r.tipo === 'pdf_propio' || r.tipo === 'enlace_externo') {
     return `
     <section class="entrega" aria-labelledby="entrega-t">
-      <h2 id="entrega-t">El documento</h2>
+      <h2 id="entrega-t">${r.tipo === 'enlace_externo' ? 'Descarga' : 'El documento'}</h2>
 ${bloqueAcceso(r)}
     </section>`;
   }
@@ -199,6 +229,40 @@ ${r.seguridad ? `      <h3>Seguridad</h3>\n      <p>${esc(r.seguridad)}</p>\n` :
     </section>`;
 }
 
+// Bloques extra del recurso, en el orden del JSON. { "tipo": "descarga" } marca dónde va la entrega.
+function seccion(s, i) {
+  const t = `sec-${i}-t`;
+  const cabeza = s.titulo ? `      <h2 id="${t}">${esc(s.titulo)}</h2>\n` : '';
+  let cuerpo;
+  if (s.tipo === 'tabla') {
+    const cols = s.columnas.map((c) => `<th scope="col">${esc(c)}</th>`).join('');
+    const filas = s.filas.map((f) => `          <tr>${f.map((c) => `<td>${esc(c)}</td>`).join('')}</tr>`).join('\n');
+    cuerpo = `      <table class="tabla">
+        <thead><tr>${cols}</tr></thead>
+        <tbody>
+${filas}
+        </tbody>
+      </table>`;
+  } else if (s.tipo === 'pasos' || s.tipo === 'lista') {
+    const etiqueta = s.tipo === 'pasos' ? 'ol class="pasos"' : 'ul class="lista"';
+    cuerpo = `      <${etiqueta}>\n${s.items.map((x) => `        <li>${esc(x)}</li>`).join('\n')}\n      </${etiqueta.split(' ')[0]}>`;
+  } else if (s.tipo === 'prompt') {
+    cuerpo = cajaCopiar(`prompt-${i}`, s.texto, t);
+  } else {
+    cuerpo = `      <p class="autoria">${esc(s.texto)}</p>`;
+  }
+  return `
+    <section class="entrega" ${s.titulo ? `aria-labelledby="${t}"` : 'aria-label="Nota"'}>
+${cabeza}${cuerpo}
+    </section>`;
+}
+
+function cuerpoRecurso(r) {
+  const sec = r.secciones || [];
+  if (!sec.some((s) => s.tipo === 'descarga')) return entrega(r) + sec.map(seccion).join('');
+  return sec.map((s, i) => (s.tipo === 'descarga' ? entrega(r) : seccion(s, i))).join('');
+}
+
 // Bloque final de invitación, igual en todas las páginas salvo "cierre_session": false.
 function promo(r, p) {
   if (!p || p.activo === false || r.cierre_session === false) return '';
@@ -220,7 +284,7 @@ function pagina(r, pr) {
   const parrafos = (r.resumen || []).map((p) => `      <p>${esc(p)}</p>`).join('\n');
   const kit = r.kit ? `    <p class="etiqueta-kit">${esc(r.kit)}</p>\n` : '';
   const bloqueResumen = parrafos ? `    <section class="resumen" aria-label="Resumen">\n${parrafos}\n    </section>\n` : '';
-  const conJs = (r.tipo === 'repo' && !r.zip) || r.codigo;
+  const conJs = (r.tipo === 'repo' && !r.zip) || r.codigo || (r.secciones || []).some((s) => s.tipo === 'prompt');
   const js = conJs ? '\n  <script src="../../assets/recursos.js" defer></script>' : '';
   const cierre = promo(r, pr);
   return `<!DOCTYPE html>
@@ -256,7 +320,7 @@ function pagina(r, pr) {
 
   <main class="recurso">
 ${kit}    <h1>${esc(r.titulo)}</h1>
-${bloqueResumen ? '\n' + bloqueResumen : ''}${entrega(r)}${cierre ? '\n' + cierre : ''}
+${bloqueResumen ? '\n' + bloqueResumen : ''}${cuerpoRecurso(r)}${cierre ? '\n' + cierre : ''}
   </main>
 </body>
 </html>

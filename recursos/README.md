@@ -46,6 +46,25 @@ Sin guiones largos ni rayas en ningún texto: el script lo rechaza.
 
 `archivo` (nombre del PDF dentro de `assets/recursos/<slug>/`) y, opcional, `etiqueta` (por defecto "Descargar PDF").
 
+### `enlace_externo`
+
+`etiqueta` (texto del botón) y `url` (https). No aloja ningún archivo: tras acertar el código (si lo lleva), el botón lleva a esa dirección, por ejemplo el ZIP de un repo público de GitHub (`https://github.com/<usuario>/<repo>/archive/refs/heads/main.zip`). El navegador ignora `download` en enlaces de otro dominio, así que la descarga la inicia el servidor de destino. No copies ni subas material de terceros a este sitio.
+
+### `secciones` (opcional, en cualquier tipo)
+
+Bloques extra, en el orden en que aparecen. Sin `secciones`, la página sale como siempre (resumen y entrega). Cada bloque lleva `tipo`:
+
+| `tipo` | Campos |
+| --- | --- |
+| `tabla` | `titulo`, `columnas` (lista de textos), `filas` (lista de filas, un texto por columna) |
+| `pasos` | `titulo`, `items` (lista numerada) |
+| `lista` | `titulo`, `items` (lista con viñetas) |
+| `prompt` | `titulo`, `texto` (caja con botón Copiar; queda visible sin código) |
+| `nota` | `texto` (párrafo pequeño, sin título) |
+| `descarga` | Sin campos. Marca dónde va la entrega (botón o formulario del código). Si falta, la entrega sale justo después del resumen y las secciones van debajo |
+
+Ejemplo del orden: resumen, `tabla`, `pasos`, `descarga`, `prompt`, `lista`, `nota`. Ver `recursos/business.json`.
+
 ### `repo`
 
 - `que_es`: qué es el recurso.
