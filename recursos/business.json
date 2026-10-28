@@ -1,0 +1,60 @@
+{
+  "slug": "business",
+  "tipo": "enlace_externo",
+  "titulo": "Agentes de comercio de Anthropic",
+  "descripcion": "Los 8 agentes de comercio que Anthropic publicó como código abierto. Escribe la clave del video y descarga el repositorio oficial.",
+  "resumen": [
+    "Anthropic publicó 8 agentes de comercio como código abierto.",
+    "4 atienden a los clientes dentro de una tienda online. 4 ayudan al equipo con ventas, inventario, precios y campañas.",
+    "Para usarlos necesitas Claude Code y una clave de la API de Claude con saldo. Cada mensaje consume crédito. El plan Pro no cubre este uso. Fuente oficial: github.com/anthropics/commerce-agents"
+  ],
+  "secciones": [
+    {
+      "tipo": "tabla",
+      "titulo": "Los 8 agentes",
+      "columnas": ["Video", "Sector", "Versión"],
+      "filas": [
+        ["El agente que revisa tu tienda cada mañana", "retail", "PANEL"],
+        ["El agente que atiende a tus clientes en tu tienda online", "retail", "TIENDA"],
+        ["El agente que arma tu viaje día por día", "travel", "TIENDA"],
+        ["El agente que ajusta las tarifas de tu hotel", "travel", "PANEL"],
+        ["El agente que te muestra el precio final de tu entrada", "entertainment", "TIENDA"],
+        ["El agente que mide cómo se vende tu evento", "entertainment", "PANEL"],
+        ["El agente que te ayuda a elegir tu plan móvil", "telecom", "TIENDA"],
+        ["El agente que detecta qué plan pierde clientes", "telecom", "PANEL"]
+      ]
+    },
+    {
+      "tipo": "pasos",
+      "titulo": "Cómo usarlo",
+      "items": [
+        "Escribe la clave y descarga el repositorio. Descomprímelo.",
+        "Abre la carpeta commerce-agents-main con Claude Code.",
+        "Copia el prompt de abajo y completa el sector y la versión de tu agente."
+      ]
+    },
+    { "tipo": "descarga" },
+    {
+      "tipo": "prompt",
+      "titulo": "El prompt",
+      "texto": "Esta carpeta es el repositorio commerce-agents de Anthropic. Quiero ejecutar la demo de [SECTOR] en su versión [VERSIÓN].\nSECTOR puede ser retail, travel, entertainment o telecom.\nVERSIÓN puede ser TIENDA, el agente de compras, o PANEL, el agente de comerciante.\n\n1. Lee README.md y examples/[SECTOR]/README.md antes de hacer nada.\n2. Revisa si tengo Python 3.11 o superior y Node 22. Si falta algo, dime cómo instalarlo en mi sistema y espera.\n3. Crea el entorno virtual e instala las dependencias como dice el README.\n4. Copia .env.example a .env. No me pidas la clave de la API en el chat. Dime que la pegue yo en el archivo .env y espera a que te confirme.\n5. Ejecuta la demo con scripts/run_demo.py. Para PANEL usa la opción --merchant.\n6. Cuando esté lista, dime qué dirección abrir en el navegador.\n7. Dame en español los mensajes de prueba de la sección Try de ese sector, para que los copie en el chat de la demo.\nNo modifiques ningún archivo del repositorio, salvo el .env."
+    },
+    {
+      "tipo": "lista",
+      "titulo": "Qué esperar",
+      "items": [
+        "Las empresas, productos y personas de las demos son ficticios. Los datos están en inglés y en dólares.",
+        "El agente no cobra ni hace pedidos reales. En el panel, todo cambio queda en borrador hasta que tú lo apruebes.",
+        "Es una implementación de referencia. Anthropic no le da soporte."
+      ]
+    },
+    {
+      "tipo": "nota",
+      "texto": "Código de Anthropic PBC bajo licencia Apache 2.0. Esta página solo enlaza al repositorio oficial y no es una publicación de Anthropic. Guía en español por Stephano, @iOStephano."
+    }
+  ],
+  "etiqueta": "Descargar el repositorio (ZIP)",
+  "url": "https://github.com/anthropics/commerce-agents/archive/refs/heads/main.zip",
+  "codigo": "8acme",
+  "cierre_session": false
+}

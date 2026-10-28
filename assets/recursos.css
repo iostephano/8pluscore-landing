@@ -170,3 +170,13 @@ a { color: inherit; }
   .recurso { padding-top: 56px; }
   .btn:hover { background: var(--violet); }
 }
+
+/* Tabla y pasos (secciones del recurso) */
+.tabla { width: 100%; border-collapse: collapse; font-size: 15px; line-height: 1.45; }
+.tabla th, .tabla td { padding: 10px 12px 10px 0; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; overflow-wrap: anywhere; }
+.tabla th { font-weight: 600; color: var(--muted); }
+.tabla th:not(:first-child), .tabla td:not(:first-child) { white-space: nowrap; overflow-wrap: normal; }
+.tabla td:last-child { font-weight: 600; }
+@media (max-width: 480px) { .tabla { font-size: 14px; } .tabla th, .tabla td { padding-right: 8px; } }
+.pasos, .lista { padding-left: 1.4em; font-size: 17px; line-height: 1.6; }
+.pasos li + li, .lista li + li { margin-top: 12px; }
