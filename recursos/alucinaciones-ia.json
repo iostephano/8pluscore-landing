@@ -1,0 +1,13 @@
+{
+  "slug": "alucinaciones-ia",
+  "tipo": "pdf_propio",
+  "titulo": "Prompts para detectar alucinaciones de la IA",
+  "descripcion": "7 prompts listos para copiar en Claude o en otra IA para verificar fuentes, pedir el nivel de confianza y revisar respuestas.",
+  "resumen": [
+    "Son 7 prompts listos para copiar en Claude o en otra IA. Sirven para verificar fuentes, pedir el nivel de confianza y revisar respuestas en un chat nuevo.",
+    "Incluye una lista de cuándo desconfiar más de una respuesta. Se basa en el tutorial de Anthropic sobre alucinaciones."
+  ],
+  "archivo": "prompts-alucinaciones-ia.pdf",
+  "etiqueta": "Descargar PDF",
+  "codigo": "H4LW7"
+}
