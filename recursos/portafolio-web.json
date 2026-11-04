@@ -1,0 +1,19 @@
+{
+  "slug": "portafolio-web",
+  "tipo": "pdf_propio",
+  "titulo": "Crea tu portafolio web con Claude",
+  "descripcion": "Prompts en español para crear tu portafolio con tu CV y tus proyectos, mejorar su diseño y publicarlo con el conector de Netlify. Incluye una revisión antes de compartir el enlace.",
+  "resumen": [
+    "Prompts en español para crear tu portafolio con tu CV y tus proyectos, mejorar su diseño y publicarlo con el conector de Netlify. Incluye una revisión antes de compartir el enlace.",
+    "Producto: Chat de Claude. Fuente: caso de uso Create a custom webpage de Claude Academy, de Anthropic (academy.claude.com/use-cases/create-a-custom-webpage)."
+  ],
+  "secciones": [
+    {
+      "tipo": "nota",
+      "texto": "Creado por Stephano, @iOStephano, 8pluscore.com"
+    }
+  ],
+  "archivo": "portafolio-web.zip",
+  "etiqueta": "Descargar archivo (ZIP)",
+  "codigo": "Q7FN2"
+}
