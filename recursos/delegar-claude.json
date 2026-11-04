@@ -1,0 +1,13 @@
+{
+  "slug": "delegar-claude",
+  "tipo": "pdf_propio",
+  "titulo": "Guía para delegarle trabajo a Claude",
+  "descripcion": "Una guía en español para delegarle a Claude tareas completas, con listas de seguridad y revisión y plantillas listas para usar.",
+  "resumen": [
+    "Una guía en español para delegarle a Claude tareas completas. Trae una lista de seguridad antes de empezar y una plantilla de instrucciones fijas.",
+    "Incluye una plantilla de pedido con prompts para probar y corregir, y una lista para revisar el resultado. Sale del curso Introduction to Claude Cowork de Anthropic."
+  ],
+  "archivo": "delegar-claude.zip",
+  "etiqueta": "Descargar archivo (ZIP)",
+  "codigo": "W4FT7"
+}
