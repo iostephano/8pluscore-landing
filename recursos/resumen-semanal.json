@@ -1,0 +1,19 @@
+{
+  "slug": "resumen-semanal",
+  "tipo": "pdf_propio",
+  "titulo": "Tu resumen semanal con Claude",
+  "descripcion": "El prompt para que Claude junte tus prioridades, tu calendario y tus correos en un resumen semanal, y los pasos para programarlo cada lunes. Incluye una lista para revisar permisos antes de aprobar.",
+  "resumen": [
+    "El prompt para que Claude junte tus prioridades, tu calendario y tus correos en un resumen semanal, y los pasos para programarlo cada lunes. Incluye una lista para revisar permisos antes de aprobar.",
+    "Producto: Claude (chat y Cowork). Fuente: webinar Building your first workflow with Cowork de Anthropic (claude.com/resources/webinars/recurring-building-your-first-workflow-with-cowork)."
+  ],
+  "secciones": [
+    {
+      "tipo": "nota",
+      "texto": "Creado por Stephano, @iOStephano, 8pluscore.com"
+    }
+  ],
+  "archivo": "resumen-semanal.zip",
+  "etiqueta": "Descargar archivo (ZIP)",
+  "codigo": "Y4DC8"
+}
