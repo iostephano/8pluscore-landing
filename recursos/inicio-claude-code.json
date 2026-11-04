@@ -1,0 +1,13 @@
+{
+  "slug": "inicio-claude-code",
+  "tipo": "pdf_propio",
+  "titulo": "Guía de inicio en Claude Code",
+  "descripcion": "Una guía en español para empezar con Claude Code: los 4 modos de permiso, un prompt para cada paso del flujo y una plantilla de CLAUDE.md.",
+  "resumen": [
+    "Una guía en español para empezar con Claude Code. Explica los 4 modos de permiso y trae un prompt listo para cada paso del flujo que recomienda Anthropic.",
+    "Incluye una plantilla de CLAUDE.md para tu proyecto. Sale del curso Claude Code 101 de Anthropic."
+  ],
+  "archivo": "inicio-claude-code.zip",
+  "etiqueta": "Descargar archivo (ZIP)",
+  "codigo": "E5PN2"
+}
