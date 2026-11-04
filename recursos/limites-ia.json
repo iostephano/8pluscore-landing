@@ -1,0 +1,13 @@
+{
+  "slug": "limites-ia",
+  "tipo": "pdf_propio",
+  "titulo": "Antes de delegar a la IA",
+  "descripcion": "4 preguntas para revisar antes de darle una tarea a la IA y 5 prompts para probarla con tus propias tareas.",
+  "resumen": [
+    "Una lista con 4 preguntas para revisar antes de darle una tarea a la IA, cada una con el ajuste que conviene hacer.",
+    "Incluye 5 prompts para probar a la IA con tus propias tareas y para entender por qué falló una respuesta. Sale del curso AI capabilities and limitations de Anthropic."
+  ],
+  "archivo": "antes-de-delegar-a-la-ia.zip",
+  "etiqueta": "Descargar archivo (ZIP)",
+  "codigo": "L6TM8"
+}
