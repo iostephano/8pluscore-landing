@@ -1,0 +1,13 @@
+{
+  "slug": "subagente-revisor",
+  "tipo": "pdf_propio",
+  "titulo": "Subagente revisor de código para Claude Code",
+  "descripcion": "Un subagente listo para instalar en Claude Code que revisa tus cambios de código y reporta problemas de calidad y seguridad con un formato fijo.",
+  "resumen": [
+    "Un subagente listo para instalar en Claude Code que revisa tus cambios de código y reporta problemas de calidad y seguridad con un formato fijo.",
+    "Sigue las 4 reglas de Anthropic: descripción clara, formato de respuesta, sección de obstáculos y sin permiso para editar. Incluye dónde guardarlo, cómo probarlo y cuándo conviene usar un subagente."
+  ],
+  "archivo": "subagente-revisor-codigo.zip",
+  "etiqueta": "Descargar archivo (ZIP)",
+  "codigo": "R8VN6"
+}
