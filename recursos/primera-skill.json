@@ -1,0 +1,13 @@
+{
+  "slug": "primera-skill",
+  "tipo": "pdf_propio",
+  "titulo": "Tu primera skill en Claude Code",
+  "descripcion": "Una skill lista para instalar en Claude Code que escribe la descripción de tus pull requests siempre con el mismo formato.",
+  "resumen": [
+    "Una skill lista para instalar en Claude Code que escribe la descripción de tus pull requests siempre con el mismo formato.",
+    "Incluye la estructura de carpetas, los pasos para instalarla, cómo ver la carpeta oculta en Mac y cómo probarla. Está basada en el ejemplo del tutorial de Anthropic."
+  ],
+  "archivo": "primera-skill-claude-code.zip",
+  "etiqueta": "Descargar archivo (ZIP)",
+  "codigo": "S7KQ3"
+}
