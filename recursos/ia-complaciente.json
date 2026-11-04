@@ -1,0 +1,13 @@
+{
+  "slug": "ia-complaciente",
+  "tipo": "pdf_propio",
+  "titulo": "Prompts para que la IA no solo te dé la razón",
+  "descripcion": "7 prompts listos para copiar en Claude o en otra IA para pedir críticas honestas, separar opiniones de hechos y revisar tu trabajo.",
+  "resumen": [
+    "Son 7 prompts listos para copiar en Claude o en otra IA. Sirven para pedir críticas honestas, separar tus opiniones de los hechos y revisar tu trabajo en un chat nuevo.",
+    "También trae los 6 momentos en que más conviene desconfiar. Se basan en el tutorial de Anthropic sobre la complacencia en la IA."
+  ],
+  "archivo": "prompts-ia-complaciente.zip",
+  "etiqueta": "Descargar archivo (ZIP)",
+  "codigo": "C4PX9"
+}
