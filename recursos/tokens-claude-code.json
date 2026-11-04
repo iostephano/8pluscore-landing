@@ -1,0 +1,19 @@
+{
+  "slug": "tokens-claude-code",
+  "tipo": "pdf_propio",
+  "titulo": "Gasta menos tokens en Claude Code",
+  "descripcion": "Una guía en español con los comandos y hábitos para que tus sesiones de Claude Code gasten menos tokens. Incluye qué comando usar en cada momento, una limpieza de 10 minutos para tu proyecto y prompts listos para copiar.",
+  "resumen": [
+    "Una guía en español con los comandos y hábitos para que tus sesiones de Claude Code gasten menos tokens. Incluye qué comando usar en cada momento, una limpieza de 10 minutos para tu proyecto y prompts listos para copiar.",
+    "Producto: Claude Code. Fuente: webinar Maximizing Value from Claude Code de Anthropic (claude.com/resources/webinars/claude-code-maximizing-value)."
+  ],
+  "secciones": [
+    {
+      "tipo": "nota",
+      "texto": "Creado por Stephano, @iOStephano, 8pluscore.com"
+    }
+  ],
+  "archivo": "tokens-claude-code.zip",
+  "etiqueta": "Descargar archivo (ZIP)",
+  "codigo": "K3TZ9"
+}

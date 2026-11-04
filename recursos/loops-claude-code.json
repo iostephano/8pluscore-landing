@@ -1,0 +1,19 @@
+{
+  "slug": "loops-claude-code",
+  "tipo": "pdf_propio",
+  "titulo": "Recetas de loops en Claude Code",
+  "descripcion": "Los 4 tipos de loop de Claude Code, cómo elegir el correcto y recetas en español con /goal, /loop y /schedule. Incluye una skill de verificación y una lista de seguridad antes de dejar un loop corriendo.",
+  "resumen": [
+    "Los 4 tipos de loop de Claude Code, cómo elegir el correcto y recetas en español con /goal, /loop y /schedule. Incluye una skill de verificación y una lista de seguridad antes de dejar un loop corriendo.",
+    "Producto: Claude Code. Fuente: webinar Startup Builds: Getting Started with Loops de Anthropic (claude.com/resources/webinars/startup-builds-getting-started-with-loops)."
+  ],
+  "secciones": [
+    {
+      "tipo": "nota",
+      "texto": "Creado por Stephano, @iOStephano, 8pluscore.com"
+    }
+  ],
+  "archivo": "loops-claude-code.zip",
+  "etiqueta": "Descargar archivo (ZIP)",
+  "codigo": "G7LW5"
+}
