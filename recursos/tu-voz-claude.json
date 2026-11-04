@@ -1,0 +1,19 @@
+{
+  "slug": "tu-voz-claude",
+  "tipo": "pdf_propio",
+  "titulo": "Que Claude escriba con tu voz",
+  "descripcion": "Prompts en español para que Claude Cowork analice cómo escribes y guarde tu estilo como una skill. Incluye cómo corregirla con cada borrador y cómo actualizarla cada mes.",
+  "resumen": [
+    "Prompts en español para que Claude Cowork analice cómo escribes y guarde tu estilo como una skill. Incluye cómo corregirla con cada borrador y cómo actualizarla cada mes.",
+    "Producto: Claude Cowork. Fuente: caso de uso Write in my voice de Claude Academy, de Anthropic (academy.claude.com/use-cases/my-voice)."
+  ],
+  "secciones": [
+    {
+      "tipo": "nota",
+      "texto": "Creado por Stephano, @iOStephano, 8pluscore.com"
+    }
+  ],
+  "archivo": "tu-voz-claude.zip",
+  "etiqueta": "Descargar archivo (ZIP)",
+  "codigo": "V6RK3"
+}

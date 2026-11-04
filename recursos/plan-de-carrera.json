@@ -1,0 +1,19 @@
+{
+  "slug": "plan-de-carrera",
+  "tipo": "pdf_propio",
+  "titulo": "Arma tu plan de carrera con Claude",
+  "descripcion": "Prompts en español para comparar tu CV con los puestos que quieres y obtener un plan de acción y un registro de logros con historias STAR. Incluye prompts para preparar entrevistas y adaptar tu CV.",
+  "resumen": [
+    "Prompts en español para comparar tu CV con los puestos que quieres y obtener un plan de acción y un registro de logros con historias STAR. Incluye prompts para preparar entrevistas y adaptar tu CV.",
+    "Producto: Chat de Claude. Fuente: caso de uso Plan your career path de Claude Academy, de Anthropic (academy.claude.com/use-cases/plan-your-career-path)."
+  ],
+  "secciones": [
+    {
+      "tipo": "nota",
+      "texto": "Creado por Stephano, @iOStephano, 8pluscore.com"
+    }
+  ],
+  "archivo": "plan-de-carrera.zip",
+  "etiqueta": "Descargar archivo (ZIP)",
+  "codigo": "P5JW8"
+}

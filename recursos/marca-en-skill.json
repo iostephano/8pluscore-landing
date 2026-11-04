@@ -1,0 +1,19 @@
+{
+  "slug": "marca-en-skill",
+  "tipo": "pdf_propio",
+  "titulo": "Tu marca guardada en una skill de Claude",
+  "descripcion": "Una ficha de marca para llenar y los prompts para convertirla en una skill. Claude aplica tus colores y tipografías en presentaciones, documentos y hojas de cálculo sin repetirlos en cada chat.",
+  "resumen": [
+    "Una ficha de marca para llenar y los prompts para convertirla en una skill. Claude aplica tus colores y tipografías en presentaciones, documentos y hojas de cálculo sin repetirlos en cada chat.",
+    "Producto: Chat de Claude. Fuente: caso de uso Package your brand guidelines in a skill de Claude Academy, de Anthropic (academy.claude.com/use-cases/package-your-brand-guidelines-in-a-skill)."
+  ],
+  "secciones": [
+    {
+      "tipo": "nota",
+      "texto": "Creado por Stephano, @iOStephano, 8pluscore.com"
+    }
+  ],
+  "archivo": "marca-en-skill.zip",
+  "etiqueta": "Descargar archivo (ZIP)",
+  "codigo": "B3MZ7"
+}

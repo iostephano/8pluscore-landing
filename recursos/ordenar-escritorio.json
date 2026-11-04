@@ -1,0 +1,19 @@
+{
+  "slug": "ordenar-escritorio",
+  "tipo": "pdf_propio",
+  "titulo": "Ordena tu escritorio con Claude Cowork",
+  "descripcion": "Una lista de seguridad de 7 puntos y prompts en español para que Claude Cowork ordene tus archivos por su contenido. Incluye cómo revisar el resultado y dejar un sistema para que no vuelva el desorden.",
+  "resumen": [
+    "Una lista de seguridad de 7 puntos y prompts en español para que Claude Cowork ordene tus archivos por su contenido. Incluye cómo revisar el resultado y dejar un sistema para que no vuelva el desorden.",
+    "Producto: Claude Cowork. Fuente: caso de uso Organize files across your desktop de Claude Academy, de Anthropic (academy.claude.com/use-cases/organize-files-by-whats-in-them)."
+  ],
+  "secciones": [
+    {
+      "tipo": "nota",
+      "texto": "Creado por Stephano, @iOStephano, 8pluscore.com"
+    }
+  ],
+  "archivo": "ordenar-escritorio.zip",
+  "etiqueta": "Descargar archivo (ZIP)",
+  "codigo": "T9HX4"
+}
