@@ -1,0 +1,14 @@
+{
+  "slug": "revisar-ia",
+  "tipo": "pdf_propio",
+  "titulo": "Skill oficial para revisar el trabajo de la IA",
+  "descripcion": "La skill oficial de Anthropic discernment-nudge: cuando Claude te da una respuesta importante, te sugiere preguntas para revisarla antes de usarla.",
+  "resumen": [
+    "Es la skill oficial de Anthropic discernment-nudge. Cuando Claude te da una respuesta que vas a usar, como un consejo, un plan o una estimación, te sugiere 2 o 3 preguntas para revisarla: qué datos comprobar, qué razonamiento cuestionar y qué contexto falta.",
+    "Descomprime el ZIP y copia la carpeta discernment-nudge dentro de .claude/skills en tu carpeta de usuario.",
+    "Código de Anthropic PBC bajo licencia Apache 2.0, incluida en la carpeta. Fuente oficial: github.com/anthropics/skills"
+  ],
+  "archivo": "discernment-nudge.zip",
+  "etiqueta": "Descargar la skill (ZIP)",
+  "codigo": "D7MQ4"
+}
