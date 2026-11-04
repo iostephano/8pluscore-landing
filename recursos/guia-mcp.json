@@ -1,0 +1,13 @@
+{
+  "slug": "guia-mcp",
+  "tipo": "pdf_propio",
+  "titulo": "Guía para planificar y revisar un servidor MCP",
+  "descripcion": "Una guía en español para trabajar con MCP: una tabla para decidir entre herramienta, recurso o prompt, y 4 prompts listos para usar.",
+  "resumen": [
+    "Una guía en español para trabajar con MCP. Trae una tabla para decidir si algo debe ser herramienta, recurso o prompt.",
+    "Incluye 4 prompts para planificar un servidor, revisarlo antes de conectarlo, escribir tu primera herramienta y probarla. Sale del curso Introduction to Model Context Protocol de Anthropic."
+  ],
+  "archivo": "guia-mcp.zip",
+  "etiqueta": "Descargar archivo (ZIP)",
+  "codigo": "M3KW8"
+}
