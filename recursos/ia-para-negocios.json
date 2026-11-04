@@ -1,0 +1,13 @@
+{
+  "slug": "ia-para-negocios",
+  "tipo": "pdf_propio",
+  "titulo": "Guía para usar la IA en tu pequeño negocio",
+  "descripcion": "Una guía en español para llevar la IA a tu negocio con criterio: una lista para proteger los datos de tus clientes y 5 prompts listos para usar.",
+  "resumen": [
+    "Una guía en español para llevar la IA a tu negocio con criterio. Trae una lista para proteger los datos de tus clientes.",
+    "Incluye 5 prompts para armar la ficha de tu negocio, elegir qué delegar, describir la tarea, probarla con casos pasados y escribir tu política de IA. Sale del curso AI Fluency for small businesses de Anthropic."
+  ],
+  "archivo": "ia-para-negocios.zip",
+  "etiqueta": "Descargar archivo (ZIP)",
+  "codigo": "N8BH5"
+}
