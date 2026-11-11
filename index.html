@@ -182,7 +182,7 @@
       font-size: clamp(34px, 3.4vw, 58px);
       font-weight: 500;
       letter-spacing: -0.05em;
-      line-height: 1.04;
+      line-height: 1.16;
       max-width: 17ch;
       margin-bottom: 30px;
       font-family: var(--font-brand);
@@ -426,7 +426,7 @@
     .facts h4 { font-size: 14px; font-weight: 600; grid-column: 1 / -1; }
     .fact strong { display: block; font-size: clamp(48px, 5vw, 84px); font-weight: 600; letter-spacing: -0.06em; line-height: 1; }
     .fact span { font-size: 15px; color: #4A4852; }
-    .fact:last-child { text-align: right; }
+    .fact { text-align: center; }
 
     /* =========================================================
        EQUIPO
@@ -537,7 +537,6 @@
       .service-visual { position: relative; top: 0; aspect-ratio: 16 / 10; order: -1; }
       .section-head { grid-template-columns: 1fr; }
       .facts { grid-template-columns: repeat(2, 1fr); row-gap: 36px; }
-      .fact:last-child { text-align: left; }
       .reviews-body { grid-template-columns: 1fr; }
       .logos { grid-template-columns: repeat(2, 1fr); }
     }
@@ -713,12 +712,12 @@
         <article class="step step-2">
           <span class="mono">02</span>
           <h3>Delego con reglas</h3>
-          <p>Los agentes trabajan dentro del harness: contexto, permisos y hooks que compilan, pasan SwiftLint y corren las pruebas en cada cambio.</p>
+          <p>Los agentes trabajan dentro del harness: contexto, permisos y hooks que comprueban en cada cambio que el código compile, siga mis convenciones y pase las pruebas.</p>
         </article>
         <article class="step step-3">
           <span class="mono">03</span>
           <h3>Reviso y publico</h3>
-          <p>Reviso cada integración, mido con pruebas y evals, y publico en el App Store.</p>
+          <p>Reviso cada cambio antes de integrarlo, mido el resultado con pruebas y evals, y publico en el App Store.</p>
         </article>
       </div>
     </section>
