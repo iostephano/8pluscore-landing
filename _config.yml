@@ -3,4 +3,5 @@
 exclude:
   - recursos
   - tools
+  - i18n
   - README.md

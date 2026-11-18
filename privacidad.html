@@ -7,6 +7,9 @@
   <meta name="description" content="Cómo 8+Core trata los datos que recibe cuando le escribes por correo.">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://8pluscore.com/privacidad.html">
+  <link rel="alternate" hreflang="es" href="https://8pluscore.com/privacidad.html">
+  <link rel="alternate" hreflang="en" href="https://8pluscore.com/en/privacy.html">
+  <link rel="alternate" hreflang="x-default" href="https://8pluscore.com/privacidad.html">
   <meta name="theme-color" content="#F6F5F3">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,9 +48,18 @@
     :focus-visible { outline: 2px solid var(--violet); outline-offset: 3px; border-radius: 6px; }
 
     .header {
+      display: flex; justify-content: space-between; align-items: center; gap: 16px;
       padding: 28px var(--gutter);
       font-family: var(--font-brand);
     }
+    .lang {
+      display: inline-flex; gap: 2px; padding: 2px;
+      border: 1px solid var(--line); border-radius: 999px;
+      font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12px; letter-spacing: .04em;
+    }
+    .lang a { padding: 4px 10px; border-radius: 999px; color: var(--muted); transition: color .2s, background-color .2s; }
+    .lang a:hover { color: var(--ink); }
+    .lang a[aria-current="page"] { background: var(--ink); color: #fff; }
     .brand-name { font-size: 22px; font-weight: 600; letter-spacing: -0.04em; }
 
     .policy {
@@ -99,6 +111,7 @@
 
   <header class="header">
     <a href="/" class="brand-name">8+Core</a>
+    <nav class="lang" aria-label="Idioma"><a href="/privacidad.html" lang="es" hreflang="es" aria-current="page" title="Ver en español">ES</a><a href="/en/privacy.html" lang="en" hreflang="en" title="Read in English">EN</a></nav>
   </header>
 
   <main class="policy">

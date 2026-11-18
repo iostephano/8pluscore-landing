@@ -16,6 +16,12 @@
   <meta property="og:title" content="8+Core · Laboratorio Apple de Stephano Portella">
   <meta property="og:description" content="Apps nativas para el ecosistema Apple creadas con agentes de IA gobernados en Claude Code.">
   <meta property="og:url" content="https://8pluscore.com/">
+  <meta property="og:locale" content="es_PE">
+  <meta property="og:locale:alternate" content="en_US">
+  <link rel="canonical" href="https://8pluscore.com/">
+  <link rel="alternate" hreflang="es" href="https://8pluscore.com/">
+  <link rel="alternate" hreflang="en" href="https://8pluscore.com/en/">
+  <link rel="alternate" hreflang="x-default" href="https://8pluscore.com/">
   <meta property="og:image" content="https://8pluscore.com/assets/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -140,6 +146,16 @@
     .nav a { opacity: .92; transition: opacity .2s; }
     .nav a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 5px; }
     .header-cta { justify-self: end; font-size: 22px; letter-spacing: -0.03em; }
+    .header-end { justify-self: end; position: relative; }
+    .lang {
+      position: absolute; top: calc(100% + 10px); right: 0;
+      display: inline-flex; gap: 2px; padding: 2px;
+      border: 1px solid rgba(255, 255, 255, .45); border-radius: 999px;
+      font-family: var(--mono); font-size: 12px; letter-spacing: .04em;
+    }
+    .lang a { padding: 4px 10px; border-radius: 999px; opacity: .8; transition: opacity .2s, background-color .2s; }
+    .lang a:hover { opacity: 1; background: rgba(255, 255, 255, .14); }
+    .lang a[aria-current="page"] { background: #fff; color: var(--ink); opacity: 1; }
 
     /* =========================================================
        HERO
@@ -571,7 +587,10 @@
       <a href="#faq">FAQ</a>
       <!-- Mostrar cuando se activen las secciones ocultas: <a href="#apps">Apps</a> <a href="#recursos">Recursos</a> <a href="#aprende">Aprende</a> -->
     </nav>
-    <a href="mailto:hola@8pluscore.com" class="header-cta">Escríbeme</a>
+    <div class="header-end">
+      <a href="mailto:hola@8pluscore.com" class="header-cta">Escríbeme</a>
+      <nav class="lang" aria-label="Idioma"><a href="/" lang="es" hreflang="es" aria-current="page" title="Ver en español">ES</a><a href="/en/" lang="en" hreflang="en" title="Read in English">EN</a></nav>
+    </div>
   </header>
 
   <main id="top">
